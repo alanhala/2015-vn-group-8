@@ -11,6 +11,7 @@ public class Receta {
 	String dificultad;
 	Temporada temporada;
 	Usuario creador;
+	Boolean subidaPorSistema;
 	List<Receta> subrecetas;
 	
 	boolean esValida()
@@ -36,13 +37,17 @@ public class Receta {
 	
 	boolean puedeSerVistaPor(Usuario usuario)
 	{
-		return usuario == creador;
-		
+		return (subidaPorSistema == true) || usuario == creador;
 	}
 	
 	boolean puedeSerModificadaPor(Usuario usuario)
 	{
 		return puedeSerVistaPor(usuario);
 	}
+	
+	// quiero ver cómo quedan modelados los usuarios antes de agregar las condiciones preexistentes
+	// no para hipertensos: contiene sal o caldo
+	// no para diabéticos: +100gr de azúcar como condimento
+	// no para veganos: pollo, carne, chivito, chori como ingredientes
 	
 }
