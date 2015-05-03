@@ -34,6 +34,15 @@ public class Receta {
 		return (ingredientes.stream().map(Ingrediente::calorias).reduce(( (ingrediente1,ingrediente2) -> ingrediente1 + ingrediente2)).get()) + (condimentos.stream().map(Condimento::calorias).reduce(( (condimento1,condimento2) -> condimento1 + condimento2)).get());
 	}
 	
+	boolean puedeSerVistaPor(Usuario usuario)
+	{
+		return usuario == creador;
+		
+	}
 	
-
+	boolean puedeSerModificadaPor(Usuario usuario)
+	{
+		return puedeSerVistaPor(usuario);
+	}
+	
 }
