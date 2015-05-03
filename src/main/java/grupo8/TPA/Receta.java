@@ -5,8 +5,8 @@ import java.util.List;
 public class Receta {
 	
 	String nombre;
-	List<Ingrediente> ingredientes;
-	List<Condimento> condimentos;
+	List<ComponenteDeReceta> ingredientes;
+	List<ComponenteDeReceta> condimentos;
 	String preparacion;
 	String dificultad;
 	Temporada temporada;
@@ -26,13 +26,17 @@ public class Receta {
 	
 	boolean tieneCaloriasEntre(int limiteInferiorDelRango, int limiteSuperiorDelRango)
 	{
-		return ( (limiteInferiorDelRango < this.caloriasTotales()) && ( this.caloriasTotales() < limiteSuperiorDelRango));
+		return ( (limiteInferiorDelRango < this.caloriasTotalesDeLaReceta()) && ( this.caloriasTotalesDeLaReceta() < limiteSuperiorDelRango));
 	}
 	
-	
-	double caloriasTotales()
+	double caloriasTotalesDeLaReceta()
 	{
-		return (ingredientes.stream().map(Ingrediente::calorias).reduce(( (ingrediente1,ingrediente2) -> ingrediente1 + ingrediente2)).get()) + (condimentos.stream().map(Condimento::calorias).reduce(( (condimento1,condimento2) -> condimento1 + condimento2)).get());
+		return (this.caloriasTotalesDe(ingredientes) + this.caloriasTotalesDe(condimentos));
+	}
+	
+	double caloriasTotalesDe(List<ComponenteDeReceta> unosComponentes)
+	{
+		return (unosComponentes.stream().map(ComponenteDeReceta::calorias).reduce((componente1,componente2) -> componente1 + componente2).get());
 	}
 	
 	boolean puedeSerVistaPor(Usuario usuario)
@@ -45,9 +49,9 @@ public class Receta {
 		return puedeSerVistaPor(usuario);
 	}
 	
-	// quiero ver cómo quedan modelados los usuarios antes de agregar las condiciones preexistentes
+	// quiero ver cï¿½mo quedan modelados los usuarios antes de agregar las condiciones preexistentes
 	// no para hipertensos: contiene sal o caldo
-	// no para diabéticos: +100gr de azúcar como condimento
+	// no para diabï¿½ticos: +100gr de azï¿½car como condimento
 	// no para veganos: pollo, carne, chivito, chori como ingredientes
 	
 }
