@@ -4,16 +4,12 @@ public class Diabetico implements Condicion {
 
 	@Override
 	public boolean esValida(Usuario usuario) {
-		if (usuario.sexo.isEmpty() || usuario.sexo == null || usuario.preferenciasAlimenticias.isEmpty())
-			return false;
-		else return true;
+		return !(usuario.sexo.isEmpty() || usuario.sexo == null || usuario.preferenciasAlimenticias.isEmpty());
 	}
 
 	@Override
 	public boolean esSubsanada(Usuario usuario) {
-		if(usuario.peso() < 70 || usuario.rutina.esActiva) //TODO Arreglar lo de la rutina
-			return true;
-		else return false;
+		return (usuario.peso() < 70 || usuario.rutina.esActiva);
 	}
 
 }

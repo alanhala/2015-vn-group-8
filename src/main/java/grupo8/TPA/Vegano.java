@@ -11,19 +11,14 @@ public class Vegano implements Condicion {
 	@Override
 	public boolean esValida(Usuario usuario) {
 
-		if (usuario.preferenciasAlimenticias.stream().anyMatch(
-				preferencia -> preferenciasProhibidas.contains(preferencia))) {
-			return false;
-		} else
-			return true;
+		return (usuario.preferenciasAlimenticias.stream().anyMatch(
+				preferencia -> preferenciasProhibidas.contains(preferencia)));
 	}
 
 	@Override
 	public boolean esSubsanada(Usuario usuario) {
 		
-		if (usuario.preferenciasAlimenticias.contains("frutas"))
-			return true;
-		else return false;
+		return (usuario.preferenciasAlimenticias.contains("frutas"));
 	}
 
 }
