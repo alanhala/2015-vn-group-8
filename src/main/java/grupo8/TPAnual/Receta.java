@@ -4,54 +4,56 @@ import java.util.List;
 
 public class Receta {
 	
-	String nombre;
-	List<ComponenteDeReceta> ingredientes;
-	List<ComponenteDeReceta> condimentos;
-	String preparacion;
-	String dificultad;
-	Temporada temporada;
-	Usuario creador;
-	Boolean subidaPorSistema;
-	List<Receta> subrecetas;
+	private String nombre;
+	private List<ComponenteDeReceta> ingredientes;
+	private List<ComponenteDeReceta> condimentos;
+	private String preparacion;
+	private String dificultad;
+	private Temporada temporada;
+	private Usuario creador;
+	private Boolean subidaPorSistema;
+	private List<Receta> subrecetas;
 	
-	boolean esValida()
+	//los warnings son porque esos atributos no se usaron aun
+	
+	public boolean esValida()
 	{
 		return (this.tieneAlMenosUnIngrediente() && this.tieneCaloriasEntre(10, 500));
 	}
 	
-	boolean tieneAlMenosUnIngrediente()
+	public boolean tieneAlMenosUnIngrediente()
 	{
 		return ingredientes.size() >= 1;
 	}
 	
-	boolean tieneCaloriasEntre(int limiteInferiorDelRango, int limiteSuperiorDelRango)
+	public boolean tieneCaloriasEntre(int limiteInferiorDelRango, int limiteSuperiorDelRango)
 	{
 		return ( (limiteInferiorDelRango < this.caloriasTotalesDeLaReceta()) && ( this.caloriasTotalesDeLaReceta() < limiteSuperiorDelRango));
 	}
 	
-	double caloriasTotalesDeLaReceta()
+	public double caloriasTotalesDeLaReceta()
 	{
 		return (this.caloriasTotalesDe(ingredientes) + this.caloriasTotalesDe(condimentos));
 	}
 	
-	double caloriasTotalesDe(List<ComponenteDeReceta> unosComponentes)
+	public double caloriasTotalesDe(List<ComponenteDeReceta> unosComponentes)
 	{
 		return (unosComponentes.stream().map(ComponenteDeReceta::calorias).reduce((componente1,componente2) -> componente1 + componente2).get());
 	}
 	
-	boolean puedeSerVistaPor(Usuario usuario)
+	public boolean puedeSerVistaPor(Usuario usuario)
 	{
 		return (subidaPorSistema == true) || usuario == creador;
 	}
 	
-	boolean puedeSerModificadaPor(Usuario usuario)
+	public boolean puedeSerModificadaPor(Usuario usuario)
 	{
 		return puedeSerVistaPor(usuario);
 	}
 	
-	// quiero ver c�mo quedan modelados los usuarios antes de agregar las condiciones preexistentes
+	// quiero ver como quedan modelados los usuarios antes de agregar las condiciones preexistentes
 	// no para hipertensos: contiene sal o caldo
-	// no para diab�ticos: +100gr de az�car como condimento
+	// no para diabeticos: +100gr de azucar como condimento
 	// no para veganos: pollo, carne, chivito, chori como ingredientes
 	
 }
