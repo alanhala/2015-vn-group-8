@@ -2,12 +2,13 @@ package grupo8.TPAnual;
 
 abstract class ComponenteDeReceta {
 	
-	String nombre;
-	double cantidad;
-	double calorias;
+	private String nombre;
+	private double cantidad;
+	private double calorias;
 	
+	//los warnings son porque los atributos no se usaron aun
 	
-	double calorias()
+	public double calorias()
 	{
 		return calorias;
 	}
