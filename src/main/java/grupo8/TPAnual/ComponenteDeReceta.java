@@ -2,12 +2,12 @@ package grupo8.TPAnual;
 
 abstract class ComponenteDeReceta {
 	
-	String nombre;
-	double cantidad;
-	double calorias;
+	private String nombre;
+	private double cantidad;
+	private double calorias;
 	
 	
-	double calorias()
+	public double calorias()
 	{
 		return calorias;
 	}
