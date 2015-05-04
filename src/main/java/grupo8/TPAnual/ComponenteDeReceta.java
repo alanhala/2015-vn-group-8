@@ -6,6 +6,7 @@ abstract class ComponenteDeReceta {
 	private double cantidad;
 	private double calorias;
 	
+	//los warnings son porque los atributos no se usaron aun
 	
 	public double calorias()
 	{
