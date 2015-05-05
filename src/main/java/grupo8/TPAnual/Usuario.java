@@ -87,12 +87,12 @@ public class Usuario {
 	public boolean tieneRutinaActiva() {
 		return rutina.esActiva();
 	}
-	
+
 	public boolean tieneRutinaConEjercicioAdicional() {
 		return rutina.esConEjercicioAdicional();
 	}
-	
-	public boolean pesoMenorOIgualA(Double unPeso){
+
+	public boolean pesoMenorOIgualA(Double unPeso) {
 		return peso <= unPeso;
 	}
 
