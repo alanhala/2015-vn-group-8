@@ -9,11 +9,13 @@ import org.junit.Test;
 public class TestIMCDeLosDesarrolladores {
 	private Usuario felipe;
 	private Usuario crespo;
+	private Usuario ivo;
 	
 	@Before
 	public void init() {
 		felipe = new Usuario(55.1, 1.69);
 		crespo = new Usuario(72.2,1.81);
+		ivo = new Usuario(65.2,1.78);
 	}
 	  
 	@Test
@@ -28,6 +30,13 @@ public class TestIMCDeLosDesarrolladores {
 		Double imcDeCrespo = crespo.calcularIMC();
 		
 		assertEquals(imcDeCrespo, (Double) 22.038, 0.001);
+	}
+	
+	@Test
+	public void IMCdeIvo() {
+		Double imcDeIvo = ivo.calcularIMC();
+		
+		assertEquals(imcDeIvo, (Double) 20.578, 0.001);
 	}
 
 }
