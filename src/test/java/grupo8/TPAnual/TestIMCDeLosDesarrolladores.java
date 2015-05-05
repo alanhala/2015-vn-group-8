@@ -11,6 +11,7 @@ public class TestIMCDeLosDesarrolladores {
 	private Usuario crespo;
 	private Usuario ivo;
 	private Usuario alan;
+	private Usuario diego;
 	
 	@Before
 	public void init() {
@@ -18,6 +19,7 @@ public class TestIMCDeLosDesarrolladores {
 		crespo = new Usuario(72.2,1.81);
 		ivo = new Usuario(65.2,1.78);
 		alan = new Usuario(90.00,1.80);
+		diego = new Usuario(62.00, 1.75);
 	}
 	  
 	@Test
@@ -46,6 +48,13 @@ public class TestIMCDeLosDesarrolladores {
 		Double imcDeAlan = alan.calcularIMC();
 		
 		assertEquals(imcDeAlan, (Double) 27.777, 0.001);
+	}
+	
+	@Test
+	public void IMCdeDiego() {
+		Double imcDeDiego = diego.calcularIMC();
+		
+		assertEquals(imcDeDiego, (Double) 20.244, 0.001);
 	}
 
 }
