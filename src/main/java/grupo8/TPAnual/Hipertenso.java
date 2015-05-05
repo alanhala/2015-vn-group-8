@@ -4,12 +4,12 @@ public class Hipertenso implements Condicion {
 
 	@Override
 	public boolean esValida(Usuario usuario) {
-		return !(usuario.preferenciasAlimenticias.isEmpty());
+		return usuario.tienePreferenciasAlimenticias();
 	}
 
 	@Override
 	public boolean esSubsanada(Usuario usuario) {
-		return (usuario.rutina.esActiva() && usuario.rutina.esConEjercicioAdicional());
+		return usuario.tieneRutinaActiva() && usuario.tieneRutinaConEjercicioAdicional();
 
 	}
 
