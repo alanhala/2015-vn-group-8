@@ -1,6 +1,6 @@
 package grupo8.TPAnual;
 
-abstract class ComponenteDeReceta {
+public class ComponenteDeReceta {
 	
 	private String nombre;
 	private double cantidad;
