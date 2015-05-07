@@ -1,5 +1,7 @@
 package grupo8.TPAnual;
 
+import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -19,6 +21,11 @@ public class Usuario {
 	public Usuario(Double unPeso, Double unaAltura) {
 		peso = unPeso;
 		altura = unaAltura;
+		
+		if(!this.esValido())
+		{
+			throw new UsuarioInvalidoException("Usuario invalido, por favor, ingrese los datos correctamente");
+		}
 	}
 
 	public double calcularIMC() {
