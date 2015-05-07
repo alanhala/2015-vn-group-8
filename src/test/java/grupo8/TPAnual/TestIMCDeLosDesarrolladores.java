@@ -1,7 +1,7 @@
 package grupo8.TPAnual;
 
 import static org.junit.Assert.*;
-import grupo8.TPAnual.Usuario;
+import grupo8.TPAnual.model.Usuario;
 
 import org.junit.Before;
 import org.junit.Test;

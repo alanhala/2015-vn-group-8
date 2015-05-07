@@ -1,4 +1,4 @@
-package grupo8.TPAnual;
+package grupo8.TPAnual.model;
 
 public class ComponenteDeReceta {
 	

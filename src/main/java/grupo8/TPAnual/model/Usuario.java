@@ -1,6 +1,4 @@
-package grupo8.TPAnual;
-
-import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
+package grupo8.TPAnual.model;
 
 import java.time.LocalDate;
 import java.util.List;
