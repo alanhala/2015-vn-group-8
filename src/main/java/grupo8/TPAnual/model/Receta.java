@@ -55,7 +55,6 @@ public class Receta {
 	{
 		return 	condimentos.stream().anyMatch(condimento -> condimento.nombre() == "sal") ||
 				ingredientes.stream().anyMatch(ingrediente -> ingrediente.nombre() == "caldo");
-				
 	}
 	
 	public boolean tieneMasDe100GramosDeAzucar()
@@ -64,6 +63,11 @@ public class Receta {
 				condimento -> (condimento.nombre() == "azucar" && condimento.cantidad() > 100));
 	}
 	
-	// no para veganos: pollo, carne, chivito, chori como ingredientes
+	public boolean tieneEstosIngredientes(List<String> estosIngredientes)
+	{
+		return 	ingredientes.stream().anyMatch(
+				ingrediente -> estosIngredientes.contains( ingrediente.nombre() ) );
+	}
 	
+
 }

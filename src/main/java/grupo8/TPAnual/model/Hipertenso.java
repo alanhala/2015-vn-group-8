@@ -12,7 +12,7 @@ public class Hipertenso implements Condicion {
 		return usuario.tieneRutinaActiva() && usuario.tieneRutinaConEjercicioAdicional();
 	}
 	
-	public boolean esInadecuada(Receta receta) {
+	public boolean esInadecuadaUnaReceta(Receta receta) {
 		return receta.tieneSalOCaldo();
 
 	}
