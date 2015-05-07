@@ -8,9 +8,18 @@ public class ComponenteDeReceta {
 	
 	//los warnings son porque los atributos no se usaron aun
 	
+	public String nombre()
+	{
+		return nombre;
+	}
+	
+	public double cantidad()
+	{
+		return cantidad;
+	}
+
 	public double calorias()
 	{
 		return calorias;
 	}
-
 }

@@ -10,6 +10,11 @@ public class Hipertenso implements Condicion {
 	@Override
 	public boolean esSubsanada(Usuario usuario) {
 		return usuario.tieneRutinaActiva() && usuario.tieneRutinaConEjercicioAdicional();
+	}
+	
+	public boolean esInadecuada(Receta receta) {
+	
+		return receta.tieneSalOCaldo();
 
 	}
 
