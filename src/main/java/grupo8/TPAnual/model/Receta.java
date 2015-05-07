@@ -53,14 +53,17 @@ public class Receta {
 	
 	public boolean tieneSalOCaldo()
 	{
-		return 	condimentos.stream().anyMatch(condimentos -> condimentos.nombre() == "sal") ||
+		return 	condimentos.stream().anyMatch(condimento -> condimento.nombre() == "sal") ||
 				ingredientes.stream().anyMatch(ingrediente -> ingrediente.nombre() == "caldo");
 				
 	}
 	
-	// quiero ver como quedan modelados los usuarios antes de agregar las condiciones preexistentes
-	// no para hipertensos: contiene sal o caldo
-	// no para diabeticos: +100gr de azucar como condimento
+	public boolean tieneMasDe100GramosDeAzucar()
+	{
+		return 	condimentos.stream().anyMatch(
+				condimento -> (condimento.nombre() == "azucar" && condimento.cantidad() > 100));
+	}
+	
 	// no para veganos: pollo, carne, chivito, chori como ingredientes
 	
 }

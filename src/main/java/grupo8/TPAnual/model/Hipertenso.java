@@ -13,7 +13,6 @@ public class Hipertenso implements Condicion {
 	}
 	
 	public boolean esInadecuada(Receta receta) {
-	
 		return receta.tieneSalOCaldo();
 
 	}

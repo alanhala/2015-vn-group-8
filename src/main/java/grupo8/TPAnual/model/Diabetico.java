@@ -12,4 +12,7 @@ public class Diabetico implements Condicion {
 		return usuario.pesoMenorOIgualA(70.00) || usuario.tieneRutinaActiva();
 	}
 
+	public boolean esInadecuada(Receta receta){
+		return receta.tieneMasDe100GramosDeAzucar();
+	}
 }
