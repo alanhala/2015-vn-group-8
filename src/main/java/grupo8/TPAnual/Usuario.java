@@ -70,10 +70,9 @@ public class Usuario {
 	public boolean fechaNacimientoValida() {
 		LocalDate today = LocalDate.now();
 		return (fechaDeNacimiento.isBefore(today));
-
 	}
 
-	public boolean tieneSexo() {
+	public boolean tieneSexo() { //jaja
 		return sexo != null || !(sexo.isEmpty());
 	}
 
@@ -81,7 +80,7 @@ public class Usuario {
 		return !(preferenciasAlimenticias.isEmpty());
 	}
 
-	public boolean noTienePrefenciasProhibidas(
+	public boolean tienePreferenciasProhibidas(
 			List<String> preferenciasProhibidas) {
 		return preferenciasAlimenticias.stream().anyMatch(
 				preferencia -> preferenciasProhibidas.contains(preferencia));

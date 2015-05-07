@@ -11,7 +11,7 @@ public class Vegano implements Condicion {
 	@Override
 	public boolean esValida(Usuario usuario) {
 
-		return usuario.noTienePrefenciasProhibidas(preferenciasProhibidas);
+		return !(usuario.tienePreferenciasProhibidas(preferenciasProhibidas));
 	}
 
 	@Override
