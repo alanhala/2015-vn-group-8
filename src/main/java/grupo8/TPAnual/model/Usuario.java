@@ -130,7 +130,6 @@ public class Usuario {
 	}
 
 	public void agregarUnaReceta(Receta receta) {
-		
 		recetas.add(receta);
 	}
 
@@ -142,5 +141,29 @@ public class Usuario {
 		return receta.puedeSerModificadaPor(this);
 	}
 	
-
+	public void agregarIngredienteEn(Receta receta, ComponenteDeReceta ingrediente){
+		if (puedeModificar(receta))
+		{
+			receta.agregarIngrediente(ingrediente);
+		}
+	}
+	
+	public void agregarCondimentoEn(Receta receta, ComponenteDeReceta condimento){
+		if (puedeModificar(receta))
+		{
+			receta.agregarCondimento(condimento);
+		}
+	}
+	
+	public void modificarPreparacionEn(Receta receta, String preparacion){
+		if (puedeModificar(receta))
+		{
+			receta.modificarPreparacion(preparacion);
+		}
+	}
+	
+	public boolean tenesUnaReceta(Receta unaReceta){
+		return recetas.contains(unaReceta);
+	}
+	
 }

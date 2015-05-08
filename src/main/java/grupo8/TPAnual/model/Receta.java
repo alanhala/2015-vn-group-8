@@ -122,4 +122,16 @@ public class Receta {
 		subrecetas.add(receta);
 	}
 
+	public void agregarIngrediente(ComponenteDeReceta ingrediente) {
+		ingredientes.add(ingrediente);
+	}
+	
+	public void agregarCondimento(ComponenteDeReceta condimento) {
+		condimentos.add(condimento);
+	}
+	
+	public void modificarPreparacion(String nuevaPreparacion){
+		preparacion = nuevaPreparacion;
+	}
 }
+
