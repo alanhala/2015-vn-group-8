@@ -18,6 +18,10 @@ public class Usuario {
 	private List<Receta> recetas;
 	private Rutina rutina;
 
+	public enum Rutina {
+		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
+	}
+
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
 			List<String> disgustosAlimenticios, List<Condicion> condiciones,
@@ -51,7 +55,7 @@ public class Usuario {
 	}
 
 	public boolean sigueRutinaSaludable() {
-		return ((this.tieneIMCEntre(18.00, 30.00) && !(condiciones.isEmpty())) || this
+		return ((this.tieneIMCEntre(18.00, 30.00) && condiciones.isEmpty()) || this
 				.condicionesSonSubsanadas());
 	}
 
@@ -102,12 +106,12 @@ public class Usuario {
 		return preferenciasAlimenticias.contains(comida);
 	}
 
-	public boolean tieneRutinaActiva() {
-		return rutina.esActiva();
+	public boolean tieneRutinaIntensiva(){
+		return rutina.equals(Rutina.INTENSIVO);
 	}
-
-	public boolean tieneRutinaConEjercicioAdicional() {
-		return rutina.esConEjercicioAdicional();
+	
+	public boolean tieneRutinaSemiIntenisva(){
+		return rutina.equals(Rutina.SEMIINTENSIVO);
 	}
 
 	public boolean pesoMenorOIgualA(Double unPeso) {

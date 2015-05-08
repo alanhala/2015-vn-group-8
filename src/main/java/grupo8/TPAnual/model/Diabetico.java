@@ -9,7 +9,7 @@ public class Diabetico implements Condicion {
 
 	@Override
 	public boolean esSubsanada(Usuario usuario) {
-		return usuario.pesoMenorOIgualA(70.00) || usuario.tieneRutinaActiva();
+		return usuario.pesoMenorOIgualA(70.00) || usuario.tieneRutinaIntensiva() || usuario.tieneRutinaSemiIntenisva();
 	}
 
 	public boolean esInadecuadaParaUnaReceta(Receta receta){
