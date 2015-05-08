@@ -48,7 +48,7 @@ public class TestIMCDeLosDesarrolladores {
 	}
 
 	@Test
-	public void IMCdeAlanDa27_77() {
+	public void IMCdeAlan() {
 		Double imcDeAlan = alan.calcularIMC();
 
 		assertEquals(imcDeAlan, (Double) 27.777, 0.001);

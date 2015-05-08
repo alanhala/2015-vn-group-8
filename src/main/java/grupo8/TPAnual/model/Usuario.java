@@ -130,12 +130,17 @@ public class Usuario {
 	}
 
 	public void agregarUnaReceta(Receta receta) {
-
+		
 		recetas.add(receta);
 	}
 
 	public boolean puedeVer(Receta receta) {
-		return recetas.contains(receta) || receta.esPublica();
+		return receta.puedeSerVistaPor(this);
 	}
+	
+	public boolean puedeModificar(Receta receta){
+		return receta.puedeSerModificadaPor(this);
+	}
+	
 
 }
