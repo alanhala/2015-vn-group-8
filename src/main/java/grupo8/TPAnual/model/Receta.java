@@ -92,8 +92,13 @@ public class Receta {
 			List<Condicion> condicionesPreexistentes) {
 		return (List<Condicion>) condicionesPreexistentes.stream().filter(
 				condicion -> condicion.esInadecuadaParaUnaReceta(this));
-		
 		//no entiendo por que tengo que poner el (List<Condicion>) para que funcione
 	}
+	
+	public void agregarSubreceta(Receta receta){
+		subrecetas.add(receta);
+	}
+	
+	
 
 }
