@@ -20,7 +20,7 @@ public class Vegano implements Condicion {
 		return usuario.leGusta("frutas");
 	}
 
-	public boolean esInadecuadaUnaReceta(Receta receta){
+	public boolean esInadecuadaParaUnaReceta(Receta receta){
 		return receta.tieneEstosIngredientes(preferenciasProhibidas);
 	}
 }

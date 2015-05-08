@@ -4,5 +4,6 @@ public interface Condicion {
 	
 	public boolean esValida(Usuario usuario);
 	public boolean esSubsanada(Usuario usuario);
+	public boolean esInadecuadaParaUnaReceta(Receta receta);
 
 }

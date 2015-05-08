@@ -1,5 +1,7 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -16,13 +18,25 @@ public class Usuario {
 	private List<Receta> recetas;
 	private Rutina rutina;
 
-	public Usuario(Double unPeso, Double unaAltura) {
-		peso = unPeso;
-		altura = unaAltura;
-		
-		if(!this.esValido())
-		{
-			throw new UsuarioInvalidoException("Usuario invalido, por favor, ingrese los datos correctamente");
+	public Usuario(Double peso, Double altura, String nombre, String sexo,
+			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
+			List<String> disgustosAlimenticios, List<Condicion> condiciones,
+			List<Receta> recetas, Rutina rutina) {
+		super();
+		this.peso = peso;
+		this.altura = altura;
+		this.nombre = nombre;
+		this.sexo = sexo;
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		this.preferenciasAlimenticias = preferenciasAlimenticias;
+		this.disgustosAlimenticios = disgustosAlimenticios;
+		this.condiciones = condiciones;
+		this.recetas = recetas;
+		this.rutina = rutina;
+
+		if (!this.esValido()) {
+			throw new UsuarioInvalidoException(
+					"Usuario invalido, por favor, ingrese los datos correctamente");
 		}
 	}
 
@@ -41,17 +55,17 @@ public class Usuario {
 				.condicionesSonSubsanadas());
 	}
 
-	private boolean condicionesSonSubsanadas() {
+	public boolean condicionesSonSubsanadas() {
 		return condiciones.stream().allMatch(
 				condicion -> condicion.esSubsanada(this));
 	}
 
-	private boolean tieneIMCEntre(double limiteInferior, double limiteSuperior) {
+	public boolean tieneIMCEntre(double limiteInferior, double limiteSuperior) {
 		return this.calcularIMC() >= limiteInferior
 				&& this.calcularIMC() <= limiteSuperior;
 	}
 
-	private boolean tieneCondicionesValidas() {
+	public boolean tieneCondicionesValidas() {
 		return condiciones.stream().allMatch(
 				condicion -> condicion.esValida(this));
 	}
@@ -70,7 +84,7 @@ public class Usuario {
 		return (fechaDeNacimiento.isBefore(today));
 	}
 
-	public boolean tieneSexo() { //jaja
+	public boolean tieneSexo() { // jaja
 		return sexo != null || !(sexo.isEmpty());
 	}
 
@@ -98,6 +112,15 @@ public class Usuario {
 
 	public boolean pesoMenorOIgualA(Double unPeso) {
 		return peso <= unPeso;
+	}
+
+	public void agregarUnaReceta(Receta receta) {
+		// hay que agregar la excepcion que verifique la validez de la receta
+		recetas.add(receta);
+	}
+
+	public boolean puedeVer(Receta receta) {
+		return recetas.contains(receta) || receta.esPublica();
 	}
 
 }

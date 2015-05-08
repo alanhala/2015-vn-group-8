@@ -11,5 +11,8 @@ public class Celiaco implements Condicion {
 	public boolean esSubsanada(Usuario usuario) {
 		return true;
 	}
-
+	
+	public boolean esInadecuadaParaUnaReceta(Receta receta){
+		return false;
+	}
 }
