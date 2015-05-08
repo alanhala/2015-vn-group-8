@@ -52,8 +52,7 @@ public class Usuario {
 		this.nombre = nombre;
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.rutina = rutina;
-		
-		
+
 	}
 
 	public double calcularIMC() {
@@ -63,7 +62,7 @@ public class Usuario {
 	public boolean esValido() {
 		return (this.tieneCamposObligatorios() && this.tieneNombreValido()
 				&& this.fechaNacimientoValida() && this
-					.tieneCondicionesValidas()); // falta verificar la condicion
+					.tieneCondicionesValidas());
 	}
 
 	public boolean sigueRutinaSaludable() {
@@ -118,11 +117,11 @@ public class Usuario {
 		return preferenciasAlimenticias.contains(comida);
 	}
 
-	public boolean tieneRutinaIntensiva(){
+	public boolean tieneRutinaIntensiva() {
 		return rutina.equals(Rutina.INTENSIVO);
 	}
-	
-	public boolean tieneRutinaSemiIntenisva(){
+
+	public boolean tieneRutinaSemiIntenisva() {
 		return rutina.equals(Rutina.SEMIINTENSIVO);
 	}
 
@@ -131,7 +130,7 @@ public class Usuario {
 	}
 
 	public void agregarUnaReceta(Receta receta) {
-		// hay que agregar la excepcion que verifique la validez de la receta
+
 		recetas.add(receta);
 	}
 

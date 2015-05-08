@@ -1,5 +1,7 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.RecetaInvalidaException;
+
 import java.util.List;
 
 public class Receta {
@@ -15,10 +17,42 @@ public class Receta {
 	private List<Receta> subrecetas;
 
 	// los warnings son porque esos atributos no se usaron aun
-	
+
+	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
+			List<ComponenteDeReceta> condimentos) {
+		this.nombre = nombre;
+		this.ingredientes = ingredientes;
+		this.condimentos = condimentos;
+
+		if (!this.esValida()) {
+			throw new RecetaInvalidaException(
+					"Receta invalida, por favor ingrese los datos correctamente");
+		}
+	}
+
+	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
+			List<ComponenteDeReceta> condimentos, String preparacion,
+			String dificultad, Temporada temporada, Usuario creador,
+			Boolean subidaPorSistema, List<Receta> subrecetas) {
+		this.nombre = nombre;
+		this.ingredientes = ingredientes;
+		this.condimentos = condimentos;
+		this.preparacion = preparacion;
+		this.dificultad = dificultad;
+		this.temporada = temporada;
+		this.creador = creador;
+		this.subidaPorSistema = subidaPorSistema;
+		this.subrecetas = subrecetas;
+
+		if (!this.esValida()) {
+			throw new RecetaInvalidaException(
+					"Receta invalida, por favor ingrese los datos correctamente");
+		}
+	}
+
 	public boolean esValida() {
 		return (this.tieneAlMenosUnIngrediente() && this.tieneCaloriasEntre(10,
-				500));
+				5000));
 	}
 
 	public boolean tieneAlMenosUnIngrediente() {
@@ -43,8 +77,8 @@ public class Receta {
 				.reduce((componente1, componente2) -> componente1 + componente2)
 				.get());
 	}
-	
-	public boolean esPublica(){
+
+	public boolean esPublica() {
 		return subidaPorSistema;
 	}
 
@@ -80,13 +114,12 @@ public class Receta {
 			List<Condicion> condicionesPreexistentes) {
 		return (List<Condicion>) condicionesPreexistentes.stream().filter(
 				condicion -> condicion.esInadecuadaParaUnaReceta(this));
-		//no entiendo por que tengo que poner el (List<Condicion>) para que funcione
+		// no entiendo por que tengo que poner el (List<Condicion>) para que
+		// funcione
 	}
-	
-	public void agregarSubreceta(Receta receta){
+
+	public void agregarSubreceta(Receta receta) {
 		subrecetas.add(receta);
 	}
-	
-	
 
 }
