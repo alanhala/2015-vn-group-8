@@ -15,6 +15,18 @@ public class Receta {
 	private List<Receta> subrecetas;
 
 	// los warnings son porque esos atributos no se usaron aun
+	
+	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
+			List<ComponenteDeReceta> condimentos, String preparacion,
+			String dificultad, Temporada temporada) {
+		super();
+		this.nombre = nombre;
+		this.ingredientes = ingredientes;
+		this.condimentos = condimentos;
+		this.preparacion = preparacion;
+		this.dificultad = dificultad;
+		this.temporada = temporada;
+	}
 
 	public boolean esValida() {
 		return (this.tieneAlMenosUnIngrediente() && this.tieneCaloriasEntre(10,

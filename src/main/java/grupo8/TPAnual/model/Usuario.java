@@ -44,6 +44,18 @@ public class Usuario {
 		}
 	}
 
+	public Usuario(Double peso, Double altura, String nombre,
+			LocalDate fechaDeNacimiento, Rutina rutina) {
+		super();
+		this.peso = peso;
+		this.altura = altura;
+		this.nombre = nombre;
+		this.fechaDeNacimiento = fechaDeNacimiento;
+		this.rutina = rutina;
+		
+		
+	}
+
 	public double calcularIMC() {
 		return peso / Math.pow(altura, 2);
 	}

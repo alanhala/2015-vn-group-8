@@ -1,7 +1,11 @@
 package grupo8.TPAnual;
 
 import static org.junit.Assert.*;
+
+import java.time.LocalDate;
+
 import grupo8.TPAnual.model.Usuario;
+import grupo8.TPAnual.model.Usuario.Rutina;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,11 +19,11 @@ public class TestIMCDeLosDesarrolladores {
 
 	@Before
 	public void init() {
-		felipe = new Usuario(55.1, 1.69);
-		crespo = new Usuario(72.2, 1.81);
-		ivo = new Usuario(65.2, 1.78);
-		alan = new Usuario(90.00, 1.80);
-		diego = new Usuario(62.00, 1.75);
+		felipe = new Usuario(55.1, 1.69, "Felipe", LocalDate.of(1994, 9, 23), Rutina.LEVE);
+		crespo = new Usuario(72.2, 1.81, "Juan Manuel", LocalDate.of(1994, 11, 14), Rutina.LEVE);
+		ivo = new Usuario(65.2, 1.78, "Ivo", LocalDate.of(1994, 12, 12), Rutina.LEVE);
+		alan = new Usuario(90.00, 1.80, "Alan", LocalDate.of(1994, 10, 28), Rutina.LEVE);
+		diego = new Usuario(62.00, 1.75, "Diego", LocalDate.of(1995, 6, 3), Rutina.LEVE);
 	}
 
 	@Test
