@@ -23,11 +23,6 @@ public class Receta {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
-
-		if (!this.esValida()) {
-			throw new RecetaInvalidaException(
-					"Receta invalida, por favor ingrese los datos correctamente");
-		}
 	}
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
@@ -137,8 +132,7 @@ public class Receta {
 				this.condimentos, this.preparacion,
 				this.dificultad, this.temporada, creador,
 				this.subidaPorSistema, this.subrecetas);
-	
-		
+
 	}
 }
 

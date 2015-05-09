@@ -37,11 +37,6 @@ public class Usuario {
 		this.condiciones = condiciones;
 		this.recetas = recetas;
 		this.rutina = rutina;
-
-		if (!this.esValido()) {
-			throw new UsuarioInvalidoException(
-					"Usuario invalido, por favor, ingrese los datos correctamente");
-		}
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -139,27 +134,6 @@ public class Usuario {
 	
 	public boolean puedeModificar(Receta receta){
 		return receta.puedeSerModificadaPor(this);
-	}
-	
-	public void agregarIngredienteEn(Receta receta, ComponenteDeReceta ingrediente){
-		if (puedeModificar(receta))
-		{
-			receta.agregarIngrediente(ingrediente);
-		}
-	}
-	
-	public void agregarCondimentoEn(Receta receta, ComponenteDeReceta condimento){
-		if (puedeModificar(receta))
-		{
-			receta.agregarCondimento(condimento);
-		}
-	}
-	
-	public void modificarPreparacionEn(Receta receta, String preparacion){
-		if (puedeModificar(receta))
-		{
-			receta.modificarPreparacion(preparacion);
-		}
 	}
 	
 	public boolean tenesUnaReceta(Receta unaReceta){
