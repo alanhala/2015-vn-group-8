@@ -166,4 +166,9 @@ public class Usuario {
 		return recetas.contains(unaReceta);
 	}
 	
+	public void modificarRecetaPublica(Receta unaReceta)
+	{
+			this.recetas.add(unaReceta.clonar(this));
+	}
+	
 }

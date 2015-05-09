@@ -44,10 +44,7 @@ public class Receta {
 		this.subidaPorSistema = subidaPorSistema;
 		this.subrecetas = subrecetas;
 
-		if (!this.esValida()) {
-			throw new RecetaInvalidaException(
-					"Receta invalida, por favor ingrese los datos correctamente");
-		}
+
 	}
 
 	public boolean esValida() {
@@ -132,6 +129,16 @@ public class Receta {
 	
 	public void modificarPreparacion(String nuevaPreparacion){
 		preparacion = nuevaPreparacion;
+	}
+
+	public Receta clonar(Usuario creador) {
+		
+		return new Receta(this.nombre, this.ingredientes,
+				this.condimentos, this.preparacion,
+				this.dificultad, this.temporada, creador,
+				this.subidaPorSistema, this.subrecetas);
+	
+		
 	}
 }
 
