@@ -1,7 +1,6 @@
 package grupo8.TPAnual.model;
 
-import grupo8.TPAnual.exceptions.RecetaInvalidaException;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class Receta {
@@ -9,6 +8,7 @@ public class Receta {
 	private String nombre;
 	private List<ComponenteDeReceta> ingredientes;
 	private List<ComponenteDeReceta> condimentos;
+	private Double calorias;
 	private String preparacion;
 	private String dificultad;
 	private Temporada temporada;
@@ -19,26 +19,28 @@ public class Receta {
 	// los warnings son porque esos atributos no se usaron aun
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
-			List<ComponenteDeReceta> condimentos) {
+			List<ComponenteDeReceta> condimentos, Double calorias) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
+		this.calorias = calorias;
+		this.subrecetas = new ArrayList<Receta>();
 	}
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
-			List<ComponenteDeReceta> condimentos, String preparacion,
-			String dificultad, Temporada temporada, Usuario creador,
-			Boolean subidaPorSistema, List<Receta> subrecetas) {
+			List<ComponenteDeReceta> condimentos, Double calorias,
+			String preparacion, String dificultad, Temporada temporada,
+			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
+		this.calorias = calorias;
 		this.preparacion = preparacion;
 		this.dificultad = dificultad;
 		this.temporada = temporada;
 		this.creador = creador;
 		this.subidaPorSistema = subidaPorSistema;
 		this.subrecetas = subrecetas;
-
 
 	}
 
@@ -53,21 +55,11 @@ public class Receta {
 
 	public boolean tieneCaloriasEntre(int limiteInferiorDelRango,
 			int limiteSuperiorDelRango) {
-		return ((limiteInferiorDelRango < this.caloriasTotalesDeLaReceta()) && (this
-				.caloriasTotalesDeLaReceta() < limiteSuperiorDelRango));
+		return ((limiteInferiorDelRango < this.calorias()) && (this.calorias() < limiteSuperiorDelRango));
 	}
 
-	public double caloriasTotalesDeLaReceta() {
-		return (this.caloriasTotalesDe(ingredientes) + this
-				.caloriasTotalesDe(condimentos));
-	}
-
-	public double caloriasTotalesDe(List<ComponenteDeReceta> unosComponentes) {
-		return (unosComponentes
-				.stream()
-				.map(ComponenteDeReceta::calorias)
-				.reduce((componente1, componente2) -> componente1 + componente2)
-				.get());
+	private double calorias() {
+		return calorias;
 	}
 
 	public boolean esPublica() {
@@ -86,7 +78,9 @@ public class Receta {
 		return condimentos.stream().anyMatch(
 				condimento -> condimento.nombre() == "sal")
 				|| ingredientes.stream().anyMatch(
-						ingrediente -> ingrediente.nombre() == "caldo");
+						ingrediente -> ingrediente.nombre() == "caldo")
+				|| subrecetas.stream().anyMatch(
+						receta -> receta.tieneSalOCaldo());
 	}
 
 	public boolean tieneMasDe100GramosDeAzucar() {
@@ -99,7 +93,10 @@ public class Receta {
 		return ingredientes.stream()
 				.anyMatch(
 						ingrediente -> estosIngredientes.contains(ingrediente
-								.nombre()));
+								.nombre()))
+				|| subrecetas.stream().anyMatch(
+						receta -> receta
+								.tieneEstosIngredientes(estosIngredientes));
 	}
 
 	public List<Condicion> condicionesInadecuadas(
@@ -117,22 +114,20 @@ public class Receta {
 	public void agregarIngrediente(ComponenteDeReceta ingrediente) {
 		ingredientes.add(ingrediente);
 	}
-	
+
 	public void agregarCondimento(ComponenteDeReceta condimento) {
 		condimentos.add(condimento);
 	}
-	
-	public void modificarPreparacion(String nuevaPreparacion){
+
+	public void modificarPreparacion(String nuevaPreparacion) {
 		preparacion = nuevaPreparacion;
 	}
 
 	public Receta clonar(Usuario creador) {
-		
-		return new Receta(this.nombre, this.ingredientes,
-				this.condimentos, this.preparacion,
-				this.dificultad, this.temporada, creador,
-				this.subidaPorSistema, this.subrecetas);
+
+		return new Receta(this.nombre, this.ingredientes, this.condimentos,
+				this.calorias, this.preparacion, this.dificultad,
+				this.temporada, creador, this.subidaPorSistema, this.subrecetas);
 
 	}
 }
-

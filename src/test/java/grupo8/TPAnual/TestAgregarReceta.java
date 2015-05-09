@@ -33,7 +33,7 @@ public class TestAgregarReceta {
 		ingredientes.add(leche);
 		condimentos.add(azucar);
 		
-		arrozConLeche = new Receta("Arroz con leche", ingredientes, condimentos);
+		arrozConLeche = new Receta("Arroz con leche", ingredientes, condimentos,350.0);
 		
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),

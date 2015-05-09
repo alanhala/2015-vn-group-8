@@ -27,4 +27,6 @@ public class ComponenteDeReceta {
 	{
 		return calorias;
 	}
+
+
 }

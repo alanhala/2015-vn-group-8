@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Usuario {
 
+	private static List<Receta> recetasPublicas;
 	private Double peso;
 	private Double altura;
 	private String nombre;
