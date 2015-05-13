@@ -1,6 +1,10 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.UsuarioSinAlturaException;
+import grupo8.TPAnual.exceptions.UsuarioSinFechaDeNacimientoException;
+import grupo8.TPAnual.exceptions.UsuarioSinPesoException;
 import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
+import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -82,8 +86,57 @@ public class Usuario {
 	}
 
 	public boolean tieneCamposObligatorios() {
-		return (nombre != null && peso != null && altura != null
-				&& fechaDeNacimiento != null && rutina != null);
+		return (this.tieneNombre() && this.tienePeso() && this.tieneAltura()
+				&& this.tieneFechaDeNacimiento() && this.tieneRutina());
+	}
+	
+	public boolean tieneNombre() {	
+		if(nombre!=null)
+		{
+			return true;
+		}
+		
+		throw new UsuarioSinNombreException("El usuario debe tener nombre");
+	}
+	
+	public boolean tienePeso() {
+		
+		if(peso!=null)
+		{
+			return true;
+		}
+		
+		throw new UsuarioSinPesoException("El usuario debe tener un peso");
+	}
+	
+	public boolean tieneAltura() {
+		
+		if(altura!=null)
+		{
+			return true;
+		}
+		
+		throw new UsuarioSinAlturaException("El usuario debe tener una altura");
+	}
+	
+	public boolean tieneFechaDeNacimiento() {
+		
+		if(fechaDeNacimiento!=null)
+		{
+			return true;
+		}
+		
+		throw new UsuarioSinFechaDeNacimientoException("El usuario debe tener una fecha de nacimiento");
+	}
+	
+	public boolean tieneRutina() {
+		
+		if(rutina!=null)
+		{
+			return true;
+		}
+		
+		throw new NoTieneRutinaException("El usuario debe tener una rutina");
 	}
 
 	public boolean tieneNombreValido() {
