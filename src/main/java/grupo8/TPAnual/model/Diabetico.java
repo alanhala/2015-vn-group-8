@@ -1,6 +1,5 @@
 package grupo8.TPAnual.model;
 
-import grupo8.TPAnual.exceptions.DiabeticoInvalidoException;
 
 public class Diabetico implements Condicion {
 
@@ -11,8 +10,7 @@ public class Diabetico implements Condicion {
 		{
 			return true;
 		}
-		
-		throw new DiabeticoInvalidoException("El usuario debe tener sexo y/o preferencias alimenticias");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 
 	@Override

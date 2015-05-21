@@ -1,10 +1,6 @@
 package grupo8.TPAnual.model;
 
-import grupo8.TPAnual.exceptions.UsuarioSinAlturaException;
-import grupo8.TPAnual.exceptions.UsuarioSinFechaDeNacimientoException;
-import grupo8.TPAnual.exceptions.UsuarioSinPesoException;
 import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
-import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -96,7 +92,7 @@ public class Usuario {
 			return true;
 		}
 		
-		throw new UsuarioSinNombreException("El usuario debe tener nombre");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 	
 	public boolean tienePeso() {
@@ -106,7 +102,7 @@ public class Usuario {
 			return true;
 		}
 		
-		throw new UsuarioSinPesoException("El usuario debe tener un peso");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 	
 	public boolean tieneAltura() {
@@ -116,7 +112,7 @@ public class Usuario {
 			return true;
 		}
 		
-		throw new UsuarioSinAlturaException("El usuario debe tener una altura");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 	
 	public boolean tieneFechaDeNacimiento() {
@@ -126,7 +122,7 @@ public class Usuario {
 			return true;
 		}
 		
-		throw new UsuarioSinFechaDeNacimientoException("El usuario debe tener una fecha de nacimiento");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 	
 	public boolean tieneRutina() {
@@ -136,7 +132,7 @@ public class Usuario {
 			return true;
 		}
 		
-		throw new NoTieneRutinaException("El usuario debe tener una rutina");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 
 	public boolean tieneNombreValido() {

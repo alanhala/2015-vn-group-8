@@ -1,6 +1,5 @@
 package grupo8.TPAnual.model;
 
-import grupo8.TPAnual.exceptions.HipertensoInvalidoException;
 
 public class Hipertenso implements Condicion {
 
@@ -11,7 +10,7 @@ public class Hipertenso implements Condicion {
 			return true;
 		}
 		
-		throw new HipertensoInvalidoException("El usuario debe tener preferencias alimenticias");
+		else return false; //TODO ACA IRIA LA EXCEPCION
 	}
 
 	@Override

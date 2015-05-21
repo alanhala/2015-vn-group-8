@@ -2,6 +2,7 @@ package grupo8.TPAnual.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Receta {
 
@@ -86,7 +87,10 @@ public class Receta {
 	public boolean tieneMasDe100GramosDeAzucar() {
 		return condimentos.stream().anyMatch(
 				condimento -> (condimento.nombre() == "azucar" && condimento
-						.cantidad() > 100));
+						.cantidad() > 100))
+				|| subrecetas.stream().anyMatch(
+						receta -> receta.tieneMasDe100GramosDeAzucar());
+
 	}
 
 	public boolean tieneEstosIngredientes(List<String> estosIngredientes) {
@@ -101,8 +105,10 @@ public class Receta {
 
 	public List<Condicion> condicionesInadecuadas(
 			List<Condicion> condicionesPreexistentes) {
-		return (List<Condicion>) condicionesPreexistentes.stream().filter(
-				condicion -> condicion.esInadecuadaParaUnaReceta(this));
+		List<Condicion> condiciones = condicionesPreexistentes.stream().filter(
+condicion -> condicion.esInadecuadaParaUnaReceta(this))
+				.collect(Collectors.toList());
+		return condiciones;
 		// no entiendo por que tengo que poner el (List<Condicion>) para que
 		// funcione
 	}
@@ -128,6 +134,6 @@ public class Receta {
 		return new Receta(this.nombre, this.ingredientes, this.condimentos,
 				this.calorias, this.preparacion, this.dificultad,
 				this.temporada, creador, this.subidaPorSistema, this.subrecetas);
-
 	}
+
 }

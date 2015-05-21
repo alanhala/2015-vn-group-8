@@ -7,8 +7,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import grupo8.TPAnual.model.Celiaco;
 import grupo8.TPAnual.model.ComponenteDeReceta;
+import grupo8.TPAnual.model.Condicion;
+import grupo8.TPAnual.model.Diabetico;
+import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
+import grupo8.TPAnual.model.Vegano;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,19 +23,25 @@ public class TestReceta {
 	Receta recetaSinSubrecetas, recetaInvalida, recetaConSubreceta, caramelo,
 			caldoSalado;
 	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo;
+	Celiaco celiaco;
+	Diabetico diabetico;
+	Hipertenso hipertenso;
+	Vegano vegano;
+	
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> ingredientesDeCaramelo = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentosDeCaramelo = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> ingredientesDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentosDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
+	List<Condicion> condiciones = new ArrayList<Condicion>();
 
 	@Before
 	public void init() {
 
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
-		azucar = new ComponenteDeReceta("gramos de azucar", 10.0, 30.0);
+		azucar = new ComponenteDeReceta("azucar", 120.0, 130.0);
 		grasa = new ComponenteDeReceta("cucharadas de grasa", 300.0, 7500.0);
 		sal = new ComponenteDeReceta("sal", 10.0, 30.0);
 		caldo = new ComponenteDeReceta("caldo", 4.0, 50.0);
@@ -54,6 +65,8 @@ public class TestReceta {
 
 		recetaConSubreceta.agregarSubreceta(caramelo);
 		recetaConSubreceta.agregarSubreceta(caldoSalado);
+		
+		
 
 	}
 
@@ -104,5 +117,33 @@ public class TestReceta {
 	public void recetaSinSubrecetaNoTieneCaldo() {
 		assertFalse(recetaSinSubrecetas.tieneEstosIngredientes(Arrays
 				.asList("caldo")));
+	}
+	
+	@Test
+	public void recetaConSubrecetaTieneMasDe100GrDeAzucar() {
+		assertTrue(recetaConSubreceta.tieneMasDe100GramosDeAzucar());
+	}
+	
+	@Test
+	public void recetaSinSubrecetaTieneMasDe100GrDeAzucar() {
+		assertTrue(recetaSinSubrecetas.tieneMasDe100GramosDeAzucar());
+	}
+	
+	@Test
+	public void recetaSinSubrecetaTieneCondicioneInadecuadaDiabetico() {
+		celiaco = new Celiaco();
+		diabetico = new Diabetico();
+		hipertenso = new Hipertenso();
+		vegano = new Vegano();
+		
+		condiciones.add(celiaco);
+		condiciones.add(diabetico);
+		condiciones.add(hipertenso);
+		condiciones.add(vegano);
+		
+		assertTrue(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(diabetico));
+		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(celiaco));
+		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(hipertenso));
+		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(vegano));
 	}
 }
