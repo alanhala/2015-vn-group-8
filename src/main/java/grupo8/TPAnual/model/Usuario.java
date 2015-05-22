@@ -1,6 +1,13 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.FechaDeNacimientoDeUsuarioInvalidaException;
+import grupo8.TPAnual.exceptions.NombreDeUsuarioInvalidoException;
+import grupo8.TPAnual.exceptions.UsuarioSinAlturaException;
+import grupo8.TPAnual.exceptions.UsuarioSinFechaDeNacimientoException;
+import grupo8.TPAnual.exceptions.UsuarioSinPesoException;
 import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
+import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
+import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -55,10 +62,11 @@ public class Usuario {
 		return peso / Math.pow(altura, 2);
 	}
 
-	public boolean esValido() {
-		return (this.tieneCamposObligatorios() && this.tieneNombreValido()
-				&& this.fechaNacimientoValida() && this
-					.tieneCondicionesValidas());
+	public void esValido() {
+		this.tieneCamposObligatorios();
+		this.tieneNombreValido();
+		this.fechaNacimientoValida();
+		this.tieneCondicionesValidas();
 	}
 
 	public boolean sigueRutinaSaludable() {
@@ -81,71 +89,54 @@ public class Usuario {
 				condicion -> condicion.esValida(this));
 	}
 
-	public boolean tieneCamposObligatorios() {
-		return (this.tieneNombre() && this.tienePeso() && this.tieneAltura()
-				&& this.tieneFechaDeNacimiento() && this.tieneRutina());
+	public void tieneCamposObligatorios() {
+		this.tieneNombre();
+		this.tienePeso();
+		this.tieneAltura();
+		this.tieneFechaDeNacimiento();
+		this.tieneRutina();
 	}
 	
-	public boolean tieneNombre() {	
-		if(nombre!=null)
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+	public void tieneNombre() {	
+		if(nombre==null)
+			throw new UsuarioSinNombreException("El usuario debe tener nombre");
 	}
 	
-	public boolean tienePeso() {
-		
-		if(peso!=null)
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+	public void tienePeso() {		
+		if(peso==null)
+			throw new UsuarioSinPesoException("El usuario debe tener un peso");
 	}
 	
-	public boolean tieneAltura() {
+	public void tieneAltura() {
 		
-		if(altura!=null)
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+		if(altura==null)
+			throw new UsuarioSinAlturaException("El usuario debe tener una altura");
 	}
 	
-	public boolean tieneFechaDeNacimiento() {
-		
-		if(fechaDeNacimiento!=null)
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+	public void tieneFechaDeNacimiento() {		
+		if(fechaDeNacimiento==null)
+			throw new UsuarioSinFechaDeNacimientoException("El usuario debe tener una fecha de nacimiento");
+
 	}
 	
-	public boolean tieneRutina() {
-		
-		if(rutina!=null)
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+	public void tieneRutina() {		
+		if(rutina==null)
+			throw new UsuarioSinRutinaException("El usuario debe tener una rutina");
 	}
 
-	public boolean tieneNombreValido() {
-		return nombre.length() > 4;
+	public void tieneNombreValido() {
+		 if(nombre.length() <= 4)
+			throw new NombreDeUsuarioInvalidoException("El nombre del usuario debe tener 4 o mas caracteres");
 	}
 
-	public boolean fechaNacimientoValida() {
+	public void fechaNacimientoValida() {
 		LocalDate today = LocalDate.now();
-		return (fechaDeNacimiento.isBefore(today));
+		if (!fechaDeNacimiento.isBefore(today))
+			throw new FechaDeNacimientoDeUsuarioInvalidaException("La fecha de nacimiento del usuario debe ser anterior a la del dia de hoy");
 	}
 
 	public boolean tieneSexo() { // jaja
-		return sexo != null || !(sexo.isEmpty());
+		return(sexo != null || (!sexo.isEmpty()) );
 	}
 
 	public boolean tienePreferenciasAlimenticias() {
