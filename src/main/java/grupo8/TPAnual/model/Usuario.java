@@ -65,7 +65,7 @@ public class Usuario {
 	public void esValido() {
 		this.tieneCamposObligatorios();
 		this.tieneNombreValido();
-		this.fechaNacimientoValida();
+		this.tieneFechaNacimientoValida();
 		this.tieneCondicionesValidas();
 	}
 
@@ -129,7 +129,7 @@ public class Usuario {
 			throw new NombreDeUsuarioInvalidoException("El nombre del usuario debe tener 4 o mas caracteres");
 	}
 
-	public void fechaNacimientoValida() {
+	public void tieneFechaNacimientoValida() {
 		LocalDate today = LocalDate.now();
 		if (!fechaDeNacimiento.isBefore(today))
 			throw new FechaDeNacimientoDeUsuarioInvalidaException("La fecha de nacimiento del usuario debe ser anterior a la del dia de hoy");
