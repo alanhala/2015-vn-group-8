@@ -29,16 +29,16 @@ public class TestUsuario {
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
 				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				Arrays.asList(), Rutina.LEVE);
+				Arrays.asList(), Rutina.LEVE, Arrays.asList());
 
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
 				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), Arrays.asList(), Rutina.INTENSIVO);
+						hipertenso), Arrays.asList(), Rutina.INTENSIVO, Arrays.asList());
 
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE);
+				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
 	}
 	
 	@Test 

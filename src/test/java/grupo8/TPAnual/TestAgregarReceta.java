@@ -38,7 +38,7 @@ public class TestAgregarReceta {
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
 				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				recetas, Rutina.LEVE);
+				recetas, Rutina.LEVE, Arrays.asList());
 		
 	}
 	

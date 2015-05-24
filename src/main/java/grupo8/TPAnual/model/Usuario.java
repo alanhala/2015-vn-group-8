@@ -34,7 +34,7 @@ public class Usuario {
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
 			List<String> disgustosAlimenticios, List<Condicion> condiciones,
-			List<Receta> recetas, Rutina rutina) {
+			List<Receta> recetas, Rutina rutina, List<Grupo> grupos) {
 		super();
 		this.peso = peso;
 		this.altura = altura;
@@ -46,6 +46,7 @@ public class Usuario {
 		this.condiciones = condiciones;
 		this.recetas = recetas;
 		this.rutina = rutina;
+		this.grupos = grupos;
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -56,7 +57,6 @@ public class Usuario {
 		this.nombre = nombre;
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.rutina = rutina;
-
 	}
 
 	public double calcularIMC() {
@@ -117,7 +117,6 @@ public class Usuario {
 	public void tieneFechaDeNacimiento() {		
 		if(fechaDeNacimiento==null)
 			throw new UsuarioSinFechaDeNacimientoException("El usuario debe tener una fecha de nacimiento");
-
 	}
 	
 	public void tieneRutina() {		
@@ -189,6 +188,11 @@ public class Usuario {
 	public boolean compartisGrupoCon(Usuario usuario) {
 		return grupos.stream().anyMatch(
 				grupo -> grupo.perteneceAlGrupo(usuario));
+	}
+	
+	public void agregarAUnGrupo(Grupo grupo){
+		grupos.add(grupo);
+		grupo.agregarUsuario(this);
 	}
 	
 }

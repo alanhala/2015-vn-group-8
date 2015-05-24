@@ -17,8 +17,6 @@ public class Receta {
 	private Boolean subidaPorSistema;
 	private List<Receta> subrecetas;
 
-	// los warnings son porque esos atributos no se usaron aun
-
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias) {
 		this.nombre = nombre;

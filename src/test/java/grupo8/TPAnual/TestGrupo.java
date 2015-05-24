@@ -27,6 +27,7 @@ public class TestGrupo {
 	
 	List<Usuario> integrantes = new ArrayList<Usuario>();
 	List<Usuario> integrantesSinPepe = new ArrayList<Usuario>();
+	List<Grupo> grupos = new ArrayList<Grupo>();
 	
 	@Before
 	public void init(){
@@ -36,24 +37,25 @@ public class TestGrupo {
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
 				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				Arrays.asList(), Rutina.LEVE);
+				Arrays.asList(), Rutina.LEVE, grupos);
 
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
 				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), Arrays.asList(), Rutina.INTENSIVO);
+						hipertenso), Arrays.asList(), Rutina.INTENSIVO, grupos);
 
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE);
+				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, grupos);
 		
-		integrantes.add(juan);
-		integrantes.add(oscar);
 		grupoSinPepe = new Grupo("Pepi-no", integrantesSinPepe, Arrays.asList("chocolate", "dulceDeLeche"));
+		juan.agregarAUnGrupo(grupoSinPepe);
+		oscar.agregarAUnGrupo(grupoSinPepe);
 		
-		integrantes.add(pepe);
 		grupoJPO = new Grupo("JPO", integrantes, Arrays.asList("sopa", "pasta"));
-		
+		juan.agregarAUnGrupo(grupoJPO);
+		oscar.agregarAUnGrupo(grupoJPO);
+		pepe.agregarAUnGrupo(grupoJPO);	
 	}
 	
 	@Test
@@ -61,7 +63,20 @@ public class TestGrupo {
 		assertTrue(grupoJPO.perteneceAlGrupo(pepe));
 	}
 	
+	@Test
 	public void estaPepeEnElGrupoSinPepe(){
 		assertFalse(grupoSinPepe.perteneceAlGrupo(pepe));
 	}
+	
+	@Test
+	public void estaOscarEnAmbosGrupos(){
+		assertTrue(grupoJPO.perteneceAlGrupo(oscar));
+		assertTrue(grupoSinPepe.perteneceAlGrupo(oscar));
+	}
+	
+	@Test
+	public void compartePepeGrupoConOscar(){
+		assertTrue(pepe.compartisGrupoCon(oscar));
+	}
+	
 }
