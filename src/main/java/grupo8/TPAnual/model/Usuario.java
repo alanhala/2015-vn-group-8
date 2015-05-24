@@ -195,4 +195,24 @@ public class Usuario {
 		grupo.agregarUsuario(this);
 	}
 	
+	public boolean mePuedenSugerir(Receta unaReceta) {
+		return (unaReceta.noContieneDisgustosAlimenticiosDe(this) && unaReceta.esAdecuadaPara(this));
+	}
+
+	public List<String> getDisgustosAlimenticios() {
+		return disgustosAlimenticios;
+	}
+
+	public void setDisgustosAlimenticios(List<String> disgustosAlimenticios) {
+		this.disgustosAlimenticios = disgustosAlimenticios;
+	}
+
+	public List<Condicion> getCondiciones() {
+		return condiciones;
+	}
+
+	public void setCondiciones(List<Condicion> condiciones) {
+		this.condiciones = condiciones;
+	}
+	
 }

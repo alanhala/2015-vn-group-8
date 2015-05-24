@@ -134,4 +134,27 @@ condicion -> condicion.esInadecuadaParaUnaReceta(this))
 				this.temporada, creador, this.subidaPorSistema, this.subrecetas);
 	}
 
+	public List<ComponenteDeReceta> getIngredientes() {
+		return ingredientes;
+	}
+
+	public void setIngredientes(List<ComponenteDeReceta> ingredientes) {
+		this.ingredientes = ingredientes;
+	}
+	
+	public boolean noContieneDisgustosAlimenticiosDe(Usuario unUsuario) {
+		return !unUsuario.getDisgustosAlimenticios().stream().anyMatch(unDisgustoAlimenticio -> ingredientes.contains(unDisgustoAlimenticio));
+	}
+
+	//estaria bueno que este metodo funcione tanto para un usuario como para un grupo
+	//tal vez deberia hacer una interfaz para usuario/grupo y delegar el comportamiento en cada uno?
+	//luego dichos metodos que tienen el comportamiennto se llamarian desde aca
+	public boolean esAdecuadaPara(Usuario unUsuario) {
+		return !unUsuario.getCondiciones().stream().anyMatch(unaCondicion -> unaCondicion.esInadecuadaParaUnaReceta(this));
+	}
+	
+	public boolean contieneAlgunaPreferenciaAlimenticiaDe(Grupo unGrupo) {
+		return unGrupo.getPreferenciasAlimenticias().stream().anyMatch(unaPreferenciaAlimenticia -> ingredientes.contains(unaPreferenciaAlimenticia));
+	}
+
 }
