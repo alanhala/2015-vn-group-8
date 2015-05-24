@@ -17,11 +17,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestUsuario {
-	private Usuario juan, oscar, pepe;
-	private Hipertenso hipertenso;
-	private Vegano vegano;
-	private Receta unaReceta;
-	private ComponenteDeReceta fideos, manteca;
+	Usuario juan, oscar, pepe;
+	Hipertenso hipertenso;
+	Vegano vegano;
 
 	@Before
 	public void init() {
@@ -64,7 +62,7 @@ public class TestUsuario {
 	}
 	
 	@Test
-	public void juanTieneSexo() {
+	public void juanTieneSexo() { // XD
 		assertTrue(juan.tieneSexo());
 	}
 	

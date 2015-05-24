@@ -65,8 +65,6 @@ public class TestReceta {
 
 		recetaConSubreceta.agregarSubreceta(caramelo);
 		recetaConSubreceta.agregarSubreceta(caldoSalado);
-		
-		
 
 	}
 
@@ -130,7 +128,7 @@ public class TestReceta {
 	}
 	
 	@Test
-	public void recetaSinSubrecetaTieneCondicioneInadecuadaDiabetico() {
+	public void recetaSinSubrecetasTieneCondicionesInadecuadas() {
 		celiaco = new Celiaco();
 		diabetico = new Diabetico();
 		hipertenso = new Hipertenso();

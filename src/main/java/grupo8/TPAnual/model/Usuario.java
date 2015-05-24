@@ -25,6 +25,7 @@ public class Usuario {
 	private List<Condicion> condiciones;
 	private List<Receta> recetas;
 	private Rutina rutina;
+	private List<Grupo> grupos;
 
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
@@ -181,9 +182,13 @@ public class Usuario {
 		return recetas.contains(unaReceta);
 	}
 	
-	public void modificarRecetaPublica(Receta unaReceta)
-	{
+	public void modificarRecetaPublica(Receta unaReceta){
 			this.recetas.add(unaReceta.clonar(this));
+	}
+
+	public boolean compartisGrupoCon(Usuario usuario) {
+		return grupos.stream().anyMatch(
+				grupo -> grupo.perteneceAlGrupo(usuario));
 	}
 	
 }

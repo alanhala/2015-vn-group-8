@@ -68,7 +68,7 @@ public class Receta {
 	}
 
 	public boolean puedeSerVistaPor(Usuario usuario) {
-		return (esPublica()) || usuario == creador;
+		return (esPublica()) || usuario == creador || usuario.compartisGrupoCon(creador);
 	}
 
 	public boolean puedeSerModificadaPor(Usuario usuario) {
