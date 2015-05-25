@@ -1,5 +1,8 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
+import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -43,21 +46,28 @@ public class Receta {
 
 	}
 
-	public boolean esValida() {
-		return (this.tieneAlMenosUnIngrediente() && this.tieneCaloriasEntre(10,
-				5000));
+	public void esValida() {
+		this.tieneAlMenosUnIngrediente();
+		this.tieneCaloriasEntre(10, 5000);
 	}
 
-	public boolean tieneAlMenosUnIngrediente() {
-		return ingredientes.size() >= 1;
+	public void tieneAlMenosUnIngrediente() {
+		if (!(ingredientes.size() >= 1))
+			throw new RecetaSinIngredientesException(
+					"La receta no tiene ingredientes");
 	}
 
-	public boolean tieneCaloriasEntre(int limiteInferiorDelRango,
+	public void tieneCaloriasEntre(int limiteInferiorDelRango,
 			int limiteSuperiorDelRango) {
-		return ((limiteInferiorDelRango < this.calorias()) && (this.calorias() < limiteSuperiorDelRango));
+		if (!(limiteInferiorDelRango < this.calorias())
+				&& (this.calorias() < limiteSuperiorDelRango))
+			throw new RecetaConCaloriasFueraDelRangoException(
+					"Las calorias deben estar entre los valores "
+							+ limiteInferiorDelRango + "y"
+							+ limiteSuperiorDelRango);
 	}
 
-	private double calorias() {
+	private Double calorias() {
 		return calorias;
 	}
 
@@ -66,7 +76,8 @@ public class Receta {
 	}
 
 	public boolean puedeSerVistaPor(Usuario usuario) {
-		return (esPublica()) || usuario == creador || usuario.compartisGrupoCon(creador);
+		return (esPublica()) || usuario == creador
+				|| usuario.compartisGrupoCon(creador);
 	}
 
 	public boolean puedeSerModificadaPor(Usuario usuario) {
@@ -103,8 +114,8 @@ public class Receta {
 
 	public List<Condicion> condicionesInadecuadas(
 			List<Condicion> condicionesPreexistentes) {
-		List<Condicion> condiciones = condicionesPreexistentes.stream().filter(
-condicion -> condicion.esInadecuadaParaUnaReceta(this))
+		List<Condicion> condiciones = condicionesPreexistentes.stream()
+				.filter(condicion -> condicion.esInadecuadaParaUnaReceta(this))
 				.collect(Collectors.toList());
 		return condiciones;
 		// no entiendo por que tengo que poner el (List<Condicion>) para que
@@ -141,17 +152,27 @@ condicion -> condicion.esInadecuadaParaUnaReceta(this))
 	public void setIngredientes(List<ComponenteDeReceta> ingredientes) {
 		this.ingredientes = ingredientes;
 	}
-	
+
 	public boolean noContieneDisgustosAlimenticiosDe(Usuario unUsuario) {
-		return !unUsuario.getDisgustosAlimenticios().stream().anyMatch(unDisgustoAlimenticio -> ingredientes.contains(unDisgustoAlimenticio));
+		return !unUsuario
+				.getDisgustosAlimenticios()
+				.stream()
+				.anyMatch(
+						unDisgustoAlimenticio -> ingredientes
+								.contains(unDisgustoAlimenticio));
 	}
 
 	public boolean esAdecuadaPara(EnteAlQueSeLePuedeSugerirUnaReceta unEnte) {
 		return unEnte.tieneCondicionesAdecuadasPara(this);
 	}
-	
+
 	public boolean contieneAlgunaPreferenciaAlimenticiaDe(Grupo unGrupo) {
-		return unGrupo.getPreferenciasAlimenticias().stream().anyMatch(unaPreferenciaAlimenticia -> ingredientes.contains(unaPreferenciaAlimenticia));
+		return unGrupo
+				.getPreferenciasAlimenticias()
+				.stream()
+				.anyMatch(
+						unaPreferenciaAlimenticia -> ingredientes
+								.contains(unaPreferenciaAlimenticia));
 	}
 
 }

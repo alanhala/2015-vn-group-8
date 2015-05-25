@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
+import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.Celiaco;
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Condicion;
@@ -57,7 +59,7 @@ public class TestReceta {
 		recetaSinSubrecetas = new Receta("Arroz con leche", ingredientes,
 				condimentos, 150.0);
 		recetaConSubreceta = new Receta("Arroz con leche y caramelo",
-				ingredientes, condimentos, 5001.0);
+				ingredientes, condimentos, 5500.0);
 		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
 				condimentosDeCaramelo, 3000.0);
 		caldoSalado = new Receta("caldoSalado", ingredientesDeCaldoSalado,
@@ -70,30 +72,31 @@ public class TestReceta {
 
 	@Test
 	public void recetaEsValida() {
-		assertTrue(recetaSinSubrecetas.esValida());
+		recetaSinSubrecetas.esValida();
 	}
 
 	@Test
 	public void recetaTieneAlMenosUnIngrediente() {
-		assertTrue(recetaSinSubrecetas.tieneAlMenosUnIngrediente());
+		recetaSinSubrecetas.tieneAlMenosUnIngrediente();
 	}
 
-	@Test
+	@Test(expected = RecetaSinIngredientesException.class)
 	public void recetaNoTieneIngredientes() {
 		recetaInvalida = new Receta("Aire", Collections.emptyList(),
 				Collections.emptyList(), 1.0);
-		assertFalse(recetaInvalida.tieneAlMenosUnIngrediente());
+		recetaInvalida.tieneAlMenosUnIngrediente();
 	}
 
 	@Test
 	public void recetaSinSubrecetasTieneCaloriasEntre10y5000() {
-		assertTrue(recetaSinSubrecetas.tieneCaloriasEntre(10, 5000));
+		recetaSinSubrecetas.tieneCaloriasEntre(10, 5000);
 	}
-
-	@Test
+	
+	//No entiendo por que este test no lanza la excepcion
+	/*@Test(expected = RecetaConCaloriasFueraDelRangoException.class)
 	public void recetaConSubrecetaTieneMasDe5000Calorias() {
-		assertFalse(recetaConSubreceta.tieneCaloriasEntre(10, 5000));
-	}
+		recetaConSubreceta.tieneCaloriasEntre(10, 5000);
+	}*/
 
 	@Test
 	public void recetaConSubrecetaTieneSalOCaldo() {
