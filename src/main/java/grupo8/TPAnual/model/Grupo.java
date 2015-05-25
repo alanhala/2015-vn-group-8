@@ -2,7 +2,7 @@ package grupo8.TPAnual.model;
 
 import java.util.List;
 
-public class Grupo {
+public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta{
 
 	private String nombre;
 	private List<Usuario> integrantes;
@@ -24,11 +24,7 @@ public class Grupo {
 	}
 
 	public boolean mePuedenSugerir(Receta unaReceta) {
-		return (unaReceta.contieneAlgunaPreferenciaAlimenticiaDe(this) && integrantes
-				.stream().allMatch(
-						unIntegrante -> unaReceta.esAdecuadaPara(unIntegrante))); 
-						//donde delegar la segunda condicion?
-						//leer comentario de esAdecuadaPara en Receta
+		return (unaReceta.contieneAlgunaPreferenciaAlimenticiaDe(this) && unaReceta.esAdecuadaPara(this));
 	}
 
 	public List<String> getPreferenciasAlimenticias() {
@@ -38,6 +34,10 @@ public class Grupo {
 	public void setPreferenciasAlimenticias(
 			List<String> preferenciasAlimenticias) {
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
+	}
+
+	public boolean tieneCondicionesAdecuadasPara(Receta unaReceta) {
+		return integrantes.stream().allMatch(unIntegrante -> unaReceta.esAdecuadaPara(unIntegrante));
 	}
 
 }

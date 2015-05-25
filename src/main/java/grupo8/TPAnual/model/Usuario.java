@@ -12,7 +12,7 @@ import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 import java.time.LocalDate;
 import java.util.List;
 
-public class Usuario {
+public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
 	private static List<Receta> recetasPublicas;
 	private Double peso;
@@ -213,6 +213,10 @@ public class Usuario {
 
 	public void setCondiciones(List<Condicion> condiciones) {
 		this.condiciones = condiciones;
+	}
+	
+	public boolean tieneCondicionesAdecuadasPara(Receta unaReceta) {
+		return !condiciones.stream().anyMatch(unaCondicion -> unaCondicion.esInadecuadaParaUnaReceta(unaReceta));
 	}
 	
 }
