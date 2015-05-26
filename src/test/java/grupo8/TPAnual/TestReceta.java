@@ -76,6 +76,8 @@ public class TestReceta {
 		
 		//Inicializacion de usuarios
 		
+		hipertenso = new Hipertenso();
+		
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
 				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
@@ -104,11 +106,10 @@ public class TestReceta {
 		recetaSinSubrecetas.tieneCaloriasEntre(10, 5000);
 	}
 	
-	//No entiendo por que este test no lanza la excepcion
-	/*@Test(expected = RecetaConCaloriasFueraDelRangoException.class)
+	@Test(expected = RecetaConCaloriasFueraDelRangoException.class)
 	public void recetaConSubrecetaTieneMasDe5000Calorias() {
 		recetaConSubreceta.tieneCaloriasEntre(10, 5000);
-	}*/
+	}
 
 	@Test
 	public void recetaConSubrecetaTieneSalOCaldo() {
@@ -160,9 +161,8 @@ public class TestReceta {
 		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(vegano));
 	}
 	
-	//Chequear por que falla
-	/*@Test
+	@Test
 	public void carameloCumpleCondicionesParaPepe() {
 		assertTrue(caramelo.cumpleCondicionesPara(pepe));
-	}*/
+	}
 }

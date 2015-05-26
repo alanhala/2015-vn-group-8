@@ -60,8 +60,8 @@ public class Receta {
 
 	public void tieneCaloriasEntre(int limiteInferiorDelRango,
 			int limiteSuperiorDelRango) {
-		if (!(limiteInferiorDelRango < this.calorias())
-				&& (this.calorias() < limiteSuperiorDelRango))
+		if (!((limiteInferiorDelRango < this.calorias())
+				&& (this.calorias() < limiteSuperiorDelRango)))
 			throw new RecetaConCaloriasFueraDelRangoException(
 					"Las calorias deben estar entre los valores "
 							+ limiteInferiorDelRango + "y"

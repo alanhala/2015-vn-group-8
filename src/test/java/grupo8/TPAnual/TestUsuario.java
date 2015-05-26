@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import grupo8.TPAnual.exceptions.VeganoInvalidoException;
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
@@ -124,8 +125,8 @@ public class TestUsuario {
 		assertTrue(pepe.seLePuedeSugerir(carneAlHornoConPapas));
 	}
 	
-	@Test(expected = Exception.class)
-	public void oscarEsVeganoInvalidoPorComerAnimales() {
+	@Test(expected = VeganoInvalidoException.class)
+	public void oscarEsVeganoInvalidoPorComerCarneYPollo() {
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("carne", "pollo"), Arrays.asList(
 				"queso", "pescado"), Arrays.asList(vegano), Arrays.asList(),
