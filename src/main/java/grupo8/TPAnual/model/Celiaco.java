@@ -3,8 +3,8 @@ package grupo8.TPAnual.model;
 public class Celiaco implements Condicion {
 
 	@Override
-	public boolean esValida(Usuario usuario) {
-		return true;
+	public void esValida(Usuario usuario) {
+		//No hace nada, el celiaco es siempre valido.
 	}
 
 	@Override

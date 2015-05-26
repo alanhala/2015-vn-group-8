@@ -2,6 +2,7 @@ package grupo8.TPAnual;
 
 import static org.junit.Assert.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -15,7 +16,9 @@ import grupo8.TPAnual.model.Condicion;
 import grupo8.TPAnual.model.Diabetico;
 import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
+import grupo8.TPAnual.model.Usuario;
 import grupo8.TPAnual.model.Vegano;
+import grupo8.TPAnual.model.Usuario.Rutina;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +32,7 @@ public class TestReceta {
 	Diabetico diabetico;
 	Hipertenso hipertenso;
 	Vegano vegano;
+	Usuario pepe;
 	
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
@@ -40,6 +44,8 @@ public class TestReceta {
 
 	@Before
 	public void init() {
+		
+		//Inicializacion de recetas
 
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -67,6 +73,12 @@ public class TestReceta {
 
 		recetaConSubreceta.agregarSubreceta(caramelo);
 		recetaConSubreceta.agregarSubreceta(caldoSalado);
+		
+		//Inicializacion de usuarios
+		
+		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
+				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
+				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
 
 	}
 
@@ -147,4 +159,10 @@ public class TestReceta {
 		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(hipertenso));
 		assertFalse(recetaSinSubrecetas.condicionesInadecuadas(condiciones).contains(vegano));
 	}
+	
+	//Chequear por que falla
+	/*@Test
+	public void carameloCumpleCondicionesParaPepe() {
+		assertTrue(caramelo.cumpleCondicionesPara(pepe));
+	}*/
 }

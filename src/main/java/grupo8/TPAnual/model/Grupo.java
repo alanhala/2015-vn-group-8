@@ -36,7 +36,8 @@ public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	public boolean leGusta(Receta unaReceta) {
 		return unaReceta.tieneEstosIngredientes(this.getPreferenciasAlimenticias());
 	}
-
+	
+	//Este no deberia ir en receta? (falta testearlo)
 	public boolean laRecetaEsApropiada(Receta unaReceta) {
 		return this.getIntegrantes().stream().allMatch(
 				unIntegrante -> unaReceta.cumpleCondicionesPara(unIntegrante));

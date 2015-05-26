@@ -4,7 +4,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Hipertenso;
@@ -20,9 +22,16 @@ public class TestUsuario {
 	Usuario juan, oscar, pepe;
 	Hipertenso hipertenso;
 	Vegano vegano;
+	Receta carneAlHornoConPapas;
+	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
+	ComponenteDeReceta colitaDeCuadril, papa;
 
 	@Before
 	public void init() {
+		
+		//Inicializacion de usuarios
+		
 		hipertenso = new Hipertenso();
 		vegano = new Vegano();
 		
@@ -39,6 +48,15 @@ public class TestUsuario {
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
 				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
+		
+		//Inicializacion de recetas
+		
+		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
+		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
+		ingredientes.add(colitaDeCuadril);
+		ingredientes.add(papa);
+		
+		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes, condimentos, 1350.0);
 	}
 	
 	@Test 
@@ -96,17 +114,24 @@ public class TestUsuario {
 		assertFalse(pepe.sigueRutinaSaludable());
 	}
 	
+	@Test
+	public void aJuanNoLeDisgustaLaCarneAlHornoConPapas() {
+		assertFalse(juan.leDisgusta(carneAlHornoConPapas));
+	}
 	
-	/* Esperando a que nos diga nico el tema de si tenemos que tirar excepcion cuando una condicion es invalida
-	 * para un usuario o directamente podemos usar booleanos (de eso depende como este programdo el test).
-	 */
+	@Test
+	public void aPepeSeLePuedeSugerirLaCarneAlHornoConPapas() {
+		assertTrue(pepe.seLePuedeSugerir(carneAlHornoConPapas));
+	}
 	
-	/*@Test(expected = Exception.class)
-	public void creacionDeOscarTiraExcepcion() {
+	@Test(expected = Exception.class)
+	public void oscarEsVeganoInvalidoPorComerAnimales() {
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("carne", "pollo"), Arrays.asList(
 				"queso", "pescado"), Arrays.asList(vegano), Arrays.asList(),
-				Rutina.LEVE);
-	}*/
+				Rutina.LEVE, null);
+		
+		oscar.esValido();
+	}
 
 }

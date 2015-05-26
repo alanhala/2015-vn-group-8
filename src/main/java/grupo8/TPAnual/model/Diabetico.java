@@ -1,16 +1,16 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.DiabeticoInvalidoException;
+
 
 public class Diabetico implements Condicion {
 
 	@Override
-	public boolean esValida(Usuario usuario) {
+	public void esValida(Usuario usuario) {
 		
-		if(usuario.tieneSexo() || usuario.tienePreferenciasAlimenticias())
-		{
-			return true;
-		}
-		else return false; //TODO ACA IRIA LA EXCEPCION
+		if(!(usuario.tieneSexo() || usuario.tienePreferenciasAlimenticias()))
+			throw new DiabeticoInvalidoException("El usuario debe tener sexo o preferencias alimenticias para ser un diabetico valido");
+		
 	}
 
 	@Override

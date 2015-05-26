@@ -1,16 +1,14 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.HipertensoInvalidoException;
+
 
 public class Hipertenso implements Condicion {
 
 	@Override
-	public boolean esValida(Usuario usuario) {
-		if(usuario.tienePreferenciasAlimenticias())
-		{
-			return true;
-		}
-		
-		else return false; //TODO ACA IRIA LA EXCEPCION
+	public void esValida(Usuario usuario) {
+		if(!usuario.tienePreferenciasAlimenticias())
+			throw new HipertensoInvalidoException("El usuario debe tener preferencias alimenticias para ser un hipertenso valido");
 	}
 
 	@Override

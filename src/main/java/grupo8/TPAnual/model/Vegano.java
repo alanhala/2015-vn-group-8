@@ -1,5 +1,7 @@
 package grupo8.TPAnual.model;
 
+import grupo8.TPAnual.exceptions.VeganoInvalidoException;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +11,11 @@ public class Vegano implements Condicion {
 			"pollo", "carne", "chivito", "chori");
 
 	@Override
-	public boolean esValida(Usuario usuario) {
+	public void esValida(Usuario usuario) {
 
-		return !(usuario.tienePreferenciasProhibidas(preferenciasProhibidas));
+		if (usuario.tienePreferenciasProhibidas(preferenciasProhibidas))
+			throw new VeganoInvalidoException(
+					"El usuario no debe tener pollo, carne, chivito o chori entre sus preferencias alimenticias para ser un vegano valido");
 	}
 
 	@Override
@@ -20,7 +24,7 @@ public class Vegano implements Condicion {
 		return usuario.leGusta("frutas");
 	}
 
-	public boolean esInadecuadaParaUnaReceta(Receta receta){
+	public boolean esInadecuadaParaUnaReceta(Receta receta) {
 		return receta.tieneEstosIngredientes(preferenciasProhibidas);
 	}
 }

@@ -7,8 +7,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Grupo;
 import grupo8.TPAnual.model.Hipertenso;
+import grupo8.TPAnual.model.Receta;
 import grupo8.TPAnual.model.Usuario;
 import grupo8.TPAnual.model.Vegano;
 import grupo8.TPAnual.model.Usuario.Rutina;
@@ -23,7 +25,11 @@ public class TestGrupo {
 	Vegano vegano;
 	Grupo grupoJPO;
 	Grupo grupoSinPepe;
-
+	Receta flanConDulceDeLeche;
+	ComponenteDeReceta flan, dulceDeLeche, caramelo;
+	
+	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	
 	List<Usuario> integrantes = new ArrayList<Usuario>();
 	List<Usuario> integrantesSinPepe = new ArrayList<Usuario>();
@@ -56,6 +62,18 @@ public class TestGrupo {
 		juan.agregarAUnGrupo(grupoJPO);
 		oscar.agregarAUnGrupo(grupoJPO);
 		pepe.agregarAUnGrupo(grupoJPO);	
+		
+		//Inicializacion de recetas
+		
+		dulceDeLeche = new ComponenteDeReceta("dulceDeLeche", 100.0, 500.0);
+		flan = new ComponenteDeReceta("flan", 400.0, 800.0);
+		caramelo = new ComponenteDeReceta("caramelo", 50.0, 420.0);
+		
+		ingredientes.add(dulceDeLeche);
+		ingredientes.add(flan);
+		condimentos.add(caramelo);
+		
+		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes, condimentos, 1720.0);
 	}
 	
 	@Test
@@ -77,6 +95,11 @@ public class TestGrupo {
 	@Test
 	public void compartePepeGrupoConOscar(){
 		assertTrue(pepe.compartisGrupoCon(oscar));
+	}
+	
+	@Test
+	public void alGrupoSinPepeLeGustaElFlanConDulceDeLeche() {
+		assertTrue(grupoSinPepe.leGusta(flanConDulceDeLeche));
 	}
 	
 }

@@ -99,9 +99,8 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 				&& this.calcularIMC() <= limiteSuperior;
 	}
 
-	public boolean tieneCondicionesValidas() {
-		return condiciones.stream().allMatch(
-				condicion -> condicion.esValida(this));
+	public void tieneCondicionesValidas() {
+		condiciones.forEach(condicion -> condicion.esValida(this));
 	}
 
 	public void tieneCamposObligatorios() {
