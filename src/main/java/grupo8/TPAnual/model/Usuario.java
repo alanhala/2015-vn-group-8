@@ -10,11 +10,13 @@ import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
 import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
-	private static List<Receta> recetasPublicas;
+	private static List<Receta> recetasPublicas = new ArrayList<Receta>();
 	private Double peso;
 	private Double altura;
 	private String nombre;
@@ -31,11 +33,18 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
 	}
 
+	public static void agregarRecetaPublica (Receta unaReceta) {
+		recetasPublicas.add(unaReceta);
+	}
+	
+	public static boolean esRecetaPublica (Receta unaReceta) {
+		return recetasPublicas.contains(unaReceta);
+	}
+	
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
 			List<String> disgustosAlimenticios, List<Condicion> condiciones,
 			List<Receta> recetas, Rutina rutina, List<Grupo> grupos) {
-		super();
 		this.peso = peso;
 		this.altura = altura;
 		this.nombre = nombre;
@@ -51,12 +60,17 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
 	public Usuario(Double peso, Double altura, String nombre,
 			LocalDate fechaDeNacimiento, Rutina rutina) {
-		super();
 		this.peso = peso;
 		this.altura = altura;
 		this.nombre = nombre;
 		this.fechaDeNacimiento = fechaDeNacimiento;
 		this.rutina = rutina;
+		this.preferenciasAlimenticias = new ArrayList<String>();
+		this.disgustosAlimenticios = new ArrayList<String>();
+		this.condiciones = new ArrayList<Condicion>();
+		this.recetas = new ArrayList<Receta>();
+		this.grupos = new ArrayList<Grupo>();
+		
 	}
 
 	public double calcularIMC() {
@@ -195,28 +209,23 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 		grupo.agregarUsuario(this);
 	}
 	
-	public boolean mePuedenSugerir(Receta unaReceta) {
-		return (unaReceta.noContieneDisgustosAlimenticiosDe(this) && unaReceta.esAdecuadaPara(this));
-	}
 
 	public List<String> getDisgustosAlimenticios() {
-		return disgustosAlimenticios;
-	}
-
-	public void setDisgustosAlimenticios(List<String> disgustosAlimenticios) {
-		this.disgustosAlimenticios = disgustosAlimenticios;
+		return Collections.unmodifiableList(disgustosAlimenticios);
 	}
 
 	public List<Condicion> getCondiciones() {
-		return condiciones;
+		return Collections.unmodifiableList(condiciones);
 	}
 
-	public void setCondiciones(List<Condicion> condiciones) {
-		this.condiciones = condiciones;
+	public boolean leDisgusta(Receta unaReceta) {
+		return unaReceta.tieneEstosIngredientes(this.getDisgustosAlimenticios());
 	}
 	
-	public boolean tieneCondicionesAdecuadasPara(Receta unaReceta) {
-		return !condiciones.stream().anyMatch(unaCondicion -> unaCondicion.esInadecuadaParaUnaReceta(unaReceta));
+	@Override
+	public boolean seLePuedeSugerir(Receta unaReceta) {
+		return !this.leDisgusta(unaReceta) && unaReceta.cumpleCondicionesPara(this);
 	}
+
 	
 }

@@ -1,8 +1,9 @@
 package grupo8.TPAnual.model;
 
+import java.util.Collections;
 import java.util.List;
 
-public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta{
+public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
 	private String nombre;
 	private List<Usuario> integrantes;
@@ -15,6 +16,14 @@ public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta{
 		this.preferenciasAlimenticias = preferenciasAlimenticias;
 	}
 
+	public List<String> getPreferenciasAlimenticias() {
+		return Collections.unmodifiableList(preferenciasAlimenticias);
+	}
+	
+	public List<Usuario> getIntegrantes() {
+		return Collections.unmodifiableList(integrantes);
+	}
+
 	public boolean perteneceAlGrupo(Usuario usuario) {
 		return integrantes.contains(usuario);
 	}
@@ -23,21 +32,19 @@ public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta{
 		integrantes.add(usuario);
 	}
 
-	public boolean mePuedenSugerir(Receta unaReceta) {
-		return (unaReceta.contieneAlgunaPreferenciaAlimenticiaDe(this) && unaReceta.esAdecuadaPara(this));
+
+	public boolean leGusta(Receta unaReceta) {
+		return unaReceta.tieneEstosIngredientes(this.getPreferenciasAlimenticias());
 	}
 
-	public List<String> getPreferenciasAlimenticias() {
-		return preferenciasAlimenticias;
+	public boolean laRecetaEsApropiada(Receta unaReceta) {
+		return this.getIntegrantes().stream().allMatch(
+				unIntegrante -> unaReceta.cumpleCondicionesPara(unIntegrante));
 	}
 
-	public void setPreferenciasAlimenticias(
-			List<String> preferenciasAlimenticias) {
-		this.preferenciasAlimenticias = preferenciasAlimenticias;
-	}
-
-	public boolean tieneCondicionesAdecuadasPara(Receta unaReceta) {
-		return integrantes.stream().allMatch(unIntegrante -> unaReceta.esAdecuadaPara(unIntegrante));
+	@Override
+	public boolean seLePuedeSugerir(Receta unaReceta) {
+		return this.leGusta(unaReceta) && this.laRecetaEsApropiada(unaReceta);
 	}
 
 }

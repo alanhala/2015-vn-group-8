@@ -4,6 +4,7 @@ import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -72,11 +73,11 @@ public class Receta {
 	}
 
 	public boolean esPublica() {
-		return subidaPorSistema;
+		return Usuario.esRecetaPublica(this);
 	}
 
 	public boolean puedeSerVistaPor(Usuario usuario) {
-		return (esPublica()) || usuario == creador
+		return this.esPublica() || usuario == creador
 				|| usuario.compartisGrupoCon(creador);
 	}
 
@@ -118,8 +119,6 @@ public class Receta {
 				.filter(condicion -> condicion.esInadecuadaParaUnaReceta(this))
 				.collect(Collectors.toList());
 		return condiciones;
-		// no entiendo por que tengo que poner el (List<Condicion>) para que
-		// funcione
 	}
 
 	public void agregarSubreceta(Receta receta) {
@@ -146,33 +145,12 @@ public class Receta {
 	}
 
 	public List<ComponenteDeReceta> getIngredientes() {
-		return ingredientes;
+		return Collections.unmodifiableList(ingredientes);
 	}
 
-	public void setIngredientes(List<ComponenteDeReceta> ingredientes) {
-		this.ingredientes = ingredientes;
-	}
 
-	public boolean noContieneDisgustosAlimenticiosDe(Usuario unUsuario) {
-		return !unUsuario
-				.getDisgustosAlimenticios()
-				.stream()
-				.anyMatch(
-						unDisgustoAlimenticio -> ingredientes
-								.contains(unDisgustoAlimenticio));
-	}
-
-	public boolean esAdecuadaPara(EnteAlQueSeLePuedeSugerirUnaReceta unEnte) {
-		return unEnte.tieneCondicionesAdecuadasPara(this);
-	}
-
-	public boolean contieneAlgunaPreferenciaAlimenticiaDe(Grupo unGrupo) {
-		return unGrupo
-				.getPreferenciasAlimenticias()
-				.stream()
-				.anyMatch(
-						unaPreferenciaAlimenticia -> ingredientes
-								.contains(unaPreferenciaAlimenticia));
+	public boolean cumpleCondicionesPara(Usuario usuario) {
+		return this.condicionesInadecuadas(usuario.getCondiciones()).isEmpty();
 	}
 
 }
