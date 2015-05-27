@@ -76,13 +76,9 @@ public class Receta {
 		return Usuario.esRecetaPublica(this);
 	}
 
-	public boolean puedeSerVistaPor(Usuario usuario) {
+	public boolean puedeSerVistaOModificadaPor(Usuario usuario) {
 		return this.esPublica() || usuario == creador
 				|| usuario.compartisGrupoCon(creador);
-	}
-
-	public boolean puedeSerModificadaPor(Usuario usuario) {
-		return puedeSerVistaPor(usuario);
 	}
 
 	public boolean tieneSalOCaldo() {

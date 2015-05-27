@@ -182,13 +182,10 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 		recetas.add(receta);
 	}
 
-	public boolean puedeVer(Receta receta) {
-		return receta.puedeSerVistaPor(this);
+	public boolean puedeVerOModificar(Receta receta) {
+		return receta.puedeSerVistaOModificadaPor(this);
 	}
 	
-	public boolean puedeModificar(Receta receta){
-		return receta.puedeSerModificadaPor(this);
-	}
 	
 	public boolean tenesUnaReceta(Receta unaReceta){
 		return recetas.contains(unaReceta);
