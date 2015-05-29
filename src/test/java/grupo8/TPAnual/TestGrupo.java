@@ -25,11 +25,13 @@ public class TestGrupo {
 	Vegano vegano;
 	Grupo grupoJPO;
 	Grupo grupoSinPepe;
-	Receta flanConDulceDeLeche;
-	ComponenteDeReceta flan, dulceDeLeche, caramelo;
+	Receta flanConDulceDeLeche, carneAlHornoConPapas;
+	ComponenteDeReceta flan, dulceDeLeche, caramelo, colitaDeCuadril, papa;
 	
-	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> ingredientes1 = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> condimentos1 = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> ingredientes2 = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> condimentos2 = new ArrayList<ComponenteDeReceta>();
 	
 	List<Usuario> integrantes = new ArrayList<Usuario>();
 	List<Usuario> integrantesSinPepe = new ArrayList<Usuario>();
@@ -58,7 +60,7 @@ public class TestGrupo {
 		juan.agregarAUnGrupo(grupoSinPepe);
 		oscar.agregarAUnGrupo(grupoSinPepe);
 		
-		grupoJPO = new Grupo("JPO", integrantes, Arrays.asList("sopa", "pasta"));
+		grupoJPO = new Grupo("JPO", integrantes, Arrays.asList("sopa", "pasta", "Papa", "Colita de cuadril"));
 		juan.agregarAUnGrupo(grupoJPO);
 		oscar.agregarAUnGrupo(grupoJPO);
 		pepe.agregarAUnGrupo(grupoJPO);	
@@ -69,11 +71,18 @@ public class TestGrupo {
 		flan = new ComponenteDeReceta("flan", 400.0, 800.0);
 		caramelo = new ComponenteDeReceta("caramelo", 50.0, 420.0);
 		
-		ingredientes.add(dulceDeLeche);
-		ingredientes.add(flan);
-		condimentos.add(caramelo);
+		ingredientes1.add(dulceDeLeche);
+		ingredientes1.add(flan);
+		condimentos1.add(caramelo);
 		
-		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes, condimentos, 1720.0);
+		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0);
+		
+		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
+		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
+		ingredientes2.add(colitaDeCuadril);
+		ingredientes2.add(papa);
+				
+		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0);
 	}
 	
 	@Test
@@ -100,6 +109,11 @@ public class TestGrupo {
 	@Test
 	public void alGrupoSinPepeLeGustaElFlanConDulceDeLeche() {
 		assertTrue(grupoSinPepe.leGusta(flanConDulceDeLeche));
+	}
+	
+	@Test
+	public void alGrupoJPOSeLePuedeSugerirLaCarneAlHornoConPapas() {
+		assertTrue(grupoJPO.seLePuedeSugerir(carneAlHornoConPapas));
 	}
 	
 }
