@@ -26,4 +26,9 @@ public class RepositorioRecetas {
 	public List<Receta> filtrarRecetasDe(Usuario usuario, Filtro filtro){
 		return filtro.filtrarRecetasDe(usuario);
 	}
+	
+	public boolean seLePuedeSugerirUnaReceta(Receta receta, Sugerible sugerible){
+		return sugerible.seLePuedeSugerir(receta);
+	}
+	
 }

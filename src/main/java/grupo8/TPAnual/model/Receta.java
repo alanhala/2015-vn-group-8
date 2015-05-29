@@ -21,7 +21,8 @@ public class Receta {
 	private List<Receta> subrecetas;
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
-			List<ComponenteDeReceta> condimentos, Double calorias, Usuario creador, Boolean subidaPorSistema) {
+			List<ComponenteDeReceta> condimentos, Double calorias,
+			Usuario creador, Boolean subidaPorSistema) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
@@ -65,15 +66,14 @@ public class Receta {
 
 	public void tieneCaloriasEntre(int limiteInferiorDelRango,
 			int limiteSuperiorDelRango) {
-		if (!((limiteInferiorDelRango < this.calorias())
-				&& (this.calorias() < limiteSuperiorDelRango)))
+		if (!((limiteInferiorDelRango < this.calorias()) && (this.calorias() < limiteSuperiorDelRango)))
 			throw new RecetaConCaloriasFueraDelRangoException(
 					"Las calorias deben estar entre los valores "
 							+ limiteInferiorDelRango + "y"
 							+ limiteSuperiorDelRango);
 	}
 
-	private Double calorias() {
+	public Double calorias() {
 		return calorias;
 	}
 
@@ -138,22 +138,21 @@ public class Receta {
 		preparacion = nuevaPreparacion;
 	}
 
-	public Receta clonar(Usuario creador) {
+	public void clonar(Usuario creador) {
 
-		return new Receta(this.nombre, this.ingredientes, this.condimentos,
+		new Receta(this.nombre, this.ingredientes, this.condimentos,
 				this.calorias, this.preparacion, this.dificultad,
-				this.temporada, creador,false, this.subrecetas);
+				this.temporada, creador, false, this.subrecetas);
 	}
 
 	public List<ComponenteDeReceta> getIngredientes() {
 		return Collections.unmodifiableList(ingredientes);
 	}
 
-
 	public boolean cumpleCondicionesPara(Usuario usuario) {
 		return this.condicionesInadecuadas(usuario.getCondiciones()).isEmpty();
 	}
-	
+
 	public boolean esParaPersonaConSobrepeso(Usuario usuario) {
 		return usuario.tieneSobrePeso() && calorias < 500;
 	}

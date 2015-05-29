@@ -7,6 +7,10 @@ public class DecoradorFiltroSobrepeso implements Filtro {
 
 	private Filtro filtro;
 	
+	public DecoradorFiltroSobrepeso(Filtro filtro){
+		this.filtro = filtro;
+	}
+	
 	@Override
 	public List<Receta> filtrarRecetasDe(Usuario usuario) {
 		List<Receta> recetasFiltradas = filtro.filtrarRecetasDe(usuario);

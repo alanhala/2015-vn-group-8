@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
+public class Usuario implements Sugerible {
 
 	private Double peso;
 	private Double altura;
@@ -27,8 +27,7 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	private List<Receta> recetas;
 	private Rutina rutina;
 	private List<Grupo> grupos;
-	private List<Receta> recetasFavoritas; //TODO Agregar en el constructor
-
+	private List<Receta> recetasFavoritas;
 
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
@@ -69,6 +68,10 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
 	public double calcularIMC() {
 		return peso / Math.pow(altura, 2);
+	}
+	
+	public List<Receta> getRecetas(){
+		return Collections.unmodifiableList(recetas);
 	}
 
 	public void esValido() {

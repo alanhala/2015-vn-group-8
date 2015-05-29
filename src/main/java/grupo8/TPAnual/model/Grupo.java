@@ -3,7 +3,7 @@ package grupo8.TPAnual.model;
 import java.util.Collections;
 import java.util.List;
 
-public class Grupo implements EnteAlQueSeLePuedeSugerirUnaReceta {
+public class Grupo implements Sugerible {
 
 	private String nombre;
 	private List<Usuario> integrantes;

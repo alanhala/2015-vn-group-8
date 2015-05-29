@@ -6,6 +6,10 @@ import java.util.stream.Collectors;
 public class DecoradorFiltroCondicionesPreexistentes implements Filtro {
 	
 	private Filtro filtro;
+	
+	public DecoradorFiltroCondicionesPreexistentes(Filtro filtro){
+		this.filtro = filtro;
+	}
 
 	@Override
 	public List<Receta> filtrarRecetasDe(Usuario usuario) {
