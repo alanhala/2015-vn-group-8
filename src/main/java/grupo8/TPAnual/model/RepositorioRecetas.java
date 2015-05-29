@@ -5,7 +5,7 @@ import java.util.List;
 
 public class RepositorioRecetas {
 
-	private static List<Receta> recetas = new ArrayList<Receta>();
+	public static List<Receta> recetas = new ArrayList<Receta>();
 
 	public static void agregar(Receta receta) {
 		recetas.add(receta);
@@ -23,8 +23,11 @@ public class RepositorioRecetas {
 		return recetas;
 	}
 
-	public List<Receta> filtrarRecetasDe(Usuario usuario, Filtro filtro){
-		return filtro.filtrarRecetasDe(usuario);
+	public List<Receta> filtrarRecetasDe(Usuario usuario) {
+		List <Receta> recetasFiltradas = new ArrayList<Receta>();
+		recetasFiltradas.addAll(this.listarRecetas());
+		recetasFiltradas.addAll(usuario.getRecetas());
+		return recetasFiltradas;
 	}
 	
 	public boolean seLePuedeSugerirUnaReceta(Receta receta, Sugerible sugerible){
