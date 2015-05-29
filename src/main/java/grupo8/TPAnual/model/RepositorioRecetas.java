@@ -10,28 +10,28 @@ public class RepositorioRecetas {
 	public static void agregar(Receta receta) {
 		recetas.add(receta);
 	}
-	
-	public static boolean tieneUnaReceta(Receta receta){
+
+	public static boolean tieneUnaReceta(Receta receta) {
 		return recetas.contains(receta);
 	}
 
 	public void quitar(Receta receta) {
 		recetas.remove(receta);
 	}
-	
-	public List<Receta> listarRecetas(){
+
+	public List<Receta> listarRecetas() {
 		return recetas;
 	}
 
 	public List<Receta> filtrarRecetasDe(Usuario usuario) {
-		List <Receta> recetasFiltradas = new ArrayList<Receta>();
+		List<Receta> recetasFiltradas = new ArrayList<Receta>();
 		recetasFiltradas.addAll(this.listarRecetas());
-		recetasFiltradas.addAll(usuario.getRecetas());
+		recetasFiltradas.addAll(usuario.getRecetasAccesibles());
 		return recetasFiltradas;
 	}
-	
-	public boolean seLePuedeSugerirUnaReceta(Receta receta, Sugerible sugerible){
+
+	public boolean seLePuedeSugerirUnaReceta(Receta receta, Sugerible sugerible) {
 		return sugerible.seLePuedeSugerir(receta);
 	}
-	
+
 }

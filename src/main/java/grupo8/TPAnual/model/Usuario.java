@@ -12,7 +12,9 @@ import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Usuario implements Sugerible {
 
@@ -32,7 +34,7 @@ public class Usuario implements Sugerible {
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
 	}
-	
+
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
 			List<String> disgustosAlimenticios, List<Condicion> condiciones,
@@ -69,8 +71,8 @@ public class Usuario implements Sugerible {
 	public double calcularIMC() {
 		return peso / Math.pow(altura, 2);
 	}
-	
-	public List<Receta> getRecetas(){
+
+	public List<Receta> getRecetas() {
 		return Collections.unmodifiableList(recetas);
 	}
 
@@ -107,46 +109,51 @@ public class Usuario implements Sugerible {
 		this.tieneFechaDeNacimiento();
 		this.tieneRutina();
 	}
-	
-	public void tieneNombre() {	
-		if(nombre==null)
+
+	public void tieneNombre() {
+		if (nombre == null)
 			throw new UsuarioSinNombreException("El usuario debe tener nombre");
 	}
-	
-	public void tienePeso() {		
-		if(peso==null)
+
+	public void tienePeso() {
+		if (peso == null)
 			throw new UsuarioSinPesoException("El usuario debe tener un peso");
 	}
-	
+
 	public void tieneAltura() {
-		
-		if(altura==null)
-			throw new UsuarioSinAlturaException("El usuario debe tener una altura");
+
+		if (altura == null)
+			throw new UsuarioSinAlturaException(
+					"El usuario debe tener una altura");
 	}
-	
-	public void tieneFechaDeNacimiento() {		
-		if(fechaDeNacimiento==null)
-			throw new UsuarioSinFechaDeNacimientoException("El usuario debe tener una fecha de nacimiento");
+
+	public void tieneFechaDeNacimiento() {
+		if (fechaDeNacimiento == null)
+			throw new UsuarioSinFechaDeNacimientoException(
+					"El usuario debe tener una fecha de nacimiento");
 	}
-	
-	public void tieneRutina() {		
-		if(rutina==null)
-			throw new UsuarioSinRutinaException("El usuario debe tener una rutina");
+
+	public void tieneRutina() {
+		if (rutina == null)
+			throw new UsuarioSinRutinaException(
+					"El usuario debe tener una rutina");
 	}
 
 	public void tieneNombreValido() {
-		 if(nombre.length() <= 4)
-			throw new NombreDeUsuarioInvalidoException("El nombre del usuario debe tener 4 o mas caracteres");
+		if (nombre.length() <= 4)
+			throw new NombreDeUsuarioInvalidoException(
+					"El nombre del usuario debe tener 4 o mas caracteres");
 	}
 
 	public void tieneFechaNacimientoValida() {
 		LocalDate today = LocalDate.now();
 		if (!fechaDeNacimiento.isBefore(today))
-			throw new FechaDeNacimientoDeUsuarioInvalidaException("La fecha de nacimiento del usuario debe ser anterior a la del dia de hoy");
+			throw new FechaDeNacimientoDeUsuarioInvalidaException(
+					"La fecha de nacimiento del usuario debe ser anterior a la del dia de hoy");
 	}
 
 	public boolean tieneSexo() { // jaja
-		return(sexo != null || (!sexo.isEmpty()) );
+		return (sexo != null || (!sexo.isEmpty()));
 	}
 
 	public boolean tienePreferenciasAlimenticias() {
@@ -182,26 +189,24 @@ public class Usuario implements Sugerible {
 	public boolean puedeVerOModificar(Receta receta) {
 		return receta.puedeSerVistaOModificadaPor(this);
 	}
-	
-	
-	public boolean tenesUnaReceta(Receta unaReceta){
+
+	public boolean tenesUnaReceta(Receta unaReceta) {
 		return recetas.contains(unaReceta);
 	}
-	
-	public void modificarRecetaPublica(Receta unaReceta){
-			unaReceta.clonar(this);
+
+	public void modificarRecetaPublica(Receta unaReceta) {
+		unaReceta.clonar(this);
 	}
 
 	public boolean compartisGrupoCon(Usuario usuario) {
 		return grupos.stream().anyMatch(
 				grupo -> grupo.perteneceAlGrupo(usuario));
 	}
-	
-	public void agregarAUnGrupo(Grupo grupo){
+
+	public void agregarAUnGrupo(Grupo grupo) {
 		grupos.add(grupo);
 		grupo.agregarUsuario(this);
 	}
-	
 
 	public List<String> getDisgustosAlimenticios() {
 		return Collections.unmodifiableList(disgustosAlimenticios);
@@ -212,21 +217,28 @@ public class Usuario implements Sugerible {
 	}
 
 	public boolean leDisgusta(Receta unaReceta) {
-		return unaReceta.tieneEstosIngredientes(this.getDisgustosAlimenticios());
+		return unaReceta
+				.tieneEstosIngredientes(this.getDisgustosAlimenticios());
 	}
-	
+
 	@Override
 	public boolean seLePuedeSugerir(Receta unaReceta) {
-		return !this.leDisgusta(unaReceta) && unaReceta.cumpleCondicionesPara(this);
+		return !this.leDisgusta(unaReceta)
+				&& unaReceta.cumpleCondicionesPara(this);
 	}
-	
-	public void agregarAFavoritos(Receta receta){
+
+	public void agregarAFavoritos(Receta receta) {
 		recetasFavoritas.add(receta);
 	}
-		
+
 	public boolean tieneSobrePeso() {
 		return this.calcularIMC() >= 25;
 	}
 
-	
+	public Set<Receta> getRecetasAccesibles() {
+		Set<Receta> recetasAccesibles = new HashSet<Receta>();
+		grupos.forEach(grupo -> recetasAccesibles.addAll(grupo
+				.getRecetasDelGrupo()));
+		return recetasAccesibles;
+	}
 }
