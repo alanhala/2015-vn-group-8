@@ -75,14 +75,14 @@ public class TestGrupo {
 		ingredientes1.add(flan);
 		condimentos1.add(caramelo);
 		
-		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0);
+		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0,juan,true);
 		
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
 		ingredientes2.add(colitaDeCuadril);
 		ingredientes2.add(papa);
 				
-		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0);
+		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0,pepe,true);
 	}
 	
 	@Test

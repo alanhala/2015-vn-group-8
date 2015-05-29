@@ -18,16 +18,20 @@ public class Receta {
 	private String dificultad;
 	private Temporada temporada;
 	private Usuario creador;
-	private Boolean subidaPorSistema;
 	private List<Receta> subrecetas;
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
-			List<ComponenteDeReceta> condimentos, Double calorias) {
+			List<ComponenteDeReceta> condimentos, Double calorias, Usuario creador, Boolean subidaPorSistema) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
 		this.calorias = calorias;
+		this.creador = creador;
 		this.subrecetas = new ArrayList<Receta>();
+		if (subidaPorSistema)
+			RepositorioRecetas.agregar(this);
+		else
+			creador.agregarUnaReceta(this);
 	}
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
@@ -42,9 +46,10 @@ public class Receta {
 		this.dificultad = dificultad;
 		this.temporada = temporada;
 		this.creador = creador;
-		this.subidaPorSistema = subidaPorSistema;
 		this.subrecetas = subrecetas;
-
+		creador.agregarUnaReceta(this);
+		if (subidaPorSistema)
+			RepositorioRecetas.agregar(this);
 	}
 
 	public void esValida() {
@@ -73,7 +78,7 @@ public class Receta {
 	}
 
 	public boolean esPublica() {
-		return Usuario.esRecetaPublica(this);
+		return RepositorioRecetas.tieneUnaReceta(this);
 	}
 
 	public boolean puedeSerVistaOModificadaPor(Usuario usuario) {
@@ -137,7 +142,7 @@ public class Receta {
 
 		return new Receta(this.nombre, this.ingredientes, this.condimentos,
 				this.calorias, this.preparacion, this.dificultad,
-				this.temporada, creador, this.subidaPorSistema, this.subrecetas);
+				this.temporada, creador,false, this.subrecetas);
 	}
 
 	public List<ComponenteDeReceta> getIngredientes() {

@@ -57,7 +57,7 @@ public class TestUsuario {
 		ingredientes.add(colitaDeCuadril);
 		ingredientes.add(papa);
 		
-		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes, condimentos, 1350.0);
+		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes, condimentos, 1350.0,juan,true);
 	}
 	
 	@Test 

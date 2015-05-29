@@ -16,7 +16,6 @@ import java.util.List;
 
 public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 
-	private static List<Receta> recetasPublicas = new ArrayList<Receta>();
 	private Double peso;
 	private Double altura;
 	private String nombre;
@@ -28,20 +27,11 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	private List<Receta> recetas;
 	private Rutina rutina;
 	private List<Grupo> grupos;
-
 	private List<Receta> recetasFavoritas; //TODO Agregar en el constructor
 
 
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
-	}
-
-	public static void agregarRecetaPublica (Receta unaReceta) {
-		recetasPublicas.add(unaReceta);
-	}
-	
-	public static boolean esRecetaPublica (Receta unaReceta) {
-		return recetasPublicas.contains(unaReceta);
 	}
 	
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
@@ -59,6 +49,7 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 		this.recetas = recetas;
 		this.rutina = rutina;
 		this.grupos = grupos;
+		this.recetasFavoritas = new ArrayList<Receta>();
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -73,7 +64,7 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 		this.condiciones = new ArrayList<Condicion>();
 		this.recetas = new ArrayList<Receta>();
 		this.grupos = new ArrayList<Grupo>();
-		
+		this.recetasFavoritas = new ArrayList<Receta>();
 	}
 
 	public double calcularIMC() {
@@ -195,7 +186,7 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	}
 	
 	public void modificarRecetaPublica(Receta unaReceta){
-			this.recetas.add(unaReceta.clonar(this));
+			unaReceta.clonar(this);
 	}
 
 	public boolean compartisGrupoCon(Usuario usuario) {
