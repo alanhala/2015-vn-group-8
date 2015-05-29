@@ -28,11 +28,9 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	private List<Receta> recetas;
 	private Rutina rutina;
 	private List<Grupo> grupos;
-<<<<<<< HEAD
-	private List<Receta> recetasFavoritas;
-=======
+
 	private List<Receta> recetasFavoritas; //TODO Agregar en el constructor
->>>>>>> b9d31b52cc4ca14388da3f54ee26a58e046b4e2a
+
 
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
@@ -231,19 +229,10 @@ public class Usuario implements EnteAlQueSeLePuedeSugerirUnaReceta {
 	public void agregarAFavoritos(Receta receta){
 		recetasFavoritas.add(receta);
 	}
-<<<<<<< HEAD
 		
 	public boolean tieneSobrePeso() {
 		return this.calcularIMC() >= 25;
 	}
-			
-=======
-
-	public boolean tieneSobrePeso() {
-		return this.calcularIMC() >= 25;
-	}
-	
->>>>>>> b9d31b52cc4ca14388da3f54ee26a58e046b4e2a
 
 	
 }
