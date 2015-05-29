@@ -148,5 +148,13 @@ public class Receta {
 	public boolean cumpleCondicionesPara(Usuario usuario) {
 		return this.condicionesInadecuadas(usuario.getCondiciones()).isEmpty();
 	}
+	
+	public boolean esParaPersonaConSobrepeso(Usuario usuario) {
+		return usuario.tieneSobrePeso() && calorias < 500;
+	}
+
+	public boolean tieneCondicionesAdecuadasPara(Usuario usuario) {
+		return this.condicionesInadecuadas(usuario.getCondiciones()).size() == 0;
+	}
 
 }
