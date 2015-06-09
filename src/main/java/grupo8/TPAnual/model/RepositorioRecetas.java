@@ -16,7 +16,7 @@ public class RepositorioRecetas {
 		return recetas.contains(receta);
 	}
 
-	public void quitar(Receta receta) {
+	public static void quitar(Receta receta) {
 		recetas.remove(receta);
 	}
 	
