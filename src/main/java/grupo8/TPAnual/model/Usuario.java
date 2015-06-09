@@ -5,7 +5,6 @@ import grupo8.TPAnual.exceptions.NombreDeUsuarioInvalidoException;
 import grupo8.TPAnual.exceptions.UsuarioSinAlturaException;
 import grupo8.TPAnual.exceptions.UsuarioSinFechaDeNacimientoException;
 import grupo8.TPAnual.exceptions.UsuarioSinPesoException;
-import grupo8.TPAnual.exceptions.UsuarioInvalidoException;
 import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
 import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 
