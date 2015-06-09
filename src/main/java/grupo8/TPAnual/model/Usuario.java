@@ -235,10 +235,24 @@ public class Usuario implements Sugerible {
 		return this.calcularIMC() >= 25;
 	}
 
-	public Set<Receta> getRecetasAccesibles() {
+	public Set<Receta> getRecetasGrupalesYPropias() {
 		Set<Receta> recetasAccesibles = new HashSet<Receta>();
 		grupos.forEach(grupo -> recetasAccesibles.addAll(grupo
 				.getRecetasDelGrupo()));
+		recetasAccesibles.addAll(this.recetas);
 		return recetasAccesibles;
 	}
+	
+	public List<Receta> getRecetasAccesibles() {
+		List<Receta> recetasFiltradas = new ArrayList<Receta>();
+		recetasFiltradas.addAll(RepositorioRecetas.listarRecetas());
+		recetasFiltradas.addAll(this.getRecetasGrupalesYPropias());
+		return recetasFiltradas;
+	}
+	
+	public List<Receta> filtrarRecetas(Filtro filtro){
+		List<Receta> recetasAFiltrar = this.getRecetasAccesibles();
+		return filtro.filtrarRecetasDe(this,recetasAFiltrar);
+	}
+
 }

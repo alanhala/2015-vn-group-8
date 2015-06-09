@@ -160,4 +160,8 @@ public class Receta {
 	public boolean tieneCondicionesAdecuadasPara(Usuario usuario) {
 		return this.condicionesInadecuadas(usuario.getCondiciones()).size() == 0;
 	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
 }
