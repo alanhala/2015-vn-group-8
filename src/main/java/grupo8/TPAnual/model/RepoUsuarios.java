@@ -2,7 +2,6 @@ package grupo8.TPAnual.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 public class RepoUsuarios {
@@ -21,19 +20,20 @@ public class RepoUsuarios {
 		//vacio
 	}
 	
-	public static Optional<Usuario> get(Usuario usuario) {
-		return usuarios.stream().filter(u -> (u.getNombre() == usuario.getNombre())).findFirst();
+	public static Stream<Usuario> get(Usuario usuario) {
+		return usuarios.stream().filter(u -> (u.tieneMismoNombreQue(usuario))).limit(1);
 	}
 	
 	public static Stream<Usuario> list(Usuario usuario) {
 		
 		Stream<Usuario> usuariosFiltrados = usuarios.stream().
-				filter(u -> u.getNombre().contains(usuario.getNombre()));
+				filter(u -> u.nombreContieneNombreDe(usuario));
 		
 		if (!usuario.getCondiciones().isEmpty()) {
 			usuariosFiltrados.filter(u -> 
-				u.getCondiciones().contains(usuario.getCondiciones()));
+				u.tieneLasCondicionesDe(usuario));
 		}
+
 		return usuariosFiltrados;
 	}
 }

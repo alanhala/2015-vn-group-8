@@ -7,11 +7,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
 import grupo8.TPAnual.model.ComponenteDeReceta;
+import grupo8.TPAnual.model.Diabetico;
+import grupo8.TPAnual.model.GestorPerfiles;
 import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
+import grupo8.TPAnual.model.RepoUsuarios;
 import grupo8.TPAnual.model.Usuario;
 import grupo8.TPAnual.model.Usuario.Rutina;
 import grupo8.TPAnual.model.Vegano;
@@ -20,9 +24,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestUsuario {
-	Usuario juan, oscar, pepe;
+	Usuario juan, oscar, pepe, osqui;
 	Hipertenso hipertenso;
 	Vegano vegano;
+	Diabetico diabetico;
 	Receta carneAlHornoConPapas;
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
@@ -49,6 +54,11 @@ public class TestUsuario {
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
 				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
+		
+		osqui = new Usuario(80.0, 1.90, "Juan Manuel Oscar", "masculino",
+				LocalDate.of(1985, 10, 11), Arrays.asList(), Arrays.asList(),
+				Arrays.asList(vegano, hipertenso, diabetico), Arrays.asList(), 
+				Rutina.MEDIANO, Arrays.asList()); 
 		
 		//Inicializacion de recetas
 		
@@ -133,6 +143,56 @@ public class TestUsuario {
 				Rutina.LEVE, null);
 		
 		oscar.esValido();
+	}
+	
+	@Test
+	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
+		assertTrue(GestorPerfiles.solicitudesPendientesDeUsuarios.containsAll(Arrays.asList(juan, pepe, oscar)));
+	}
+	
+	@Test
+	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
+		GestorPerfiles.aceptarPerfil(juan);
+		
+		assertFalse(GestorPerfiles.solicitudesPendientesDeUsuarios.contains(juan));
+		assertTrue(RepoUsuarios.usuarios.contains(juan));
+	}
+	
+	@Test
+	public void buscarUsuarioConGetEnRepoUsuarios() {
+		GestorPerfiles.aceptarPerfil(juan);
+		GestorPerfiles.aceptarPerfil(oscar);
+		GestorPerfiles.aceptarPerfil(pepe);
+		
+		Stream<Usuario> usuarioFiltrado = RepoUsuarios.get(juan);
+		
+		ArrayList<Usuario> usuarioFinal = new ArrayList<Usuario>();
+		
+		usuarioFiltrado.forEach(u -> usuarioFinal.add(u));
+		
+		assertTrue(usuarioFinal.contains(juan));
+		assertFalse(usuarioFinal.contains(pepe));
+		assertFalse(usuarioFinal.contains(oscar));
+		
+	}
+	
+	@Test
+	public void filtrarUsuariosConNombreYCondiciones() {
+		GestorPerfiles.aceptarPerfil(juan);
+		GestorPerfiles.aceptarPerfil(oscar);
+		GestorPerfiles.aceptarPerfil(pepe);
+		GestorPerfiles.aceptarPerfil(osqui);
+		
+		Stream<Usuario> usuariosFiltrados = RepoUsuarios.list(juan);
+		
+		ArrayList<Usuario> listaFinal = new ArrayList<Usuario>();
+		usuariosFiltrados.forEach(u -> listaFinal.add(u));
+		
+		assertTrue(listaFinal.contains(juan));
+		assertTrue(listaFinal.contains(osqui));
+		assertFalse(listaFinal.contains(pepe));
+		assertFalse(listaFinal.contains(oscar));
+
 	}
 
 }

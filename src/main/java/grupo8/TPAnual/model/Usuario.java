@@ -262,4 +262,16 @@ public class Usuario implements Sugerible {
 		return filtro.filtrarRecetasDe(this,recetasAFiltrar);
 	}
 
+	public Boolean tieneMismoNombreQue(Usuario usuario) {
+		return this.getNombre().equals(usuario.getNombre());
+	}
+
+	public Boolean nombreContieneNombreDe(Usuario usuario) {
+		return this.getNombre().contains(usuario.getNombre());
+	}
+
+	public Boolean tieneLasCondicionesDe(Usuario usuario) {
+		return usuario.condiciones.stream().allMatch(c -> this.condiciones.contains(c));
+	}
+
 }
