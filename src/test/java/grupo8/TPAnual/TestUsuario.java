@@ -7,8 +7,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
-
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Diabetico;
@@ -159,20 +157,22 @@ public class TestUsuario {
 	}
 	
 	@Test
+	public void osquiTieneCondicionesDeOscar() {
+		GestorPerfiles.aceptarPerfil(oscar);
+		GestorPerfiles.aceptarPerfil(osqui);
+		
+		assertTrue(osqui.tieneLasCondicionesDe(oscar));
+	}
+	
+	@Test
 	public void buscarUsuarioConGetEnRepoUsuarios() {
 		GestorPerfiles.aceptarPerfil(juan);
 		GestorPerfiles.aceptarPerfil(oscar);
 		GestorPerfiles.aceptarPerfil(pepe);
 		
-		Stream<Usuario> usuarioFiltrado = RepoUsuarios.get(juan);
+		Usuario usuarioFiltrado = RepoUsuarios.get(juan);
 		
-		ArrayList<Usuario> usuarioFinal = new ArrayList<Usuario>();
-		
-		usuarioFiltrado.forEach(u -> usuarioFinal.add(u));
-		
-		assertTrue(usuarioFinal.contains(juan));
-		assertFalse(usuarioFinal.contains(pepe));
-		assertFalse(usuarioFinal.contains(oscar));
+		assertTrue(usuarioFiltrado.equals(juan));
 		
 	}
 	
@@ -183,15 +183,12 @@ public class TestUsuario {
 		GestorPerfiles.aceptarPerfil(pepe);
 		GestorPerfiles.aceptarPerfil(osqui);
 		
-		Stream<Usuario> usuariosFiltrados = RepoUsuarios.list(juan);
+		List<Usuario> usuariosFiltrados = RepoUsuarios.list(oscar);
 		
-		ArrayList<Usuario> listaFinal = new ArrayList<Usuario>();
-		usuariosFiltrados.forEach(u -> listaFinal.add(u));
-		
-		assertTrue(listaFinal.contains(juan));
-		assertTrue(listaFinal.contains(osqui));
-		assertFalse(listaFinal.contains(pepe));
-		assertFalse(listaFinal.contains(oscar));
+		assertTrue(usuariosFiltrados.contains(oscar));
+		assertTrue(usuariosFiltrados.contains(osqui));
+		assertFalse(usuariosFiltrados.contains(pepe));
+		assertFalse(usuariosFiltrados.contains(juan));
 
 	}
 
