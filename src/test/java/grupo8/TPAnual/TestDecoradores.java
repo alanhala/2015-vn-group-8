@@ -22,7 +22,7 @@ import grupo8.TPAnual.model.FiltroNulo;
 import grupo8.TPAnual.model.Grupo;
 import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
-import grupo8.TPAnual.model.RepositorioRecetas;
+import grupo8.TPAnual.model.RepoRecetas;
 import grupo8.TPAnual.model.Usuario;
 import grupo8.TPAnual.model.Vegano;
 import grupo8.TPAnual.model.Usuario.Rutina;
@@ -32,7 +32,7 @@ import org.junit.Test;
 
 public class TestDecoradores {
 
-	RepositorioRecetas repositorio;
+	RepoRecetas repositorio;
 	Usuario roberto, sistema;
 	Receta recetaDeRoberto1, recetaDeRoberto2, recetaDeRoberto3,
 			recetaDeRoberto4, recetaDeRoberto5, recetaDeRoberto6,
@@ -191,7 +191,7 @@ public class TestDecoradores {
 
 		// Inicializo el repo
 
-		repositorio = new RepositorioRecetas();
+		repositorio = new RepoRecetas();
 
 	}
 

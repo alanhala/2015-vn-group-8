@@ -29,6 +29,7 @@ public class Usuario implements Sugerible {
 	private Rutina rutina;
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
+	private RepositorioDeRecetas repositorio;
 
 	public enum Rutina {
 		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
@@ -252,7 +253,7 @@ public class Usuario implements Sugerible {
 	
 	public List<Receta> getRecetasAccesibles() {
 		List<Receta> recetasFiltradas = new ArrayList<Receta>();
-		recetasFiltradas.addAll(RepositorioRecetas.listarRecetas());
+		recetasFiltradas.addAll(repositorio.listarRecetas());
 		recetasFiltradas.addAll(this.getRecetasGrupalesYPropias());
 		return recetasFiltradas;
 	}

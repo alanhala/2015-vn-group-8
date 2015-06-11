@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //TODO Convertir esto en un singleton
-public class RepositorioRecetas {
+public class RepoRecetas implements RepositorioDeRecetas {
 
 	public static List<Receta> recetas = new ArrayList<Receta>();
 
@@ -20,7 +20,7 @@ public class RepositorioRecetas {
 		recetas.remove(receta);
 	}
 	
-	public static List<Receta> listarRecetas(){
+	public List<Receta> listarRecetas(){
 		return recetas;
 	}
 		

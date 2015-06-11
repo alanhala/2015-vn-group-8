@@ -9,7 +9,7 @@ import java.util.List;
 
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Receta;
-import grupo8.TPAnual.model.RepositorioRecetas;
+import grupo8.TPAnual.model.RepoRecetas;
 import grupo8.TPAnual.model.Usuario;
 import grupo8.TPAnual.model.Usuario.Rutina;
 
@@ -66,7 +66,7 @@ public class TestAgregarReceta {
 
 	@Test
 	public void seCreaUnaRecetaPublicaYSeAgregaAlRepositorio() {
-		assertTrue(RepositorioRecetas.tieneUnaReceta(arrozConLechePublica));
+		assertTrue(RepoRecetas.tieneUnaReceta(arrozConLechePublica));
 	}
 	
 	@Test
