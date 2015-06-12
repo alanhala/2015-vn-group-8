@@ -1,11 +1,10 @@
-package grupo8.TPAnual.model.Repositorios;
+package grupo8.TPAnual.model.Adapters;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import grupo8.TPAnual.model.Adapters.BuscadorAdapter;
-import grupo8.TPAnual.model.Adapters.RecetaAdapter;
 import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
