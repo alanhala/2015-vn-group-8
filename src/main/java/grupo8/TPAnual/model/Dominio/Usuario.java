@@ -10,6 +10,7 @@ import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
+import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
 import grupo8.TPAnual.model.Dominio.Rutina;
@@ -35,7 +36,7 @@ public class Usuario implements Sugerible {
 	private Rutina rutina;
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
-	private RepositorioDeRecetas repositorio;
+	private RepoRecetas repositorio;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
@@ -54,6 +55,7 @@ public class Usuario implements Sugerible {
 		this.grupos = grupos;
 		this.recetasFavoritas = new ArrayList<Receta>();
 		
+		this.repositorio = RepoRecetas.getInstance();
 		RepoUsuarios.getInstance().seCreoNuevoPerfil(this);
 	}
 
@@ -277,7 +279,7 @@ public class Usuario implements Sugerible {
 		return usuario.condiciones.stream().allMatch(c -> this.condiciones.contains(c));
 	}
 	
-	public void agregarRepositorio(RepositorioDeRecetas repositorio){
+	public void agregarRepositorio(RepoRecetas repositorio){
 		this.repositorio = repositorio;
 	}
 

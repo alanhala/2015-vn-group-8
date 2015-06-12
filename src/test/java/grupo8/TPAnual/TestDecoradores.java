@@ -212,8 +212,8 @@ public class TestDecoradores {
 		List<Receta> recetasFiltradas = roberto
 				.filtrarRecetas(procesarRecetasParesParaUsuariosConSobrepeso);
 
-		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto2,
-				recetaDeRoberto4)));
+		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto2, recetaDeRoberto4
+				)));
 	}
 
 	@Test

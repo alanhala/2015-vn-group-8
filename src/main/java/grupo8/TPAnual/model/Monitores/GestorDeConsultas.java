@@ -4,10 +4,16 @@ import grupo8.TPAnual.model.Decorators.Filtro;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class GestorDeConsultas {
+	
 	private List<Monitor> monitores;
+	
+	public GestorDeConsultas(){
+		monitores = new ArrayList<Monitor>();
+	}
 	
 	public void agregarMonitor(Monitor unMonitor) {
 		monitores.add(unMonitor);
