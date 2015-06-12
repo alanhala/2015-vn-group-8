@@ -9,6 +9,7 @@ import java.util.List;
 import grupo8.TPAnual.model.Adapters.BuscadorAdapter;
 import grupo8.TPAnual.model.Adapters.RecetaAdapter;
 import grupo8.TPAnual.model.Repositorios.RepoRecetasAdapter;
+import grupo8.TPAnual.model.Dominio.Receta;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
@@ -29,7 +30,7 @@ import queComemos.entrega3.repositorio.RepoRecetas;
 
 public class TestConsultaRecetasRepoExterno {
 
-	private RepoRecetas repositorioExterno;
+	private RepoRecetas repositorioExternoMock, repoExterno;
 	private RecetaAdapter recetaAdapter;
 	private RepoRecetasAdapter repoRecetasAdapter;
 	private BuscadorAdapter buscadorAdapter;
@@ -38,8 +39,9 @@ public class TestConsultaRecetasRepoExterno {
 	@Before
 	public void setup() {
 
-		repositorioExterno = mock(RepoRecetas.class);
-		repoRecetasAdapter = new RepoRecetasAdapter(repositorioExterno);
+		repositorioExternoMock = mock(RepoRecetas.class);
+		repoExterno = new RepoRecetas();
+		
 
 		List<String> palabrasClave = new ArrayList<String>();
 		palabrasClave.add("lechuga");
@@ -49,14 +51,27 @@ public class TestConsultaRecetasRepoExterno {
 		buscadorAdapter = new BuscadorAdapter("ensalada caesar",
 				Dificultad.FACIL, palabrasClave);
 
-		repoRecetasAdapter.setAdapter(buscadorAdapter);
+		
 	}
 
 	@Test
 	public void sePuedenListarLasRecetas() {
-
+		repoRecetasAdapter = new RepoRecetasAdapter(repositorioExternoMock);
+		repoRecetasAdapter.setAdapter(buscadorAdapter);
+		
 		repoRecetasAdapter.getRecetas();
-		verify(repositorioExterno).getRecetas(any(BusquedaRecetas.class));
+		verify(repositorioExternoMock).getRecetas(any(BusquedaRecetas.class));
 	}
+	
+	@Test
+	public void busquedaDevuelveRecetaEnsaladaCaesar(){
+		repoRecetasAdapter = new RepoRecetasAdapter(repoExterno);
+		repoRecetasAdapter.setAdapter(buscadorAdapter);
+		Receta recetaObtenida = repoRecetasAdapter.listarRecetas().get(0);
+		
+		assertEquals("ensalada caesar", recetaObtenida.getNombre());
+		
+	}
+	
 
 }

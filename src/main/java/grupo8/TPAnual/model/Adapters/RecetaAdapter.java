@@ -2,7 +2,10 @@ package grupo8.TPAnual.model.Adapters;
 
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Dominio.Rutina;
+import grupo8.TPAnual.model.Dominio.Usuario;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +22,8 @@ public class RecetaAdapter {
 	private int anioReceta;
 	
 	public Receta getReceta(){
-		Receta receta = new Receta(nombre,this.crearComponentes(),this.crearComponentes(),(double) totalCalorias,null,false);
+		Usuario usuarioExterno = new Usuario(2.0,2.0,"Usuario externo", LocalDate.of(1994, 11, 14), Rutina.LEVE);
+		Receta receta = new Receta(nombre,this.crearComponentes(),this.crearComponentes(),(double) totalCalorias,usuarioExterno,false);
 		return receta;
 	}
 	
