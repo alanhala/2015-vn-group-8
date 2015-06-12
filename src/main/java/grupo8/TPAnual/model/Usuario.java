@@ -52,7 +52,7 @@ public class Usuario implements Sugerible {
 		this.grupos = grupos;
 		this.recetasFavoritas = new ArrayList<Receta>();
 		
-		RepoUsuarios.seCreoNuevoPerfil(this);
+		RepoUsuarios.getInstance().seCreoNuevoPerfil(this);
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -69,7 +69,7 @@ public class Usuario implements Sugerible {
 		this.grupos = new ArrayList<Grupo>();
 		this.recetasFavoritas = new ArrayList<Receta>();
 		
-		RepoUsuarios.seCreoNuevoPerfil(this);
+		RepoUsuarios.getInstance().seCreoNuevoPerfil(this);
 	}
 
 	public double calcularIMC() {

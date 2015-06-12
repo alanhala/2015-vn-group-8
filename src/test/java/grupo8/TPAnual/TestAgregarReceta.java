@@ -66,7 +66,7 @@ public class TestAgregarReceta {
 
 	@Test
 	public void seCreaUnaRecetaPublicaYSeAgregaAlRepositorio() {
-		assertTrue(RepoRecetas.tieneUnaReceta(arrozConLechePublica));
+		assertTrue(RepoRecetas.getInstance().tieneUnaReceta(arrozConLechePublica));
 	}
 	
 	@Test

@@ -8,27 +8,39 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class RepoUsuarios {
-
-	public static List<Usuario> usuarios= new ArrayList<Usuario>();
-	public static List<Usuario> solicitudesPendientesDeUsuarios = new ArrayList<Usuario>();
 	
-	public static void add(Usuario usuario) {
+	private static RepoUsuarios instance;
+	public  List<Usuario> usuarios = new ArrayList<Usuario>();
+	public  List<Usuario> solicitudesPendientesDeUsuarios = new ArrayList<Usuario>();
+	
+	private RepoUsuarios(){
+
+	}
+	
+	public static RepoUsuarios getInstance(){
+		if (instance == null){
+			instance = new RepoUsuarios();
+		}
+		return instance;
+	}
+	
+	public void add(Usuario usuario) {
 		usuarios.add(usuario);		
 	}
 
-	public static void remove(Usuario usuario) {
+	public void remove(Usuario usuario) {
 		usuarios.remove(usuario);
 	}
 	
-	public static void update(Usuario usuario) {
+	public void update(Usuario usuario) {
 		//TODO
 	}
 	
-	public static Usuario get(Usuario usuario) {
+	public Usuario get(Usuario usuario) {
 		return usuarios.stream().filter(u -> (u.tieneMismoNombreQue(usuario))).findFirst().get();
 	}
 	
-	public static List<Usuario> list(Usuario usuario) {
+	public List<Usuario> list(Usuario usuario) {
 		
 		Stream<Usuario> usuariosFiltrados = usuarios.stream().
 				filter(u -> u.nombreContieneNombreDe(usuario) && u.tieneLasCondicionesDe(usuario));
@@ -36,21 +48,21 @@ public class RepoUsuarios {
 		return usuariosFiltrados.collect(Collectors.toList());
 	}
 	
-	public static void seCreoNuevoPerfil(Usuario usuario) {
+	public void seCreoNuevoPerfil(Usuario usuario) {
 		solicitudesPendientesDeUsuarios.add(usuario);
 	}
 	
-	public static void aceptarPerfil(Usuario usuario) {
+	public void aceptarPerfil(Usuario usuario) {
 		chequearYRemoverUsuario(usuario);
 		usuarios.add(usuario);
 	}
 	
-	public static String rechazarPerfil(Usuario usuario, String motivo) {
+	public String rechazarPerfil(Usuario usuario, String motivo) {
 		chequearYRemoverUsuario(usuario);
 		return motivo;
 	}
 
-	private static void chequearYRemoverUsuario(Usuario usuario) {
+	private void chequearYRemoverUsuario(Usuario usuario) {
 		if (!solicitudesPendientesDeUsuarios.contains(usuario)) {
 			throw new UsuarioNoEstaEnListaDePendientesException("El usuario ingresado no se encuentra en la lista de solicitudes pendientes");
 		}

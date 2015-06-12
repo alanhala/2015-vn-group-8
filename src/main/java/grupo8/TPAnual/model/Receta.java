@@ -30,7 +30,7 @@ public class Receta {
 		this.creador = creador;
 		this.subrecetas = new ArrayList<Receta>();
 		if (subidaPorSistema)
-			RepoRecetas.agregar(this);
+			RepoRecetas.getInstance().agregar(this);
 		else
 			creador.agregarUnaReceta(this);
 	}
@@ -50,7 +50,7 @@ public class Receta {
 		this.subrecetas = subrecetas;
 		creador.agregarUnaReceta(this);
 		if (subidaPorSistema)
-			RepoRecetas.agregar(this);
+			RepoRecetas.getInstance().agregar(this);
 	}
 
 	public void esValida() {
@@ -78,7 +78,7 @@ public class Receta {
 	}
 
 	public boolean esPublica() {
-		return RepoRecetas.tieneUnaReceta(this);
+		return RepoRecetas.getInstance().tieneUnaReceta(this);
 	}
 
 	public boolean puedeSerVistaOModificadaPor(Usuario usuario) {

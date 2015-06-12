@@ -148,38 +148,38 @@ public class TestUsuario {
 
 	@Test
 	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
-		assertTrue(RepoUsuarios.solicitudesPendientesDeUsuarios
+		assertTrue(RepoUsuarios.getInstance().solicitudesPendientesDeUsuarios
 				.containsAll(Arrays.asList(juan, pepe, oscar)));
 	}
 
 	@Test
 	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
-		RepoUsuarios.aceptarPerfil(juan);
+		RepoUsuarios.getInstance().aceptarPerfil(juan);
 
-		assertTrue(RepoUsuarios.usuarios.contains(juan));
+		assertTrue(RepoUsuarios.getInstance().usuarios.contains(juan));
 	}
 
 	@Test
 	public void juanEsAceptadoYEsEliminadoDeLasSolicitudesPendientes() {
-		RepoUsuarios.aceptarPerfil(juan);
-		assertFalse(RepoUsuarios.solicitudesPendientesDeUsuarios.contains(juan));
+		RepoUsuarios.getInstance().aceptarPerfil(juan);
+		assertFalse(RepoUsuarios.getInstance().solicitudesPendientesDeUsuarios.contains(juan));
 	}
 
 	@Test
 	public void osquiTieneCondicionesDeOscar() {
-		RepoUsuarios.aceptarPerfil(oscar);
-		RepoUsuarios.aceptarPerfil(osqui);
+		RepoUsuarios.getInstance().aceptarPerfil(oscar);
+		RepoUsuarios.getInstance().aceptarPerfil(osqui);
 
 		assertTrue(osqui.tieneLasCondicionesDe(oscar));
 	}
 
 	@Test
 	public void buscarUsuarioConGetEnRepoUsuarios() {
-		RepoUsuarios.aceptarPerfil(juan);
-		RepoUsuarios.aceptarPerfil(oscar);
-		RepoUsuarios.aceptarPerfil(pepe);
+		RepoUsuarios.getInstance().aceptarPerfil(juan);
+		RepoUsuarios.getInstance().aceptarPerfil(oscar);
+		RepoUsuarios.getInstance().aceptarPerfil(pepe);
 
-		Usuario usuarioFiltrado = RepoUsuarios.get(juan);
+		Usuario usuarioFiltrado = RepoUsuarios.getInstance().get(juan);
 
 		assertTrue(usuarioFiltrado.equals(juan));
 
@@ -187,12 +187,12 @@ public class TestUsuario {
 
 	@Test
 	public void filtrarUsuariosConNombreYCondiciones() {
-		RepoUsuarios.aceptarPerfil(juan);
-		RepoUsuarios.aceptarPerfil(oscar);
-		RepoUsuarios.aceptarPerfil(pepe);
-		RepoUsuarios.aceptarPerfil(osqui);
+		RepoUsuarios.getInstance().aceptarPerfil(juan);
+		RepoUsuarios.getInstance().aceptarPerfil(oscar);
+		RepoUsuarios.getInstance().aceptarPerfil(pepe);
+		RepoUsuarios.getInstance().aceptarPerfil(osqui);
 
-		List<Usuario> usuariosFiltrados = RepoUsuarios.list(oscar);
+		List<Usuario> usuariosFiltrados = RepoUsuarios.getInstance().list(oscar);
 
 		assertTrue(usuariosFiltrados.containsAll(Arrays.asList(oscar, osqui))
 				&& !usuariosFiltrados.contains(pepe) && !usuariosFiltrados.contains(juan));

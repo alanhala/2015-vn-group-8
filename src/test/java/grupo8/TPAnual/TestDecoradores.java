@@ -32,7 +32,6 @@ import org.junit.Test;
 
 public class TestDecoradores {
 
-	RepoRecetas repositorio;
 	Usuario roberto, sistema;
 	Receta recetaDeRoberto1, recetaDeRoberto2, recetaDeRoberto3,
 			recetaDeRoberto4, recetaDeRoberto5, recetaDeRoberto6,
@@ -190,10 +189,8 @@ public class TestDecoradores {
 				true);
 
 		// Inicializo el repo
-
-		repositorio = new RepoRecetas();
 		
-		roberto.agregarRepositorio(repositorio);
+		roberto.agregarRepositorio(RepoRecetas.getInstance());
 	}
 
 	@Test

@@ -3,20 +3,32 @@ package grupo8.TPAnual.model;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO Convertir esto en un singleton
+
 public class RepoRecetas implements RepositorioDeRecetas {
 
-	public static List<Receta> recetas = new ArrayList<Receta>();
+	private static RepoRecetas instance;
+	private List<Receta> recetas = new ArrayList<Receta>();
+	
+	private RepoRecetas(){
+		
+	}
+	
+	public static RepoRecetas getInstance(){
+		if (instance == null){
+			instance = new RepoRecetas();
+		}
+		return instance;
+	}
 
-	public static void agregar(Receta receta) {
+	public void agregar(Receta receta) {
 		recetas.add(receta);
 	}
 	
-	public static boolean tieneUnaReceta(Receta receta){
+	public boolean tieneUnaReceta(Receta receta){
 		return recetas.contains(receta);
 	}
 
-	public static void quitar(Receta receta) {
+	public void quitar(Receta receta) {
 		recetas.remove(receta);
 	}
 	
