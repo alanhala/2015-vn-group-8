@@ -189,7 +189,7 @@ public class TestDecoradores {
 				true);
 
 		// Inicializo el repo
-		
+
 		roberto.agregarRepositorio(RepoRecetas.getInstance());
 	}
 
@@ -201,7 +201,8 @@ public class TestDecoradores {
 		List<Receta> recetasFiltradas = roberto
 				.filtrarRecetas(procesarRecetasParaUsuariosConSobrepeso);
 
-		assertEquals(4, recetasFiltradas.size());
+		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto1,
+				recetaDeRoberto2, recetaDeRoberto3, recetaDeRoberto4)));
 	}
 
 	@Test
@@ -210,9 +211,9 @@ public class TestDecoradores {
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));
 		List<Receta> recetasFiltradas = roberto
 				.filtrarRecetas(procesarRecetasParesParaUsuariosConSobrepeso);
-		List<Receta> recetasDeRoberto = new ArrayList<Receta>();
 
-		assertEquals(2, recetasFiltradas.size());
+		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto2,
+				recetaDeRoberto4)));
 	}
 
 	@Test
@@ -272,7 +273,6 @@ public class TestDecoradores {
 				&& (recetasFiltradas.size() == 10));
 
 	}
-	
 
 	// Orden esperado: Recetas de roberto 1,2,4, recetas publicas 3, 2, 4, 1, 5
 	@Test
@@ -297,27 +297,32 @@ public class TestDecoradores {
 				&& recetasFiltradas.indexOf(recetaPublica4) == 5
 				&& recetasFiltradas.indexOf(recetaPublica5) == 7);
 	}
-	
+
 	@Test
 	public void filtroRecetasDeRobertoPorDisgustosAlimenticiosYSobrepeso() {
 
 		DecoradorFiltroDisgusto filtroPorDisgustoYSobrepeso = new DecoradorFiltroDisgusto(
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));
-		
-		List<Receta> recetasFiltradas = roberto.filtrarRecetas(filtroPorDisgustoYSobrepeso);
-		
-		assertTrue( (recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto1,
-				recetaDeRoberto2, recetaDeRoberto3, recetaDeRoberto4))  && (recetasFiltradas.size() == 4)));
+
+		List<Receta> recetasFiltradas = roberto
+				.filtrarRecetas(filtroPorDisgustoYSobrepeso);
+
+		assertTrue((recetasFiltradas.containsAll(Arrays.asList(
+				recetaDeRoberto1, recetaDeRoberto2, recetaDeRoberto3,
+				recetaDeRoberto4)) && (recetasFiltradas.size() == 4)));
 	}
-	
+
 	// Orden esperado: Recetas de roberto 1,4,3,2
 	@Test
 	public void filtroRecetasDeRobertoPorDisgustosAlimenticiosYSobrepesoOrdenadoAlfabeticamente() {
 
-		DecoradorProcesarOrdenamiento filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente = new DecoradorProcesarOrdenamiento(new DecoradorFiltroDisgusto(
-				new DecoradorFiltroSobrepeso(new FiltroNulo())), new ComparatorRecetasAlfabeticamente());
-		
-		List<Receta> recetasFiltradas = roberto.filtrarRecetas(filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente);
+		DecoradorProcesarOrdenamiento filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente = new DecoradorProcesarOrdenamiento(
+				new DecoradorFiltroDisgusto(new DecoradorFiltroSobrepeso(
+						new FiltroNulo())),
+				new ComparatorRecetasAlfabeticamente());
+
+		List<Receta> recetasFiltradas = roberto
+				.filtrarRecetas(filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente);
 
 		assertTrue(recetasFiltradas.indexOf(recetaDeRoberto1) == 0
 				&& recetasFiltradas.indexOf(recetaDeRoberto2) == 3
