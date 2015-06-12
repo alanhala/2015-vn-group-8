@@ -1,10 +1,12 @@
 package grupo8.TPAnual.model.Repositorios;
 
+import grupo8.TPAnual.exceptions.UsuarioNoEstaEnElRepositorioException;
 import grupo8.TPAnual.exceptions.UsuarioNoEstaEnListaDePendientesException;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -34,7 +36,17 @@ public class RepoUsuarios {
 	}
 	
 	public void update(Usuario usuario) {
-		//TODO
+		try 
+		{
+			this.get(usuario);
+			
+		}catch(NoSuchElementException exception)
+		{	
+			throw new UsuarioNoEstaEnElRepositorioException("El usuario no se encuentra en el repositorio");
+		}
+		
+		usuarios.remove(this.get(usuario));
+		usuarios.add(usuario);
 	}
 	
 	public Usuario get(Usuario usuario) {
