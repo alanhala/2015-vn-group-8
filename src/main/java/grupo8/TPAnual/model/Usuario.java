@@ -279,4 +279,12 @@ public class Usuario implements Sugerible {
 		this.repositorio = repositorio;
 	}
 
+	public boolean esVegano() {
+		return condiciones.stream().anyMatch(condicion -> Vegano.class.isInstance(condicion));
+	}
+
+	public boolean esHombre() {
+		return sexo.equalsIgnoreCase("masculino");
+	}
+
 }
