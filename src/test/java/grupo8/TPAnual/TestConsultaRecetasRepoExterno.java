@@ -8,7 +8,7 @@ import java.util.List;
 
 import grupo8.TPAnual.model.Adapters.BuscadorAdapter;
 import grupo8.TPAnual.model.Adapters.RecetaAdapter;
-import grupo8.TPAnual.model.Adapters.RepoRecetasAdapter;
+import grupo8.TPAnual.model.Repositorios.RepoRecetasAdapter;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.eq;
