@@ -10,7 +10,6 @@ import java.util.List;
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
 import grupo8.TPAnual.model.ComponenteDeReceta;
 import grupo8.TPAnual.model.Diabetico;
-import grupo8.TPAnual.model.GestorPerfiles;
 import grupo8.TPAnual.model.Hipertenso;
 import grupo8.TPAnual.model.Receta;
 import grupo8.TPAnual.model.RepoUsuarios;
@@ -143,53 +142,53 @@ public class TestUsuario {
 		oscar.esValido();
 	}
 	
-	@Test
-	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
-		assertTrue(GestorPerfiles.solicitudesPendientesDeUsuarios.containsAll(Arrays.asList(juan, pepe, oscar)));
-	}
-	
-	@Test
-	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
-		GestorPerfiles.aceptarPerfil(juan);
-		
-		assertFalse(GestorPerfiles.solicitudesPendientesDeUsuarios.contains(juan));
-		assertTrue(RepoUsuarios.usuarios.contains(juan));
-	}
-	
-	@Test
-	public void osquiTieneCondicionesDeOscar() {
-		GestorPerfiles.aceptarPerfil(oscar);
-		GestorPerfiles.aceptarPerfil(osqui);
-		
-		assertTrue(osqui.tieneLasCondicionesDe(oscar));
-	}
-	
-	@Test
-	public void buscarUsuarioConGetEnRepoUsuarios() {
-		GestorPerfiles.aceptarPerfil(juan);
-		GestorPerfiles.aceptarPerfil(oscar);
-		GestorPerfiles.aceptarPerfil(pepe);
-		
-		Usuario usuarioFiltrado = RepoUsuarios.get(juan);
-		
-		assertTrue(usuarioFiltrado.equals(juan));
-		
-	}
-	
-	@Test
-	public void filtrarUsuariosConNombreYCondiciones() {
-		GestorPerfiles.aceptarPerfil(juan);
-		GestorPerfiles.aceptarPerfil(oscar);
-		GestorPerfiles.aceptarPerfil(pepe);
-		GestorPerfiles.aceptarPerfil(osqui);
-		
-		List<Usuario> usuariosFiltrados = RepoUsuarios.list(oscar);
-		
-		assertTrue(usuariosFiltrados.contains(oscar));
-		assertTrue(usuariosFiltrados.contains(osqui));
-		assertFalse(usuariosFiltrados.contains(pepe));
-		assertFalse(usuariosFiltrados.contains(juan));
-
-	}
+//	@Test
+//	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
+//		assertTrue(GestorPerfiles.solicitudesPendientesDeUsuarios.containsAll(Arrays.asList(juan, pepe, oscar)));
+//	}
+//	
+//	@Test
+//	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
+//		GestorPerfiles.aceptarPerfil(juan);
+//		
+//		assertFalse(GestorPerfiles.solicitudesPendientesDeUsuarios.contains(juan));
+//		assertTrue(RepoUsuarios.usuarios.contains(juan));
+//	}
+//	
+//	@Test
+//	public void osquiTieneCondicionesDeOscar() {
+//		GestorPerfiles.aceptarPerfil(oscar);
+//		GestorPerfiles.aceptarPerfil(osqui);
+//		
+//		assertTrue(osqui.tieneLasCondicionesDe(oscar));
+//	}
+//	
+//	@Test
+//	public void buscarUsuarioConGetEnRepoUsuarios() {
+//		GestorPerfiles.aceptarPerfil(juan);
+//		GestorPerfiles.aceptarPerfil(oscar);
+//		GestorPerfiles.aceptarPerfil(pepe);
+//		
+//		Usuario usuarioFiltrado = RepoUsuarios.get(juan);
+//		
+//		assertTrue(usuarioFiltrado.equals(juan));
+//		
+//	}
+//	
+//	@Test
+//	public void filtrarUsuariosConNombreYCondiciones() {
+//		GestorPerfiles.aceptarPerfil(juan);
+//		GestorPerfiles.aceptarPerfil(oscar);
+//		GestorPerfiles.aceptarPerfil(pepe);
+//		GestorPerfiles.aceptarPerfil(osqui);
+//		
+//		List<Usuario> usuariosFiltrados = RepoUsuarios.list(oscar);
+//		
+//		assertTrue(usuariosFiltrados.contains(oscar));
+//		assertTrue(usuariosFiltrados.contains(osqui));
+//		assertFalse(usuariosFiltrados.contains(pepe));
+//		assertFalse(usuariosFiltrados.contains(juan));
+//
+//	}
 
 }
