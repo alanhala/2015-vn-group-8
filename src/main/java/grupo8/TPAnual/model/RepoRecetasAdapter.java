@@ -36,7 +36,14 @@ public class RepoRecetasAdapter implements RepositorioDeRecetas {
 		return recetasModificadas;
 		
 	}
-	
+
+	public void setAdapter(BuscadorAdapter adapter) {
+		this.adapter = adapter;
+	}
+
+	public BuscadorAdapter getAdapter() {
+		return adapter;
+	}
 	
 	 
 }

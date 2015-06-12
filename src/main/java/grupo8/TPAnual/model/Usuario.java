@@ -274,5 +274,9 @@ public class Usuario implements Sugerible {
 	public Boolean tieneLasCondicionesDe(Usuario usuario) {
 		return usuario.condiciones.stream().allMatch(c -> this.condiciones.contains(c));
 	}
+	
+	public void agregarRepositorio(RepositorioDeRecetas repositorio){
+		this.repositorio = repositorio;
+	}
 
 }
