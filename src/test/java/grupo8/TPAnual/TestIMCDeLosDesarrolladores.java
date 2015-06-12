@@ -4,8 +4,8 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 
-import grupo8.TPAnual.model.Usuario;
-import grupo8.TPAnual.model.Usuario.Rutina;
+import grupo8.TPAnual.model.Dominio.Usuario;
+import grupo8.TPAnual.model.Dominio.Usuario.Rutina;
 
 import org.junit.Before;
 import org.junit.Test;

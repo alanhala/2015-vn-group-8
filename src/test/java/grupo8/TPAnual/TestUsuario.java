@@ -7,15 +7,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
-import grupo8.TPAnual.model.ComponenteDeReceta;
-import grupo8.TPAnual.model.Diabetico;
-import grupo8.TPAnual.model.Hipertenso;
-import grupo8.TPAnual.model.Receta;
-import grupo8.TPAnual.model.RepoUsuarios;
-import grupo8.TPAnual.model.Usuario;
-import grupo8.TPAnual.model.Usuario.Rutina;
-import grupo8.TPAnual.model.Vegano;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
+import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
+import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Dominio.Usuario;
+import grupo8.TPAnual.model.Dominio.Usuario.Rutina;
+import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 
 import org.junit.Before;
 import org.junit.Test;

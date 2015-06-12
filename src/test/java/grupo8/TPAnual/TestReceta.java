@@ -10,15 +10,15 @@ import java.util.List;
 
 import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
-import grupo8.TPAnual.model.Celiaco;
-import grupo8.TPAnual.model.ComponenteDeReceta;
-import grupo8.TPAnual.model.Condicion;
-import grupo8.TPAnual.model.Diabetico;
-import grupo8.TPAnual.model.Hipertenso;
-import grupo8.TPAnual.model.Receta;
-import grupo8.TPAnual.model.Usuario;
-import grupo8.TPAnual.model.Vegano;
-import grupo8.TPAnual.model.Usuario.Rutina;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Celiaco;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
+import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
+import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
+import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Dominio.Usuario;
+import grupo8.TPAnual.model.Dominio.Usuario.Rutina;
 
 import org.junit.Before;
 import org.junit.Test;
