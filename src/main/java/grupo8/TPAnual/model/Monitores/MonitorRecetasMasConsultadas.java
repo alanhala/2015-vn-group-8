@@ -1,26 +1,26 @@
 package grupo8.TPAnual.model.Monitores;
 
 import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
 public class MonitorRecetasMasConsultadas implements Monitor {
 	
-	private GestorDeConsultas gestor;
 	private Map<String, Integer> recetasConsultadas;
 	
 	
-	public MonitorRecetasMasConsultadas(GestorDeConsultas unGestor) {
-		gestor = unGestor;
+	public MonitorRecetasMasConsultadas() {
 		recetasConsultadas = new HashMap<String, Integer>();
 	}
 	
 	@Override
-	public void actualizar() {
-		gestor.getUltimaConsulta().forEach(receta -> this.agregarReceta(receta));
+	public void actualizar(Usuario usuario, List<Receta> consulta) {
+		consulta.forEach(receta -> this.agregarReceta(receta));
 	}
 
 	private void agregarReceta(Receta receta) {

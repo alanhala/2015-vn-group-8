@@ -1,25 +1,24 @@
 package grupo8.TPAnual.model.Monitores;
 
+import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class MonitorConsultasDeVeganosPorRecetasDificiles implements Monitor {
 
-	GestorDeConsultas gestor;
 	Set<Usuario> veganos;
 	
-	public MonitorConsultasDeVeganosPorRecetasDificiles(GestorDeConsultas unGestor) {
-		gestor = unGestor;
+	public MonitorConsultasDeVeganosPorRecetasDificiles() {
 		veganos = new HashSet<Usuario>();
 	}
 	
 	@Override
-	public void actualizar() {
-		Usuario ultimoUsuario = gestor.getUltimoUsuario();
-		if(ultimoUsuario.esVegano()) {
-			veganos.add(ultimoUsuario);
+	public void actualizar(Usuario usuario, List<Receta> consulta) {
+		if(usuario.esVegano() && consulta.stream().anyMatch(receta -> receta.esDificil())) {
+			veganos.add(usuario);
 		}
 	}
 	

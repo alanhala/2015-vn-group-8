@@ -17,7 +17,7 @@ public class Receta {
 	private List<ComponenteDeReceta> condimentos;
 	private Double calorias;
 	private String preparacion;
-	private String dificultad;
+	private Dificultad dificultad;
 	private Temporada temporada;
 	private Usuario creador;
 	private List<Receta> subrecetas;
@@ -39,7 +39,7 @@ public class Receta {
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,
-			String preparacion, String dificultad, Temporada temporada,
+			String preparacion, Dificultad dificultad, Temporada temporada,
 			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
@@ -165,5 +165,9 @@ public class Receta {
 
 	public String getNombre() {
 		return this.nombre;
+	}
+
+	public boolean esDificil() {
+		return this.dificultad == Dificultad.DIFICIL;
 	}
 }

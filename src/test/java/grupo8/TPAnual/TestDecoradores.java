@@ -24,7 +24,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
-import grupo8.TPAnual.model.Dominio.Usuario.Rutina;
+import grupo8.TPAnual.model.Dominio.Rutina;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 
 import org.junit.Before;

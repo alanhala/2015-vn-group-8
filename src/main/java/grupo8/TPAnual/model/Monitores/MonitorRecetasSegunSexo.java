@@ -1,28 +1,28 @@
 package grupo8.TPAnual.model.Monitores;
 
 import grupo8.TPAnual.model.Dominio.Receta;
+import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MonitorRecetasSegunSexo implements Monitor {
 
-	private GestorDeConsultas gestor;
 	private Map<String, Integer> consultasHombres;
 	private Map<String, Integer> consultasMujeres;
 	
-	public MonitorRecetasSegunSexo(GestorDeConsultas unGestor) {
-		gestor = unGestor;
+	public MonitorRecetasSegunSexo() {
 		consultasHombres = new HashMap<String, Integer>();
 		consultasMujeres = new HashMap<String, Integer>();
 	}
 	
 	@Override
-	public void actualizar() {
-		if(gestor.getUltimoUsuario().esHombre()) {
-			gestor.getUltimaConsulta().forEach(receta -> this.agregarReceta(receta, consultasHombres));
-		} else gestor.getUltimaConsulta().forEach(receta -> this.agregarReceta(receta, consultasMujeres));
+	public void actualizar(Usuario usuario, List<Receta> consulta) {
+		if(usuario.esHombre()) {
+			consulta.forEach(receta -> this.agregarReceta(receta, consultasHombres));
+		} else consulta.forEach(receta -> this.agregarReceta(receta, consultasMujeres));
 
 	}
 

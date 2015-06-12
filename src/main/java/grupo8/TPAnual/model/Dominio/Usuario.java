@@ -12,6 +12,7 @@ import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
+import grupo8.TPAnual.model.Dominio.Rutina;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,10 +36,6 @@ public class Usuario implements Sugerible {
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
 	private RepositorioDeRecetas repositorio;
-
-	public enum Rutina {
-		LEVE, NADA, MEDIANO, INTENSIVO, SEMIINTENSIVO
-	}
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,

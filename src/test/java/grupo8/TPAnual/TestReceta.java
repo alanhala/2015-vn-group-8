@@ -18,7 +18,7 @@ import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
-import grupo8.TPAnual.model.Dominio.Usuario.Rutina;
+import grupo8.TPAnual.model.Dominio.Rutina;
 
 import org.junit.Before;
 import org.junit.Test;
