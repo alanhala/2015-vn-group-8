@@ -148,7 +148,7 @@ public class TestUsuario {
 
 	@Test
 	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
-		assertTrue(RepoUsuarios.getInstance().solicitudesPendientesDeUsuarios
+		assertTrue(RepoUsuarios.getInstance().getSolicitudesPendientesDeUsuarios()
 				.containsAll(Arrays.asList(juan, pepe, oscar)));
 	}
 
@@ -156,13 +156,13 @@ public class TestUsuario {
 	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
 		RepoUsuarios.getInstance().aceptarPerfil(juan);
 
-		assertTrue(RepoUsuarios.getInstance().usuarios.contains(juan));
+		assertTrue(RepoUsuarios.getInstance().getUsuarios().contains(juan));
 	}
 
 	@Test
 	public void juanEsAceptadoYEsEliminadoDeLasSolicitudesPendientes() {
 		RepoUsuarios.getInstance().aceptarPerfil(juan);
-		assertFalse(RepoUsuarios.getInstance().solicitudesPendientesDeUsuarios.contains(juan));
+		assertFalse(RepoUsuarios.getInstance().getSolicitudesPendientesDeUsuarios().contains(juan));
 	}
 
 	@Test

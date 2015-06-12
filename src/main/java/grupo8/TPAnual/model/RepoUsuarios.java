@@ -10,8 +10,8 @@ import java.util.stream.Stream;
 public class RepoUsuarios {
 	
 	private static RepoUsuarios instance;
-	public  List<Usuario> usuarios = new ArrayList<Usuario>();
-	public  List<Usuario> solicitudesPendientesDeUsuarios = new ArrayList<Usuario>();
+	private  List<Usuario> usuarios = new ArrayList<Usuario>();
+	private  List<Usuario> solicitudesPendientesDeUsuarios = new ArrayList<Usuario>();
 	
 	private RepoUsuarios(){
 
@@ -67,6 +67,14 @@ public class RepoUsuarios {
 			throw new UsuarioNoEstaEnListaDePendientesException("El usuario ingresado no se encuentra en la lista de solicitudes pendientes");
 		}
 		solicitudesPendientesDeUsuarios.remove(usuario);
+	}
+
+	public List<Usuario> getSolicitudesPendientesDeUsuarios() {
+		return solicitudesPendientesDeUsuarios;
+	}
+
+	public List<Usuario> getUsuarios() {
+		return usuarios;
 	}
 	
 	
