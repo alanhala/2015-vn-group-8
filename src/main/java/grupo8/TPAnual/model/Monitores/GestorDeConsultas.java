@@ -8,11 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GestorDeConsultas {
-	
+	private static GestorDeConsultas instance;
 	private List<Monitor> monitores;
 	
-	public GestorDeConsultas(){
+	private GestorDeConsultas(){
 		monitores = new ArrayList<Monitor>();
+	}
+	
+	public static GestorDeConsultas getInstance(){
+		if (instance == null){
+			instance = new GestorDeConsultas();
+		}
+		
+		return instance;
 	}
 	
 	public void agregarMonitor(Monitor unMonitor) {
@@ -23,13 +31,8 @@ public class GestorDeConsultas {
 		monitores.remove(unMonitor);
 	}
 	
-	public void consultarRecetas(Usuario usuario, Filtro unFiltro) {
-		List<Receta> consulta = usuario.filtrarRecetas(unFiltro);
-		this.notificar(usuario,consulta);
-		
-	}
 
-	private void notificar(Usuario usuario, List<Receta> consulta) {
+	public void notificar(Usuario usuario, List<Receta> consulta) {
 		monitores.forEach(monitor -> monitor.actualizar(usuario, consulta));
 	}
 }

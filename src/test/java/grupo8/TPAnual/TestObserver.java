@@ -42,11 +42,12 @@ public class TestObserver {
 	private MonitorRecetasSegunSexo recetasSegunSexo;
 	private Usuario veganoVerdulero;
 	private Usuario veganaFrutera;
+	private Usuario adictoAlCafe;
 	private Vegano vegano;
 	private RepoRecetas repoRecetas;
 	
-	Receta caramelo, caldoSalado;
-	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo;
+	Receta caramelo, caldoSalado, cafeConLeche;
+	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo, cafe;
 	
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
@@ -54,8 +55,9 @@ public class TestObserver {
 	List<ComponenteDeReceta> condimentosDeCaramelo = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> ingredientesDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentosDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> ingredientesDeCafeConLeche = new ArrayList<ComponenteDeReceta>();
+	List<ComponenteDeReceta> condimentosDeCafeConLeche = new ArrayList<ComponenteDeReceta>();
 	List<Condicion> condiciones = new ArrayList<Condicion>();
-	
 	
 	@Before
 	public void setup() {
@@ -65,12 +67,10 @@ public class TestObserver {
 		recetasMasConsultadas = new MonitorRecetasMasConsultadas();
 		recetasSegunSexo = new MonitorRecetasSegunSexo();
 		
-		gestorDeConsultas = new GestorDeConsultas();
-		
-		gestorDeConsultas.agregarMonitor(consultasDeVeganosPorRecetasDificiles);
-		gestorDeConsultas.agregarMonitor(consultasPorHora);
-		gestorDeConsultas.agregarMonitor(recetasMasConsultadas);
-		gestorDeConsultas.agregarMonitor(recetasSegunSexo);	
+		GestorDeConsultas.getInstance().agregarMonitor(consultasDeVeganosPorRecetasDificiles);
+		GestorDeConsultas.getInstance().agregarMonitor(consultasPorHora);
+		GestorDeConsultas.getInstance().agregarMonitor(recetasMasConsultadas);
+		GestorDeConsultas.getInstance().agregarMonitor(recetasSegunSexo);	
 		
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -78,6 +78,7 @@ public class TestObserver {
 		grasa = new ComponenteDeReceta("cucharadas de grasa", 300.0, 7500.0);
 		sal = new ComponenteDeReceta("sal", 10.0, 30.0);
 		caldo = new ComponenteDeReceta("caldo", 4.0, 50.0);
+		cafe = new ComponenteDeReceta("cafe", 3.0, 20.0);
 
 		ingredientes.add(arroz);
 		ingredientes.add(leche);
@@ -87,7 +88,11 @@ public class TestObserver {
 		ingredientesDeCaldoSalado.add(caldo);
 		condimentosDeCaldoSalado.add(sal);
 		
-//	 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
+		ingredientesDeCafeConLeche.add(cafe);
+		ingredientesDeCafeConLeche.add(leche);
+		condimentosDeCafeConLeche.add(azucar);
+		
+	 	//public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			//List<ComponenteDeReceta> condimentos, Double calorias,
 			//String preparacion, Dificultad dificultad, Temporada temporada,
 			//Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas) {
@@ -104,6 +109,10 @@ public class TestObserver {
 				Arrays.asList("pescado", "bebés"), Arrays.asList(vegano),
 				new ArrayList<Receta>(), Rutina.INTENSIVO, new ArrayList<Grupo>());
 		
+		adictoAlCafe = new Usuario(43.2, 1.42, "Cafetero", "masculino", LocalDate.of(
+				1994, 9, 24), Arrays.asList("cafe", "leche", "cafeConLeche"),
+				Arrays.asList("nesquik", "noCafe"), Arrays.asList(),
+				new ArrayList<Receta>(), Rutina.NADA, new ArrayList<Grupo>());
 		
 		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
 				condimentosDeCaramelo, 3000.0, "hacer caramelo", Dificultad.DIFICIL, null,
@@ -113,19 +122,21 @@ public class TestObserver {
 				condimentosDeCaldoSalado, 700.0, "hacer caldo salado", Dificultad.DIFICIL,
 				null, veganoVerdulero, false, Arrays.asList());
 		
+		cafeConLeche = new Receta("cafe con leche", ingredientesDeCafeConLeche,
+				condimentosDeCafeConLeche, 50.0, "mezclar cafe y leche", Dificultad.FACIL,
+				null, adictoAlCafe, false, Arrays.asList());
+		
 		repoRecetas = RepoRecetas.getInstance();
-		
-		
 		
 	}
 
 	@Test
 	public void dosVeganosConsultanTresVeces() {
 		
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganoVerdulero, new FiltroNulo());
-
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+	
 		assertEquals(consultasDeVeganosPorRecetasDificiles.cantidadDeVeganosConRecetasDificiles(), (Integer) 2 );
 		
 	}
@@ -133,18 +144,19 @@ public class TestObserver {
 	@Test
 	public void elCarameloEsElMasConsultado() {
 		
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganoVerdulero, new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+		adictoAlCafe.filtrarRecetas(new FiltroNulo());
 		
 		assertTrue(recetasMasConsultadas.recetaMasConsultada().equalsIgnoreCase("caramelo"));
 	}
 	@Test
-	public void consultamosAntesDeEntregar() {
+	public void consultamosAEstaHora() {
 		
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
-		gestorDeConsultas.consultarRecetas(veganoVerdulero, new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
+		veganoVerdulero.filtrarRecetas(new FiltroNulo());
 		
 		assertEquals(consultasPorHora.cantidadDeConsultasPorHora(Calendar.HOUR_OF_DAY), (Integer) 3 );
 		
@@ -153,7 +165,7 @@ public class TestObserver {
 	@Test
 	public void lasMujeresConsultanMásElCaramelo() {
 		
-		gestorDeConsultas.consultarRecetas(veganaFrutera, new FiltroNulo());
+		veganaFrutera.filtrarRecetas(new FiltroNulo());
 		
 		assertTrue(recetasSegunSexo.recetaMasConsultadaPorMujeres().equalsIgnoreCase("caramelo"));
 		
@@ -162,8 +174,10 @@ public class TestObserver {
 	@Test
 	public void losHombresConsultanMásElCaldoSalado() {
 		
-		gestorDeConsultas.consultarRecetas(veganoVerdulero, new FiltroNulo());
-			
+		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+		adictoAlCafe.filtrarRecetas(new FiltroNulo());
+		
 		assertTrue(recetasSegunSexo.recetaMasConsultadaPorHombres().equalsIgnoreCase("caldo salado"));
 			
 	}

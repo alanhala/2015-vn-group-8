@@ -10,6 +10,7 @@ import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
+import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
@@ -264,7 +265,9 @@ public class Usuario implements Sugerible {
 	
 	public List<Receta> filtrarRecetas(Filtro filtro){
 		List<Receta> recetasAFiltrar = this.getRecetasAccesibles();
-		return filtro.filtrarRecetasDe(this,recetasAFiltrar);
+		List<Receta> recetasFiltradas = filtro.filtrarRecetasDe(this,recetasAFiltrar);
+		GestorDeConsultas.getInstance().notificar(this, recetasFiltradas);
+		return recetasFiltradas;
 	}
 
 	public Boolean tieneMismoNombreQue(Usuario usuario) {
