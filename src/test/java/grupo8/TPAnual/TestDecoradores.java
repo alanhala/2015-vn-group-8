@@ -192,7 +192,8 @@ public class TestDecoradores {
 		// Inicializo el repo
 
 		repositorio = new RepoRecetas();
-
+		
+		roberto.agregarRepositorio(repositorio);
 	}
 
 	@Test

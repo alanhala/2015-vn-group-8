@@ -20,6 +20,8 @@ import static org.mockito.Mockito.when;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Matchers;
+import org.mockito.internal.verification.AtLeast;
+import org.mockito.internal.verification.Times;
 
 import queComemos.entrega3.dominio.Dificultad;
 import queComemos.entrega3.repositorio.BusquedaRecetas;
@@ -35,18 +37,18 @@ public class TestConsultaRecetasRepoExterno {
 
 	@Before
 	public void setup() {
-		
+
 		repositorioExterno = mock(RepoRecetas.class);
 		repoRecetasAdapter = new RepoRecetasAdapter(repositorioExterno);
-		
+
 		List<String> palabrasClave = new ArrayList<String>();
 		palabrasClave.add("lechuga");
 		palabrasClave.add("croutons");
 		palabrasClave.add("parmesano");
-		
+
 		buscadorAdapter = new BuscadorAdapter("ensalada caesar",
 				Dificultad.FACIL, palabrasClave);
-		
+
 		repoRecetasAdapter.setAdapter(buscadorAdapter);
 	}
 
@@ -55,13 +57,6 @@ public class TestConsultaRecetasRepoExterno {
 
 		repoRecetasAdapter.getRecetas();
 		verify(repositorioExterno).getRecetas(any(BusquedaRecetas.class));
-	}
-	
-	@Test
-	public void miBuscadorAdapterSeAdaptaABusquedaRecetas() {
-		
-		buscadorAdapter = new BuscadorAdapter(any(String.class), any(Dificultad.class), Matchers.anyListOf(String.class));
-		verify(unaBusqueda).
 	}
 
 }
