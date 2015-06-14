@@ -7,11 +7,11 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GestorDeConsultas {
+public class GestorDeConsultas implements Notificador {
 	private static GestorDeConsultas instance;
 	private List<Monitor> monitores;
 	
-	private GestorDeConsultas(){
+	public GestorDeConsultas(){
 		monitores = new ArrayList<Monitor>();
 	}
 	
@@ -32,6 +32,7 @@ public class GestorDeConsultas {
 	}
 	
 
+	@Override
 	public void notificar(Usuario usuario, List<Receta> consulta) {
 		monitores.forEach(monitor -> monitor.actualizar(usuario, consulta));
 	}

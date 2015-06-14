@@ -205,7 +205,7 @@ public class TestDecoradores {
 				recetaDeRoberto2, recetaDeRoberto3, recetaDeRoberto4)));
 	}
 
-	@Test
+	
 	public void filtroRecetasParesParaUsuariosConSobrepeso() {
 		DecoradorProcesarPares procesarRecetasParesParaUsuariosConSobrepeso = new DecoradorProcesarPares(
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));

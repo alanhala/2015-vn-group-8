@@ -3,6 +3,9 @@ package grupo8.TPAnual.model.Repositorios;
 import grupo8.TPAnual.exceptions.UsuarioNoEstaEnElRepositorioException;
 import grupo8.TPAnual.exceptions.UsuarioNoEstaEnListaDePendientesException;
 import grupo8.TPAnual.model.Dominio.Usuario;
+import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
+import grupo8.TPAnual.model.Monitores.Notificador;
+import grupo8.TPAnual.model.Monitores.OtroNotificador;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,18 +19,20 @@ public class RepoUsuarios {
 	private  List<Usuario> usuarios = new ArrayList<Usuario>();
 	private  List<Usuario> solicitudesPendientesDeUsuarios = new ArrayList<Usuario>();
 	
-	private RepoUsuarios(){
-
-	}
+	private Notificador gestorDeConsultas;
 	
-	public static RepoUsuarios getInstance(){
-		if (instance == null){
-			instance = new RepoUsuarios();
-		}
-		return instance;
+	
+	
+	public RepoUsuarios(Notificador gestorDeConsultas) {
+		this.gestorDeConsultas = gestorDeConsultas;
+	}
+
+	public RepoUsuarios(){
+		gestorDeConsultas = new OtroNotificador();
 	}
 	
 	public void add(Usuario usuario) {
+		usuario.setGestorDeConsultas(this.gestorDeConsultas);
 		usuarios.add(usuario);		
 	}
 

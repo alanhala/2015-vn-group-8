@@ -8,16 +8,12 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
-import grupo8.TPAnual.model.Adapters.BuscadorAdapter;
-import grupo8.TPAnual.model.Adapters.RecetaAdapter;
 import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
-import grupo8.TPAnual.model.Monitores.Monitor;
 import grupo8.TPAnual.model.Monitores.MonitorConsultasDeVeganosPorRecetasDificiles;
 import grupo8.TPAnual.model.Monitores.MonitorConsultasPorHora;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasMasConsultadas;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasSegunSexo;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
-import grupo8.TPAnual.model.Repositorios.RepoRecetasAdapter;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.FiltroNulo;
@@ -26,7 +22,6 @@ import grupo8.TPAnual.model.Dominio.Dificultad;
 import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Rutina;
-import grupo8.TPAnual.model.Dominio.Temporada;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
 import org.junit.Before;
@@ -35,7 +30,6 @@ import org.junit.Test;
 
 public class TestObserver {
 
-	private GestorDeConsultas gestorDeConsultas;
 	private MonitorConsultasDeVeganosPorRecetasDificiles consultasDeVeganosPorRecetasDificiles;
 	private MonitorConsultasPorHora consultasPorHora;
 	private MonitorRecetasMasConsultadas recetasMasConsultadas;
