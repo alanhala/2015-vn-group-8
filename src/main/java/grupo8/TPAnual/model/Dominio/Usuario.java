@@ -37,7 +37,7 @@ public class Usuario implements Sugerible {
 	private Rutina rutina;
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
-	private RepoRecetas repositorio;
+	private RepositorioDeRecetas repositorio;
 	private Usuario usuario;
 	private GestorDeConsultas gestorDeConsultas;
 
@@ -57,7 +57,6 @@ public class Usuario implements Sugerible {
 		this.rutina = rutina;
 		this.grupos = grupos;
 		this.recetasFavoritas = new ArrayList<Receta>();
-		this.repositorio = RepoRecetas.getInstance();
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -281,7 +280,7 @@ public class Usuario implements Sugerible {
 		return usuario.condiciones.stream().allMatch(c -> this.condiciones.contains(c));
 	}
 	
-	public void agregarRepositorio(RepoRecetas repositorio){
+	public void agregarRepositorio(RepositorioDeRecetas repositorio){
 		this.repositorio = repositorio;
 	}
 

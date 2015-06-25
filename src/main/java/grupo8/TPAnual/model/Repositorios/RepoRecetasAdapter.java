@@ -18,13 +18,13 @@ public class RepoRecetasAdapter implements RepositorioDeRecetas {
 
 	private RepoRecetas repoRecetas;
 	private BuscadorAdapter adapter;
-	
-	public RepoRecetasAdapter(RepoRecetas repo){
+
+	public RepoRecetasAdapter(RepoRecetas repo) {
 		this.repoRecetas = repo;
 	}
 
 	public List<RecetaAdapter> getRecetas() {
-		BusquedaRecetas buscador = adapter.getBuscador();		
+		BusquedaRecetas buscador = adapter.getBuscador();
 		String resultJson = repoRecetas.getRecetas(buscador);
 		final Type tipoListaRecetasAdapter = new TypeToken<List<RecetaAdapter>>() {
 		}.getType();
@@ -36,9 +36,10 @@ public class RepoRecetasAdapter implements RepositorioDeRecetas {
 	public List<Receta> listarRecetas() {
 		List<RecetaAdapter> recetasAModificar = this.getRecetas();
 		List<Receta> recetasModificadas = new ArrayList<Receta>();
-		recetasAModificar.forEach(recetaAModificar -> recetasModificadas.add(recetaAModificar.getReceta()));
+		recetasAModificar.forEach(recetaAModificar -> recetasModificadas
+				.add(recetaAModificar.getReceta()));
 		return recetasModificadas;
-		
+
 	}
 
 	public void setAdapter(BuscadorAdapter adapter) {
@@ -48,6 +49,5 @@ public class RepoRecetasAdapter implements RepositorioDeRecetas {
 	public BuscadorAdapter getAdapter() {
 		return adapter;
 	}
-	
-	 
+
 }

@@ -4,6 +4,7 @@ import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,26 +22,29 @@ public class Receta {
 	private Temporada temporada;
 	private Usuario creador;
 	private List<Receta> subrecetas;
+	private RepoRecetas repositorio;
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,
-			Usuario creador, Boolean subidaPorSistema) {
+			Usuario creador, Boolean subidaPorSistema, RepoRecetas repositorio) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
 		this.calorias = calorias;
 		this.creador = creador;
 		this.subrecetas = new ArrayList<Receta>();
+		this.repositorio = repositorio;
 		if (subidaPorSistema)
-			RepoRecetas.getInstance().agregar(this);
+			repositorio.agregar(this);
 		else
 			creador.agregarUnaReceta(this);
+		
 	}
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,
 			String preparacion, Dificultad dificultad, Temporada temporada,
-			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas) {
+			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas, RepoRecetas repositorio) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
@@ -50,9 +54,10 @@ public class Receta {
 		this.temporada = temporada;
 		this.creador = creador;
 		this.subrecetas = subrecetas;
+		this.repositorio = repositorio;
 		creador.agregarUnaReceta(this);
 		if (subidaPorSistema)
-			RepoRecetas.getInstance().agregar(this);
+			repositorio.agregar(this);
 	}
 
 	public void esValida() {
@@ -80,7 +85,7 @@ public class Receta {
 	}
 
 	public boolean esPublica() {
-		return RepoRecetas.getInstance().tieneUnaReceta(this);
+		return repositorio.tieneUnaReceta(this);
 	}
 
 	public boolean puedeSerVistaOModificadaPor(Usuario usuario) {
@@ -144,7 +149,7 @@ public class Receta {
 
 		new Receta(this.nombre, this.ingredientes, this.condimentos,
 				this.calorias, this.preparacion, this.dificultad,
-				this.temporada, creador, false, this.subrecetas);
+				this.temporada, creador, false, this.subrecetas,this.repositorio);
 	}
 
 	public List<ComponenteDeReceta> getIngredientes() {

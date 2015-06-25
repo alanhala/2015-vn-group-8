@@ -16,6 +16,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
+import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 
 import org.junit.Before;
@@ -31,6 +32,7 @@ public class TestUsuario {
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	ComponenteDeReceta colitaDeCuadril, papa;
 	RepoUsuarios repoUsuarios = new RepoUsuarios();
+	RepoRecetas repositorio;
 
 	@Before
 	public void init() {
@@ -69,6 +71,8 @@ public class TestUsuario {
 		
 
 		// Inicializacion de recetas
+		
+		repositorio = new RepoRecetas();
 
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0,
 				1000.0);
@@ -77,7 +81,7 @@ public class TestUsuario {
 		ingredientes.add(papa);
 
 		carneAlHornoConPapas = new Receta("Carne al horno con papas",
-				ingredientes, condimentos, 1350.0, juan, true);
+				ingredientes, condimentos, 1350.0, juan, true, repositorio);
 	}
 
 	@Test

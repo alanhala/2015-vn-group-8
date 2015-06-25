@@ -14,6 +14,7 @@ import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
+import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -26,6 +27,7 @@ public class TestGrupo {
 	Grupo grupoJPO;
 	Grupo grupoSinPepe;
 	Receta flanConDulceDeLeche, carneAlHornoConPapas;
+	RepoRecetas repositorio = new RepoRecetas();
 	ComponenteDeReceta flan, dulceDeLeche, caramelo, colitaDeCuadril, papa;
 	
 	List<ComponenteDeReceta> ingredientes1 = new ArrayList<ComponenteDeReceta>();
@@ -75,14 +77,14 @@ public class TestGrupo {
 		ingredientes1.add(flan);
 		condimentos1.add(caramelo);
 		
-		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0,juan,true);
+		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0,juan,true, repositorio);
 		
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
 		ingredientes2.add(colitaDeCuadril);
 		ingredientes2.add(papa);
 				
-		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0,pepe,true);
+		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0,pepe,true, repositorio);
 	}
 	
 	@Test

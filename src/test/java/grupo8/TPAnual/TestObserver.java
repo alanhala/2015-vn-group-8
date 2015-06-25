@@ -14,6 +14,7 @@ import grupo8.TPAnual.model.Monitores.MonitorConsultasPorHora;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasMasConsultadas;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasSegunSexo;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.FiltroNulo;
@@ -39,6 +40,7 @@ public class TestObserver {
 	private Usuario adictoAlCafe;
 	private Vegano vegano;
 	private RepoRecetas repoRecetas;
+	private GestorDeConsultas gestorDeConsultas = new GestorDeConsultas();
 	
 	Receta caramelo, caldoSalado, cafeConLeche;
 	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo, cafe;
@@ -56,15 +58,17 @@ public class TestObserver {
 	@Before
 	public void setup() {
 		
+		repoRecetas = new RepoRecetas();
+		
 		consultasDeVeganosPorRecetasDificiles = new MonitorConsultasDeVeganosPorRecetasDificiles();
 		consultasPorHora = new MonitorConsultasPorHora();
 		recetasMasConsultadas = new MonitorRecetasMasConsultadas();
 		recetasSegunSexo = new MonitorRecetasSegunSexo();
 		
-		GestorDeConsultas.getInstance().agregarMonitor(consultasDeVeganosPorRecetasDificiles);
-		GestorDeConsultas.getInstance().agregarMonitor(consultasPorHora);
-		GestorDeConsultas.getInstance().agregarMonitor(recetasMasConsultadas);
-		GestorDeConsultas.getInstance().agregarMonitor(recetasSegunSexo);	
+		gestorDeConsultas.agregarMonitor(consultasDeVeganosPorRecetasDificiles);
+		gestorDeConsultas.agregarMonitor(consultasPorHora);
+		gestorDeConsultas.agregarMonitor(recetasMasConsultadas);
+		gestorDeConsultas.agregarMonitor(recetasSegunSexo);	
 		
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -94,13 +98,13 @@ public class TestObserver {
 		vegano = new Vegano();
 		
 		veganoVerdulero = new Usuario(80.5, 1.80, "Verdulero", "masculino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("lechuga", "tomate", "rúcula"),
+				1994, 9, 24), Arrays.asList("lechuga", "tomate", "rï¿½cula"),
 				Arrays.asList("carne", "pollo"), Arrays.asList(vegano),
 				new ArrayList<Receta>(), Rutina.LEVE, new ArrayList<Grupo>());
 		
 		veganaFrutera = new Usuario(80.5, 1.80, "Frutero", "femenino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("manzana", "banana", "kiwi"),
-				Arrays.asList("pescado", "bebés"), Arrays.asList(vegano),
+				Arrays.asList("pescado", "bebï¿½s"), Arrays.asList(vegano),
 				new ArrayList<Receta>(), Rutina.INTENSIVO, new ArrayList<Grupo>());
 		
 		adictoAlCafe = new Usuario(43.2, 1.42, "Cafetero", "masculino", LocalDate.of(
@@ -108,19 +112,28 @@ public class TestObserver {
 				Arrays.asList("nesquik", "noCafe"), Arrays.asList(),
 				new ArrayList<Receta>(), Rutina.NADA, new ArrayList<Grupo>());
 		
+		veganoVerdulero.setGestorDeConsultas(gestorDeConsultas);
+		veganaFrutera.setGestorDeConsultas(gestorDeConsultas);
+		adictoAlCafe.setGestorDeConsultas(gestorDeConsultas);
+		
+		veganoVerdulero.agregarRepositorio(repoRecetas);
+		veganaFrutera.agregarRepositorio(repoRecetas);
+		adictoAlCafe.agregarRepositorio(repoRecetas);
+		
+		
 		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
 				condimentosDeCaramelo, 3000.0, "hacer caramelo", Dificultad.DIFICIL, null,
-				veganaFrutera, false, Arrays.asList());
+				veganaFrutera, false, Arrays.asList(),repoRecetas);
 		
 		caldoSalado = new Receta("caldo salado", ingredientesDeCaldoSalado,
 				condimentosDeCaldoSalado, 700.0, "hacer caldo salado", Dificultad.DIFICIL,
-				null, veganoVerdulero, false, Arrays.asList());
+				null, veganoVerdulero, false, Arrays.asList(), repoRecetas);
 		
 		cafeConLeche = new Receta("cafe con leche", ingredientesDeCafeConLeche,
 				condimentosDeCafeConLeche, 50.0, "mezclar cafe y leche", Dificultad.FACIL,
-				null, adictoAlCafe, false, Arrays.asList());
+				null, adictoAlCafe, false, Arrays.asList(), repoRecetas);
 		
-		repoRecetas = RepoRecetas.getInstance();
+		
 		
 	}
 
@@ -157,7 +170,7 @@ public class TestObserver {
 	}
 	
 	@Test
-	public void lasMujeresConsultanMásElCaramelo() {
+	public void lasMujeresConsultanMasElCaramelo() {
 		
 		veganaFrutera.filtrarRecetas(new FiltroNulo());
 		
@@ -166,7 +179,7 @@ public class TestObserver {
 	}
 	
 	@Test
-	public void losHombresConsultanMásElCaldoSalado() {
+	public void losHombresConsultanMasElCaldoSalado() {
 		
 		veganoVerdulero.filtrarRecetas(new FiltroNulo());
 		veganoVerdulero.filtrarRecetas(new FiltroNulo());

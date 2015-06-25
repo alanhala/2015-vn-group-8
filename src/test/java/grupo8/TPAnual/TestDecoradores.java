@@ -90,6 +90,8 @@ public class TestDecoradores {
 		repoUsuarios.add(roberto);
 
 		// Inicializo las recetas
+		
+		RepoRecetas repositorio = new RepoRecetas();
 
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -155,45 +157,45 @@ public class TestDecoradores {
 		condimentosPublica5.add(pimenton);
 
 		recetaDeRoberto1 = new Receta("arroz con leche", ingredientesRoberto1,
-				condimentosRoberto1, 30.0, roberto, false);
+				condimentosRoberto1, 30.0, roberto, false, repositorio);
 
 		recetaDeRoberto2 = new Receta("grasa con azucar", ingredientesRoberto2,
-				condimentosRoberto2, 70.0, roberto, false);
+				condimentosRoberto2, 70.0, roberto, false, repositorio);
 
 		recetaDeRoberto3 = new Receta("chivito con cebolla",
-				ingredientesRoberto3, condimentosRoberto3, 40.0, roberto, false);
+				ingredientesRoberto3, condimentosRoberto3, 40.0, roberto, false, repositorio);
 
 		recetaDeRoberto4 = new Receta("caldo salado", ingredientesRoberto4,
-				condimentosRoberto4, 250.0, roberto, false);
+				condimentosRoberto4, 250.0, roberto, false, repositorio);
 
 		recetaDeRoberto5 = new Receta("chivito salado", ingredientesRoberto5,
-				condimentosRoberto5, 550.0, roberto, false);
+				condimentosRoberto5, 550.0, roberto, false, repositorio);
 
 		recetaDeRoberto6 = new Receta("torta de chocolate",
 				ingredientesRoberto6, condimentosRoberto6, 900.0, roberto,
-				false);
+				false, repositorio);
 
 		recetaPublica1 = new Receta("pollo al horno con papas",
 				ingredientesPublica1, condimentosPublica1, 1500.0, roberto,
-				true);
+				true, repositorio);
 
 		recetaPublica2 = new Receta("guiso de lentejas", ingredientesPublica2,
-				condimentosPublica2, 600.0, roberto, true);
+				condimentosPublica2, 600.0, roberto, true, repositorio);
 
 		recetaPublica3 = new Receta("fideos con manteca", ingredientesPublica3,
-				condimentosPublica3, 500.0, roberto, true);
+				condimentosPublica3, 500.0, roberto, true, repositorio);
 
 		recetaPublica4 = new Receta("mondongo con tabasco",
 				ingredientesPublica4, condimentosPublica4, 1330.0, roberto,
-				true);
+				true, repositorio);
 
 		recetaPublica5 = new Receta("porotos con pimenton",
 				ingredientesPublica5, condimentosPublica5, 5000.0, roberto,
-				true);
+				true, repositorio);
 
 		// Inicializo el repo
 
-		roberto.agregarRepositorio(RepoRecetas.getInstance());
+		roberto.agregarRepositorio(repositorio);
 	}
 
 	@Test

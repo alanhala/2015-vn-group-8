@@ -19,6 +19,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
+import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -33,6 +34,7 @@ public class TestReceta {
 	Hipertenso hipertenso;
 	Vegano vegano;
 	Usuario pepe;
+	RepoRecetas repositorio;
 	
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
@@ -46,7 +48,9 @@ public class TestReceta {
 	public void init() {
 		
 		//Inicializacion de recetas
-
+		
+		repositorio = new RepoRecetas();
+		
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
 		azucar = new ComponenteDeReceta("azucar", 120.0, 130.0);
@@ -63,13 +67,13 @@ public class TestReceta {
 		condimentosDeCaldoSalado.add(sal);
 
 		recetaSinSubrecetas = new Receta("Arroz con leche", ingredientes,
-				condimentos, 150.0,pepe,true);
+				condimentos, 150.0,pepe,true, repositorio);
 		recetaConSubreceta = new Receta("Arroz con leche y caramelo",
-				ingredientes, condimentos, 5500.0,pepe,true);
+				ingredientes, condimentos, 5500.0,pepe,true, repositorio);
 		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
-				condimentosDeCaramelo, 3000.0,pepe,true);
+				condimentosDeCaramelo, 3000.0,pepe,true, repositorio);
 		caldoSalado = new Receta("caldoSalado", ingredientesDeCaldoSalado,
-				condimentosDeCaldoSalado, 700.0,pepe,true);
+				condimentosDeCaldoSalado, 700.0,pepe,true,repositorio);
 
 		recetaConSubreceta.agregarSubreceta(caramelo);
 		recetaConSubreceta.agregarSubreceta(caldoSalado);
@@ -97,7 +101,7 @@ public class TestReceta {
 	@Test(expected = RecetaSinIngredientesException.class)
 	public void recetaNoTieneIngredientes() {
 		recetaInvalida = new Receta("Aire", Collections.emptyList(),
-				Collections.emptyList(), 1.0,pepe,true);
+				Collections.emptyList(), 1.0,pepe,true, repositorio);
 		recetaInvalida.tieneAlMenosUnIngrediente();
 	}
 

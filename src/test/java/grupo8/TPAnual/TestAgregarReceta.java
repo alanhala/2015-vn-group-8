@@ -24,6 +24,7 @@ public class TestAgregarReceta {
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	List<Receta> recetas = new ArrayList<Receta>();
 	List<Receta> subrecetas = new ArrayList<Receta>();
+	RepoRecetas repositorio = new RepoRecetas();
 
 	@Before
 	public void init() {
@@ -35,7 +36,7 @@ public class TestAgregarReceta {
 		ingredientes.add(leche);
 		condimentos.add(azucar);
 		arrozConLechePublica = new Receta("Arroz con leche", ingredientes,
-				condimentos, 350.00, juan, true);
+				condimentos, 350.00, juan, true, repositorio);
 
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
@@ -52,21 +53,21 @@ public class TestAgregarReceta {
 	public void juanTieneUnaReceta() {
 
 		arrozConLechePrivada = new Receta("Arroz con leche", ingredientes,
-				condimentos, 350.00, juan, false);
+				condimentos, 350.00, juan, false, repositorio);
 		assertTrue(juan.tenesUnaReceta(arrozConLechePrivada));
 	}
 
 	@Test
 	public void seCreaUnaRecetaPublica() {
 		arrozConLechePublica = new Receta("Arroz con leche", ingredientes,
-				condimentos, 350.00, juan, true);
+				condimentos, 350.00, juan, true, repositorio);
 		assertTrue(arrozConLechePublica.esPublica());
 
 	}
 
 	@Test
 	public void seCreaUnaRecetaPublicaYSeAgregaAlRepositorio() {
-		assertTrue(RepoRecetas.getInstance().tieneUnaReceta(arrozConLechePublica));
+		assertTrue(repositorio.tieneUnaReceta(arrozConLechePublica));
 	}
 	
 	@Test

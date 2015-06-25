@@ -4,6 +4,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Rutina;
 import grupo8.TPAnual.model.Dominio.Usuario;
+import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class RecetaAdapter {
 	
 	public Receta getReceta(){
 		Usuario usuarioExterno = new Usuario(2.0,2.0,"Usuario externo", LocalDate.of(1994, 11, 14), Rutina.LEVE);
-		Receta receta = new Receta(nombre,this.crearComponentes(),this.crearComponentes(),(double) totalCalorias,usuarioExterno,false);
+		Receta receta = new Receta(nombre,this.crearComponentes(),this.crearComponentes(),(double) totalCalorias,usuarioExterno,false,new RepoRecetas());
 		return receta;
 	}
 	
