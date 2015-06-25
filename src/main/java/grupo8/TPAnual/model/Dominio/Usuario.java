@@ -10,7 +10,7 @@ import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
-import grupo8.TPAnual.model.Monitores.Notificador;
+import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
@@ -38,13 +38,13 @@ public class Usuario implements Sugerible {
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
 	private RepoRecetas repositorio;
-	private Notificador gestorDeConsultas;
 	private Usuario usuario;
+	private GestorDeConsultas gestorDeConsultas;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
 			List<String> disgustosAlimenticios, List<Condicion> condiciones,
-			List<Receta> recetas, Rutina rutina, List<Grupo> grupos, Notificador gestorDeConsultas) {
+			List<Receta> recetas, Rutina rutina, List<Grupo> grupos) {
 		this.peso = peso;
 		this.altura = altura;
 		this.nombre = nombre;
@@ -56,12 +56,8 @@ public class Usuario implements Sugerible {
 		this.recetas = recetas;
 		this.rutina = rutina;
 		this.grupos = grupos;
-		this.gestorDeConsultas = gestorDeConsultas;
 		this.recetasFavoritas = new ArrayList<Receta>();
-		
 		this.repositorio = RepoRecetas.getInstance();
-		// FIXME I HAVE TO FLYYYYYYYYYYYYYY
-		RepoUsuarios.getInstance().seCreoNuevoPerfil(this);
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -77,8 +73,6 @@ public class Usuario implements Sugerible {
 		this.recetas = new ArrayList<Receta>();
 		this.grupos = new ArrayList<Grupo>();
 		this.recetasFavoritas = new ArrayList<Receta>();
-		
-		RepoUsuarios.getInstance().seCreoNuevoPerfil(this);
 	}
 
 	public double calcularIMC() {
@@ -178,7 +172,8 @@ public class Usuario implements Sugerible {
 	}
 
 	public boolean tienePreferenciasProhibidas(
-			List<String> preferenciasProhibidas) {
+			List
+			<String> preferenciasProhibidas) {
 		return preferenciasAlimenticias.stream().anyMatch(
 				preferencia -> preferenciasProhibidas.contains(preferencia));
 	}
@@ -298,7 +293,7 @@ public class Usuario implements Sugerible {
 		return sexo.equalsIgnoreCase("masculino");
 	}
 
-	public void setGestorDeConsultas(Notificador gestorDeConsultas) {
+	public void setGestorDeConsultas(GestorDeConsultas gestorDeConsultas) {
 		this.gestorDeConsultas = gestorDeConsultas;
 		
 	}
