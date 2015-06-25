@@ -1,12 +1,6 @@
 package grupo8.TPAnual;
 
-import static org.junit.Assert.*;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
+import static org.junit.Assert.assertTrue;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
@@ -23,9 +17,15 @@ import grupo8.TPAnual.model.Decorators.FiltroNulo;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
-import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
+import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -85,6 +85,9 @@ public class TestDecoradores {
 						"frutas"), Arrays.asList("polenta", "fideos"),
 				condiciones, new ArrayList<Receta>(), Rutina.INTENSIVO,
 				new ArrayList<Grupo>());
+
+		RepoUsuarios repoUsuarios = new RepoUsuarios();
+		repoUsuarios.add(roberto);
 
 		// Inicializo las recetas
 
@@ -205,15 +208,14 @@ public class TestDecoradores {
 				recetaDeRoberto2, recetaDeRoberto3, recetaDeRoberto4)));
 	}
 
-	
 	public void filtroRecetasParesParaUsuariosConSobrepeso() {
 		DecoradorProcesarPares procesarRecetasParesParaUsuariosConSobrepeso = new DecoradorProcesarPares(
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));
 		List<Receta> recetasFiltradas = roberto
 				.filtrarRecetas(procesarRecetasParesParaUsuariosConSobrepeso);
 
-		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto2, recetaDeRoberto4
-				)));
+		assertTrue(recetasFiltradas.containsAll(Arrays.asList(recetaDeRoberto2,
+				recetaDeRoberto4)));
 	}
 
 	@Test

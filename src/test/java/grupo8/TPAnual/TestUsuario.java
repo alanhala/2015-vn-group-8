@@ -30,6 +30,7 @@ public class TestUsuario {
 	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	ComponenteDeReceta colitaDeCuadril, papa;
+	RepoUsuarios repoUsuarios = new RepoUsuarios();
 
 	@Before
 	public void init() {
@@ -61,6 +62,11 @@ public class TestUsuario {
 				LocalDate.of(1985, 10, 11), Arrays.asList(), Arrays.asList(),
 				Arrays.asList(vegano, hipertenso, diabetico), Arrays.asList(),
 				Rutina.MEDIANO, Arrays.asList());
+		repoUsuarios.agregarAPendienteDeAprobacion(juan);
+		repoUsuarios.agregarAPendienteDeAprobacion(oscar);
+		repoUsuarios.agregarAPendienteDeAprobacion(pepe);
+		repoUsuarios.agregarAPendienteDeAprobacion(osqui);
+		
 
 		// Inicializacion de recetas
 
@@ -151,38 +157,38 @@ public class TestUsuario {
 
 	@Test
 	public void juanPepeYOscarEstanEnSolicitudesPendientes() {
-		assertTrue(RepoUsuarios.getInstance().getSolicitudesPendientesDeUsuarios()
+		assertTrue(repoUsuarios.getSolicitudesPendientesDeUsuarios()
 				.containsAll(Arrays.asList(juan, pepe, oscar)));
 	}
 
 	@Test
 	public void juanEsAceptadoYEntraEnElRepoUsuarios() {
-		RepoUsuarios.getInstance().aceptarPerfil(juan);
+		repoUsuarios.aceptarPerfil(juan);
 
-		assertTrue(RepoUsuarios.getInstance().getUsuarios().contains(juan));
+		assertTrue(repoUsuarios.getUsuarios().contains(juan));
 	}
 
 	@Test
 	public void juanEsAceptadoYEsEliminadoDeLasSolicitudesPendientes() {
-		RepoUsuarios.getInstance().aceptarPerfil(juan);
-		assertFalse(RepoUsuarios.getInstance().getSolicitudesPendientesDeUsuarios().contains(juan));
+		repoUsuarios.aceptarPerfil(juan);
+		assertFalse(repoUsuarios.getSolicitudesPendientesDeUsuarios().contains(juan));
 	}
 
 	@Test
 	public void osquiTieneCondicionesDeOscar() {
-		RepoUsuarios.getInstance().aceptarPerfil(oscar);
-		RepoUsuarios.getInstance().aceptarPerfil(osqui);
+		repoUsuarios.aceptarPerfil(oscar);
+		repoUsuarios.aceptarPerfil(osqui);
 
 		assertTrue(osqui.tieneLasCondicionesDe(oscar));
 	}
 
 	@Test
 	public void buscarUsuarioConGetEnRepoUsuarios() {
-		RepoUsuarios.getInstance().aceptarPerfil(juan);
-		RepoUsuarios.getInstance().aceptarPerfil(oscar);
-		RepoUsuarios.getInstance().aceptarPerfil(pepe);
+		repoUsuarios.aceptarPerfil(juan);
+		repoUsuarios.aceptarPerfil(oscar);
+		repoUsuarios.aceptarPerfil(pepe);
 
-		Usuario usuarioFiltrado = RepoUsuarios.getInstance().get(juan);
+		Usuario usuarioFiltrado = repoUsuarios.get(juan);
 
 		assertTrue(usuarioFiltrado.equals(juan));
 
@@ -190,17 +196,30 @@ public class TestUsuario {
 
 	@Test
 	public void filtrarUsuariosConNombreYCondiciones() {
-		RepoUsuarios.getInstance().aceptarPerfil(juan);
-		RepoUsuarios.getInstance().aceptarPerfil(oscar);
-		RepoUsuarios.getInstance().aceptarPerfil(pepe);
-		RepoUsuarios.getInstance().aceptarPerfil(osqui);
+		repoUsuarios.aceptarPerfil(juan);
+		repoUsuarios.aceptarPerfil(oscar);
+		repoUsuarios.aceptarPerfil(pepe);
+		repoUsuarios.aceptarPerfil(osqui);
 
-		List<Usuario> usuariosFiltrados = RepoUsuarios.getInstance().list(oscar);
+		List<Usuario> usuariosFiltrados = repoUsuarios.list(oscar);
 
-		// FIXME Separar asserts
-		assertTrue(usuariosFiltrados.containsAll(Arrays.asList(oscar, osqui))
-				&& !usuariosFiltrados.contains(pepe) && !usuariosFiltrados.contains(juan));
+		assertTrue(usuariosFiltrados.containsAll(Arrays.asList(oscar, osqui)));
 
+	}
+	
+	@Test
+	public void pepeYJuanNoEstanDentroDeLosUsuariosFiltradosConNombreYCondiciones(){
+		repoUsuarios.aceptarPerfil(juan);
+		repoUsuarios.aceptarPerfil(oscar);
+		repoUsuarios.aceptarPerfil(pepe);
+		repoUsuarios.aceptarPerfil(osqui);
+
+		List<Usuario> usuariosFiltrados = repoUsuarios.list(oscar);
+		List<Usuario> usuariosNoFiltrados = new ArrayList<Usuario>();
+		usuariosNoFiltrados.add(pepe);
+		usuariosNoFiltrados.add(juan);
+
+		assertTrue(!usuariosFiltrados.containsAll(usuariosNoFiltrados));
 	}
 
 }
