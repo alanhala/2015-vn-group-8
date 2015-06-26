@@ -5,11 +5,11 @@ import static org.junit.Assert.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
+import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Celiaco;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
@@ -27,27 +27,28 @@ import org.junit.Test;
 public class TestReceta {
 
 	Receta recetaSinSubrecetas, recetaInvalida, recetaConSubreceta, caramelo,
-			caldoSalado;
+			caldoSalado, aireCalorico;
 	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo;
 	Celiaco celiaco;
 	Diabetico diabetico;
 	Hipertenso hipertenso;
 	Vegano vegano;
 	Usuario pepe;
+	
 	RepoRecetas repositorio;
 	
-	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> ingredientesDeCaramelo = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentosDeCaramelo = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> ingredientesDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentosDeCaldoSalado = new ArrayList<ComponenteDeReceta>();
 	List<Condicion> condiciones = new ArrayList<Condicion>();
-
+	List<Receta> recetas = new ArrayList<Receta>();
+	
+	RecetaBuilder builderRecetasSinSubrecetas;
+	RecetaBuilder builderRecetasConSubreceta;
+	RecetaBuilder builderCaramelo;
+	RecetaBuilder builderCaldoSalado;
+	RecetaBuilder builderRecetaInvalida;
+	RecetaBuilder builderToneladasDeGrasa;
+	
 	@Before
 	public void init() {
-		
-		//Inicializacion de recetas
 		
 		repositorio = new RepoRecetas();
 		
@@ -58,61 +59,80 @@ public class TestReceta {
 		sal = new ComponenteDeReceta("sal", 10.0, 30.0);
 		caldo = new ComponenteDeReceta("caldo", 4.0, 50.0);
 
-		ingredientes.add(arroz);
-		ingredientes.add(leche);
-		condimentos.add(azucar);
-		ingredientesDeCaramelo.add(grasa);
-		condimentosDeCaramelo.add(azucar);
-		ingredientesDeCaldoSalado.add(caldo);
-		condimentosDeCaldoSalado.add(sal);
-
-		recetaSinSubrecetas = new Receta("Arroz con leche", ingredientes,
-				condimentos, 150.0,pepe,true, repositorio);
-		recetaConSubreceta = new Receta("Arroz con leche y caramelo",
-				ingredientes, condimentos, 5500.0,pepe,true, repositorio);
-		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
-				condimentosDeCaramelo, 3000.0,pepe,true, repositorio);
-		caldoSalado = new Receta("caldoSalado", ingredientesDeCaldoSalado,
-				condimentosDeCaldoSalado, 700.0,pepe,true,repositorio);
-
-		recetaConSubreceta.agregarSubreceta(caramelo);
-		recetaConSubreceta.agregarSubreceta(caldoSalado);
-		
-		//Inicializacion de usuarios
-		
 		hipertenso = new Hipertenso();
 		
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, Arrays.asList());
+				Arrays.asList(hipertenso), recetas, Rutina.LEVE, Arrays.asList());
+		
+		builderCaramelo = new RecetaBuilder();
+		builderCaramelo.setNombre("Caramelo");
+		builderCaramelo.agregarIngrediente(grasa);
+		builderCaramelo.agregarCondimento(azucar);
+		builderCaramelo.setCalorias(3000.0);
+		builderCaramelo.setCreador(pepe);
+		builderCaramelo.setSubidaPorSistema(true);
+		builderCaramelo.setRepositorio(repositorio);
+		caramelo = builderCaramelo.build();
+		
+		builderCaldoSalado = new RecetaBuilder();
+		builderCaldoSalado.setNombre("CaldoSalado");
+		builderCaldoSalado.agregarIngrediente(caldo);
+		builderCaldoSalado.agregarCondimento(sal);
+		builderCaldoSalado.setCalorias(700.0);
+		builderCaldoSalado.setCreador(pepe);
+		builderCaldoSalado.setSubidaPorSistema(true);
+		builderCaldoSalado.setRepositorio(repositorio);
+		caldoSalado = builderCaldoSalado.build();
+		
+		builderRecetasSinSubrecetas = new RecetaBuilder();
+		builderRecetasSinSubrecetas.setNombre("Arroz con leche");
+		builderRecetasSinSubrecetas.agregarIngrediente(arroz);
+		builderRecetasSinSubrecetas.agregarIngrediente(leche);
+		builderRecetasSinSubrecetas.agregarCondimento(azucar);
+		builderRecetasSinSubrecetas.setCalorias(150.0);
+		builderRecetasSinSubrecetas.setCreador(pepe);
+		builderRecetasSinSubrecetas.setSubidaPorSistema(true);
+		builderRecetasSinSubrecetas.setRepositorio(repositorio);
+		recetaSinSubrecetas = builderRecetasSinSubrecetas.build();
+		
+		builderRecetasConSubreceta = new RecetaBuilder();
+		builderRecetasConSubreceta.setNombre("Arroz con leche y caramelo");
+		builderRecetasConSubreceta.agregarIngrediente(arroz);
+		builderRecetasConSubreceta.agregarIngrediente(leche);
+		builderRecetasConSubreceta.agregarCondimento(azucar);
+		builderRecetasConSubreceta.setCalorias(4500.0);
+		builderRecetasConSubreceta.setCreador(pepe);
+		builderRecetasConSubreceta.setSubidaPorSistema(true);
+		builderRecetasConSubreceta.setRepositorio(repositorio);
+		builderRecetasConSubreceta.agregarSubreceta(caramelo);
+		builderRecetasConSubreceta.agregarSubreceta(caldoSalado);
+		recetaConSubreceta = builderRecetasConSubreceta.build();
+	
 
-	}
-
-	@Test
-	public void recetaEsValida() {
-		recetaSinSubrecetas.esValida();
-	}
-
-	@Test
-	public void recetaTieneAlMenosUnIngrediente() {
-		recetaSinSubrecetas.tieneAlMenosUnIngrediente();
 	}
 
 	@Test(expected = RecetaSinIngredientesException.class)
 	public void recetaNoTieneIngredientes() {
-		recetaInvalida = new Receta("Aire", Collections.emptyList(),
-				Collections.emptyList(), 1.0,pepe,true, repositorio);
-		recetaInvalida.tieneAlMenosUnIngrediente();
+		builderRecetaInvalida = new RecetaBuilder();
+		builderRecetaInvalida.setNombre("Aire");
+		builderRecetaInvalida.setCalorias(1.0);
+		builderRecetasConSubreceta.setCreador(pepe);
+		builderRecetasConSubreceta.setSubidaPorSistema(true);
+		builderRecetasConSubreceta.setRepositorio(repositorio);
+		recetaInvalida = builderRecetaInvalida.build();
 	}
 
-	@Test
-	public void recetaSinSubrecetasTieneCaloriasEntre10y5000() {
-		recetaSinSubrecetas.tieneCaloriasEntre(10, 5000);
-	}
-	
 	@Test(expected = RecetaConCaloriasFueraDelRangoException.class)
 	public void recetaConSubrecetaTieneMasDe5000Calorias() {
-		recetaConSubreceta.tieneCaloriasEntre(10, 5000);
+		builderToneladasDeGrasa = new RecetaBuilder();
+		builderToneladasDeGrasa.setNombre("Toneladas de grasa");
+		builderToneladasDeGrasa.agregarIngrediente(grasa);
+		builderToneladasDeGrasa.setCalorias(7284.0);
+		builderToneladasDeGrasa.setCreador(pepe);
+		builderToneladasDeGrasa.setSubidaPorSistema(true);
+		builderToneladasDeGrasa.setRepositorio(repositorio);
+		aireCalorico = builderToneladasDeGrasa.build();
 	}
 
 	@Test

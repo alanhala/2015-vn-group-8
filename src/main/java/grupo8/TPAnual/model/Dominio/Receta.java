@@ -26,23 +26,6 @@ public class Receta {
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,
-			Usuario creador, Boolean subidaPorSistema, RepoRecetas repositorio) {
-		this.nombre = nombre;
-		this.ingredientes = ingredientes;
-		this.condimentos = condimentos;
-		this.calorias = calorias;
-		this.creador = creador;
-		this.subrecetas = new ArrayList<Receta>();
-		this.repositorio = repositorio;
-		if (subidaPorSistema)
-			repositorio.agregar(this);
-		else
-			creador.agregarUnaReceta(this);
-		
-	}
-
-	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
-			List<ComponenteDeReceta> condimentos, Double calorias,
 			String preparacion, Dificultad dificultad, Temporada temporada,
 			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas, RepoRecetas repositorio) {
 		this.nombre = nombre;
@@ -58,26 +41,6 @@ public class Receta {
 		creador.agregarUnaReceta(this);
 		if (subidaPorSistema)
 			repositorio.agregar(this);
-	}
-
-	public void esValida() {
-		this.tieneAlMenosUnIngrediente();
-		this.tieneCaloriasEntre(10, 5000);
-	}
-
-	public void tieneAlMenosUnIngrediente() {
-		if (!(ingredientes.size() >= 1))
-			throw new RecetaSinIngredientesException(
-					"La receta no tiene ingredientes");
-	}
-
-	public void tieneCaloriasEntre(int limiteInferiorDelRango,
-			int limiteSuperiorDelRango) {
-		if (!((limiteInferiorDelRango < this.calorias()) && (this.calorias() < limiteSuperiorDelRango)))
-			throw new RecetaConCaloriasFueraDelRangoException(
-					"Las calorias deben estar entre los valores "
-							+ limiteInferiorDelRango + "y"
-							+ limiteSuperiorDelRango);
 	}
 
 	public Double calorias() {

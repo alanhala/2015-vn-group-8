@@ -1,5 +1,6 @@
 package grupo8.TPAnual.model.Adapters;
 
+import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Rutina;
@@ -21,11 +22,21 @@ public class RecetaAdapter {
 	private Dificultad dificultadReceta;
 	private String autor;
 	private int anioReceta;
+	private RecetaBuilder recetaBuilder;
 	
 	public Receta getReceta(){
 		Usuario usuarioExterno = new Usuario(2.0,2.0,"Usuario externo", LocalDate.of(1994, 11, 14), Rutina.LEVE);
-		Receta receta = new Receta(nombre,this.crearComponentes(),this.crearComponentes(),(double) totalCalorias,usuarioExterno,false,new RepoRecetas());
-		return receta;
+		
+		recetaBuilder = new RecetaBuilder();
+		recetaBuilder.setNombre(nombre);
+		recetaBuilder.setIngredientes(this.crearComponentes());
+		recetaBuilder.setCondimentos(this.crearComponentes());
+		recetaBuilder.setCalorias((double) totalCalorias);
+		recetaBuilder.setCreador(usuarioExterno);
+		recetaBuilder.setSubidaPorSistema(false);
+		recetaBuilder.setRepositorio(new RepoRecetas());
+		
+		return recetaBuilder.build();
 	}
 	
 	public List<ComponenteDeReceta> crearComponentes(){

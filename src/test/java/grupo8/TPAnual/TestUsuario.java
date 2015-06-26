@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
+import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
@@ -23,17 +24,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestUsuario {
+	
 	Usuario juan, oscar, pepe, osqui;
 	Hipertenso hipertenso;
 	Vegano vegano;
 	Diabetico diabetico;
+	
 	Receta carneAlHornoConPapas;
-	List<ComponenteDeReceta> ingredientes = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	ComponenteDeReceta colitaDeCuadril, papa;
+	
 	RepoUsuarios repoUsuarios = new RepoUsuarios();
 	RepoRecetas repositorio;
-
+	
+	RecetaBuilder carneAlHornoConPapasBuilder;
+	List<Receta> recetas = new ArrayList<Receta>();
+	
 	@Before
 	public void init() {
 
@@ -47,41 +52,44 @@ public class TestUsuario {
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
 				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				Arrays.asList(), Rutina.LEVE, Arrays.asList());
+				recetas, Rutina.LEVE, Arrays.asList());
 
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
 				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), Arrays.asList(), Rutina.INTENSIVO,
+						hipertenso), recetas, Rutina.INTENSIVO,
 				Arrays.asList());
 
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE,
+				Arrays.asList(hipertenso), recetas, Rutina.LEVE,
 				Arrays.asList());
 
 		osqui = new Usuario(80.0, 1.90, "Juan Manuel Oscar", "masculino",
 				LocalDate.of(1985, 10, 11), Arrays.asList(), Arrays.asList(),
-				Arrays.asList(vegano, hipertenso, diabetico), Arrays.asList(),
+				Arrays.asList(vegano, hipertenso, diabetico), recetas,
 				Rutina.MEDIANO, Arrays.asList());
+		
 		repoUsuarios.agregarAPendienteDeAprobacion(juan);
 		repoUsuarios.agregarAPendienteDeAprobacion(oscar);
 		repoUsuarios.agregarAPendienteDeAprobacion(pepe);
 		repoUsuarios.agregarAPendienteDeAprobacion(osqui);
-		
-
-		// Inicializacion de recetas
 		
 		repositorio = new RepoRecetas();
 
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0,
 				1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
-		ingredientes.add(colitaDeCuadril);
-		ingredientes.add(papa);
-
-		carneAlHornoConPapas = new Receta("Carne al horno con papas",
-				ingredientes, condimentos, 1350.0, juan, true, repositorio);
+		
+		carneAlHornoConPapasBuilder = new RecetaBuilder();
+		carneAlHornoConPapasBuilder.setNombre("Carne al horno con papas");
+		carneAlHornoConPapasBuilder.agregarIngrediente(colitaDeCuadril);
+		carneAlHornoConPapasBuilder.agregarIngrediente(papa);
+		carneAlHornoConPapasBuilder.setCalorias(1350.0);
+		carneAlHornoConPapasBuilder.setCreador(juan);
+		carneAlHornoConPapasBuilder.setSubidaPorSistema(true);
+		carneAlHornoConPapasBuilder.setRepositorio(repositorio);	
+		carneAlHornoConPapas = carneAlHornoConPapasBuilder.build();
 	}
 
 	@Test

@@ -131,7 +131,6 @@ public class Usuario implements Sugerible {
 	}
 
 	public void tieneAltura() {
-
 		if (altura == null)
 			throw new UsuarioSinAlturaException(
 					"El usuario debe tener una altura");

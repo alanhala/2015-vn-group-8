@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
@@ -26,19 +27,19 @@ public class TestGrupo {
 	Vegano vegano;
 	Grupo grupoJPO;
 	Grupo grupoSinPepe;
+	
 	Receta flanConDulceDeLeche, carneAlHornoConPapas;
 	RepoRecetas repositorio = new RepoRecetas();
 	ComponenteDeReceta flan, dulceDeLeche, caramelo, colitaDeCuadril, papa;
-	
-	List<ComponenteDeReceta> ingredientes1 = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentos1 = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> ingredientes2 = new ArrayList<ComponenteDeReceta>();
-	List<ComponenteDeReceta> condimentos2 = new ArrayList<ComponenteDeReceta>();
+	RecetaBuilder carneAlHornoConPapasBuilder;
+	RecetaBuilder flanConDulceDeLecheBuilder;
+	List<Receta> recetas = new ArrayList<Receta>();
 	
 	List<Usuario> integrantes = new ArrayList<Usuario>();
 	List<Usuario> integrantesSinPepe = new ArrayList<Usuario>();
 	List<Grupo> grupos = new ArrayList<Grupo>();
 	
+
 	@Before
 	public void init(){
 		hipertenso = new Hipertenso();
@@ -47,16 +48,16 @@ public class TestGrupo {
 		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
 				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
 				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				Arrays.asList(), Rutina.LEVE, grupos);
+				recetas, Rutina.LEVE, grupos);
 
 		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
 				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
 				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), Arrays.asList(), Rutina.INTENSIVO, grupos);
+						hipertenso), recetas, Rutina.INTENSIVO, grupos);
 
 		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
 				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), Arrays.asList(), Rutina.LEVE, grupos);
+				Arrays.asList(hipertenso), recetas, Rutina.LEVE, grupos);
 		
 		grupoSinPepe = new Grupo("Pepi-no", integrantesSinPepe, Arrays.asList("chocolate", "dulceDeLeche"));
 		juan.agregarAUnGrupo(grupoSinPepe);
@@ -73,18 +74,30 @@ public class TestGrupo {
 		flan = new ComponenteDeReceta("flan", 400.0, 800.0);
 		caramelo = new ComponenteDeReceta("caramelo", 50.0, 420.0);
 		
-		ingredientes1.add(dulceDeLeche);
-		ingredientes1.add(flan);
-		condimentos1.add(caramelo);
+		flanConDulceDeLecheBuilder = new RecetaBuilder();
+		flanConDulceDeLecheBuilder.setNombre("Flan con dulce de leche");
+		flanConDulceDeLecheBuilder.agregarIngrediente(flan);
+		flanConDulceDeLecheBuilder.agregarIngrediente(dulceDeLeche);
+		flanConDulceDeLecheBuilder.agregarCondimento(caramelo);
+		flanConDulceDeLecheBuilder.setCalorias(1720.0);
+		flanConDulceDeLecheBuilder.setCreador(juan);
+		flanConDulceDeLecheBuilder.setSubidaPorSistema(true);
+		flanConDulceDeLecheBuilder.setRepositorio(repositorio);	
+		flanConDulceDeLeche = flanConDulceDeLecheBuilder.build();
 		
-		flanConDulceDeLeche = new Receta("Flan con dulce de leche", ingredientes1, condimentos1, 1720.0,juan,true, repositorio);
 		
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
-		ingredientes2.add(colitaDeCuadril);
-		ingredientes2.add(papa);
-				
-		carneAlHornoConPapas = new Receta("Carne al horno con papas", ingredientes2, condimentos2, 1350.0,pepe,true, repositorio);
+
+		carneAlHornoConPapasBuilder = new RecetaBuilder();
+		carneAlHornoConPapasBuilder.setNombre("Carne al horno con papas");
+		carneAlHornoConPapasBuilder.agregarIngrediente(colitaDeCuadril);
+		carneAlHornoConPapasBuilder.agregarIngrediente(papa);
+		carneAlHornoConPapasBuilder.setCalorias(1350.0);
+		carneAlHornoConPapasBuilder.setCreador(pepe);
+		carneAlHornoConPapasBuilder.setSubidaPorSistema(true);
+		carneAlHornoConPapasBuilder.setRepositorio(repositorio);	
+		carneAlHornoConPapas = carneAlHornoConPapasBuilder.build();
 	}
 	
 	@Test
