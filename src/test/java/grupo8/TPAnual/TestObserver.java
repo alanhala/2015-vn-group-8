@@ -15,6 +15,7 @@ import grupo8.TPAnual.model.Monitores.MonitorRecetasMasConsultadas;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasSegunSexo;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.FiltroNulo;
@@ -31,16 +32,15 @@ import org.junit.Test;
 
 public class TestObserver {
 
-	private MonitorConsultasDeVeganosPorRecetasDificiles consultasDeVeganosPorRecetasDificiles;
-	private MonitorConsultasPorHora consultasPorHora;
-	private MonitorRecetasMasConsultadas recetasMasConsultadas;
-	private MonitorRecetasSegunSexo recetasSegunSexo;
-	private Usuario veganoVerdulero;
-	private Usuario veganaFrutera;
-	private Usuario adictoAlCafe;
-	private Vegano vegano;
-	private RepoRecetas repoRecetas;
-	private GestorDeConsultas gestorDeConsultas = new GestorDeConsultas();
+	MonitorConsultasDeVeganosPorRecetasDificiles consultasDeVeganosPorRecetasDificiles;
+	MonitorConsultasPorHora consultasPorHora;
+	MonitorRecetasMasConsultadas recetasMasConsultadas;
+	MonitorRecetasSegunSexo recetasSegunSexo;
+	Usuario veganoVerdulero, veganaFrutera, adictoAlCafe;
+	UsuarioBuilder veganoVerduleroBuilder, veganaFruteraBuilder, adictoAlCafeBuilder;
+	Vegano vegano;
+	RepoRecetas repoRecetas;
+	GestorDeConsultas gestorDeConsultas = new GestorDeConsultas();
 	
 	Receta caramelo, caldoSalado, cafeConLeche;
 	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo, cafe;
@@ -97,20 +97,52 @@ public class TestObserver {
 
 		vegano = new Vegano();
 		
-		veganoVerdulero = new Usuario(80.5, 1.80, "Verdulero", "masculino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("lechuga", "tomate", "r�cula"),
-				Arrays.asList("carne", "pollo"), Arrays.asList(vegano),
-				new ArrayList<Receta>(), Rutina.LEVE, new ArrayList<Grupo>());
+		veganoVerduleroBuilder = new UsuarioBuilder();
+		veganoVerduleroBuilder.setPeso(80.5);
+		veganoVerduleroBuilder.setAltura(1.80);
+		veganoVerduleroBuilder.setNombre("Verdulero");
+		veganoVerduleroBuilder.setSexo("masculino");
+		veganoVerduleroBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
+		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("lechuga");
+		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("tomate");
+		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("rucula");
+		veganoVerduleroBuilder.agregarDisgustoAlimenticio("carne");
+		veganoVerduleroBuilder.agregarDisgustoAlimenticio("pollo");
+		veganoVerduleroBuilder.agregarCondicion(vegano);
+		veganoVerduleroBuilder.setRutina(Rutina.LEVE);
+		veganoVerdulero = veganoVerduleroBuilder.build();
+
 		
-		veganaFrutera = new Usuario(80.5, 1.80, "Frutero", "femenino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("manzana", "banana", "kiwi"),
-				Arrays.asList("pescado", "beb�s"), Arrays.asList(vegano),
-				new ArrayList<Receta>(), Rutina.INTENSIVO, new ArrayList<Grupo>());
+		veganaFruteraBuilder = new UsuarioBuilder();
+		veganaFruteraBuilder.setPeso(80.5);
+		veganaFruteraBuilder.setAltura(1.80);
+		veganaFruteraBuilder.setNombre("Frutero");
+		veganaFruteraBuilder.setSexo("femenino");
+		veganaFruteraBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
+		veganaFruteraBuilder.agregarPreferenciaAlimenticia("manzana");
+		veganaFruteraBuilder.agregarPreferenciaAlimenticia("banana");
+		veganaFruteraBuilder.agregarPreferenciaAlimenticia("kiwi");
+		veganaFruteraBuilder.agregarDisgustoAlimenticio("pescado");
+		veganaFruteraBuilder.agregarDisgustoAlimenticio("chivito");
+		veganaFruteraBuilder.agregarCondicion(vegano);
+		veganaFruteraBuilder.setRutina(Rutina.INTENSIVO);
+		veganaFrutera = veganaFruteraBuilder.build();
+
 		
-		adictoAlCafe = new Usuario(43.2, 1.42, "Cafetero", "masculino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("cafe", "leche", "cafeConLeche"),
-				Arrays.asList("nesquik", "noCafe"), Arrays.asList(),
-				new ArrayList<Receta>(), Rutina.NADA, new ArrayList<Grupo>());
+		adictoAlCafeBuilder = new UsuarioBuilder();
+		adictoAlCafeBuilder.setPeso(43.2);
+		adictoAlCafeBuilder.setAltura(1.42);
+		adictoAlCafeBuilder.setNombre("Cafetero");
+		adictoAlCafeBuilder.setSexo("masculino");
+		adictoAlCafeBuilder.setFechaDeNacimiento(LocalDate.of(1992, 3, 6));
+		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("cafe");
+		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("leche");
+		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("cafe con leche");
+		adictoAlCafeBuilder.agregarDisgustoAlimenticio("nesquik");
+		adictoAlCafeBuilder.agregarDisgustoAlimenticio("no cafe");
+		adictoAlCafeBuilder.setRutina(Rutina.NADA);
+		adictoAlCafe = adictoAlCafeBuilder.build();
+
 		
 		veganoVerdulero.setGestorDeConsultas(gestorDeConsultas);
 		veganaFrutera.setGestorDeConsultas(gestorDeConsultas);

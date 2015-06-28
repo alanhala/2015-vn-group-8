@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.time.LocalDate;
 
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
 
@@ -11,19 +12,62 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class TestIMCDeLosDesarrolladores {
-	private Usuario felipe;
-	private Usuario crespo;
-	private Usuario ivo;
-	private Usuario alan;
-	private Usuario diego;
+	
+	Usuario felipe, crespo, ivo, alan, diego;
+	UsuarioBuilder felipeBuilder, crespoBuilder, ivoBuilder, alanBuilder, diegoBuilder;
+	
 
 	@Before
 	public void init() {
-		felipe = new Usuario(55.1, 1.69, "Felipe", LocalDate.of(1994, 9, 23), Rutina.LEVE);
-		crespo = new Usuario(72.2, 1.81, "Juan Manuel", LocalDate.of(1994, 11, 14), Rutina.LEVE);
-		ivo = new Usuario(65.2, 1.78, "Ivo", LocalDate.of(1994, 12, 12), Rutina.LEVE);
-		alan = new Usuario(90.00, 1.80, "Alan", LocalDate.of(1994, 10, 28), Rutina.LEVE);
-		diego = new Usuario(62.00, 1.75, "Diego", LocalDate.of(1995, 6, 3), Rutina.LEVE);
+		
+		felipeBuilder = new UsuarioBuilder();
+		felipeBuilder.setPeso(55.1);
+		felipeBuilder.setAltura(1.69);
+		felipeBuilder.setSexo("masculino");
+		felipeBuilder.setNombre("Felipe");
+		felipeBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 23));
+		felipeBuilder.setRutina(Rutina.LEVE);
+		felipe = felipeBuilder.build();
+		
+		
+		crespoBuilder = new UsuarioBuilder();
+		crespoBuilder.setPeso(72.2);
+		crespoBuilder.setAltura(1.81);
+		crespoBuilder.setSexo("masculino");
+		crespoBuilder.setNombre("Juan Manuel");
+		crespoBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
+		crespoBuilder.setRutina(Rutina.LEVE);
+		crespo = crespoBuilder.build();
+		
+		
+		ivoBuilder = new UsuarioBuilder();
+		ivoBuilder.setPeso(65.2);
+		ivoBuilder.setAltura(1.78);
+		ivoBuilder.setNombre("Ivo");
+		ivoBuilder.setFechaDeNacimiento(LocalDate.of(1994, 12, 12));
+		ivoBuilder.setSexo("masculino");
+		ivoBuilder.setRutina(Rutina.LEVE);
+		ivo = ivoBuilder.build();
+		
+		
+		alanBuilder = new UsuarioBuilder();
+		alanBuilder.setPeso(90.0);
+		alanBuilder.setAltura(1.80);
+		alanBuilder.setNombre("Alan");
+		alanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 10, 28));
+		alanBuilder.setSexo("masculino");
+		alanBuilder.setRutina(Rutina.LEVE);
+		alan = alanBuilder.build();
+		
+		
+		diegoBuilder = new UsuarioBuilder();
+		diegoBuilder.setPeso(62.00);
+		diegoBuilder.setAltura(1.75);
+		diegoBuilder.setNombre("Diego");
+		diegoBuilder.setFechaDeNacimiento(LocalDate.of(1995, 6, 3));
+		diegoBuilder.setSexo("masculino");
+		diegoBuilder.setRutina(Rutina.LEVE);
+		diego = diegoBuilder.build();
 	}
 
 	@Test
