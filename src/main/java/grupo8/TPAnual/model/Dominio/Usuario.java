@@ -38,7 +38,6 @@ public class Usuario implements Sugerible {
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
 	private RepositorioDeRecetas repositorio;
-	private Usuario usuario;
 	private GestorDeConsultas gestorDeConsultas;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
@@ -290,10 +289,11 @@ public class Usuario implements Sugerible {
 	public boolean esHombre() {
 		return sexo.equalsIgnoreCase("masculino");
 	}
-
+	
 	public void setGestorDeConsultas(GestorDeConsultas gestorDeConsultas) {
-		this.gestorDeConsultas = gestorDeConsultas;
-		
+		this.gestorDeConsultas = gestorDeConsultas;	
 	}
+
+
 
 }

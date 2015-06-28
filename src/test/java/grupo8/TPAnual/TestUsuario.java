@@ -10,6 +10,7 @@ import java.util.List;
 
 import grupo8.TPAnual.exceptions.VeganoInvalidoException;
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
@@ -36,6 +37,8 @@ public class TestUsuario {
 	RepoUsuarios repoUsuarios = new RepoUsuarios();
 	RepoRecetas repositorio;
 	
+	UsuarioBuilder juanBuilder, oscarBuilder, pepeBuilder, osquiBuilder;
+	
 	RecetaBuilder carneAlHornoConPapasBuilder;
 	List<Receta> recetas = new ArrayList<Receta>();
 	
@@ -49,26 +52,61 @@ public class TestUsuario {
 
 		
 		// FIXME Usar fixtures?
-		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
-				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
-				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				recetas, Rutina.LEVE, Arrays.asList());
+		juanBuilder = new UsuarioBuilder();
+		juanBuilder.setPeso(72.2);
+		juanBuilder.setAltura(1.81);
+		juanBuilder.setNombre("Juan Manuel");
+		juanBuilder.setSexo("masculino");
+		juanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
+		juanBuilder.agregarPreferenciaAlimenticia("sopa");
+		juanBuilder.agregarPreferenciaAlimenticia("pasta");
+		juanBuilder.agregarDisgustoAlimenticio("polenta");
+		juanBuilder.agregarDisgustoAlimenticio("pollo");
+		juanBuilder.setRutina(Rutina.INTENSIVO);
+		juan = juanBuilder.build();
+		
+	
+		oscarBuilder = new UsuarioBuilder();
+		oscarBuilder.setPeso(80.5);
+		oscarBuilder.setAltura(1.80);
+		oscarBuilder.setNombre("Oscar");
+		oscarBuilder.setSexo("masculino");
+		oscarBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
+		oscarBuilder.agregarPreferenciaAlimenticia("queso");
+		oscarBuilder.agregarPreferenciaAlimenticia("pescado");
+		oscarBuilder.agregarPreferenciaAlimenticia("frutas");
+		oscarBuilder.agregarDisgustoAlimenticio("polenta");
+		oscarBuilder.agregarDisgustoAlimenticio("fideos");
+		oscarBuilder.agregarCondicion(hipertenso);
+		oscarBuilder.agregarCondicion(vegano);
+		oscarBuilder.setRutina(Rutina.INTENSIVO);
+		oscar = oscarBuilder.build();
 
-		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
-				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), recetas, Rutina.INTENSIVO,
-				Arrays.asList());
+		
+		pepeBuilder = new UsuarioBuilder();
+		pepeBuilder.setPeso(70.0);
+		pepeBuilder.setAltura(1.70);
+		pepeBuilder.setNombre("Pepex");
+		pepeBuilder.setSexo("masculino");
+		pepeBuilder.setFechaDeNacimiento(LocalDate.of(1990,4, 2));
+		pepeBuilder.agregarPreferenciaAlimenticia("asado");
+		pepeBuilder.agregarPreferenciaAlimenticia("chivito");
+		pepeBuilder.agregarCondicion(hipertenso);
+		pepeBuilder.setRutina(Rutina.LEVE);
+		pepe = pepeBuilder.build();
 
-		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
-				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), recetas, Rutina.LEVE,
-				Arrays.asList());
+		osquiBuilder = new UsuarioBuilder();
+		osquiBuilder.setPeso(80.0);
+		osquiBuilder.setAltura(1.90);
+		osquiBuilder.setNombre("Juan Manuel Oscar");
+		osquiBuilder.setSexo("masculino");
+		osquiBuilder.setFechaDeNacimiento(LocalDate.of(1985, 10, 11));
+		osquiBuilder.agregarCondicion(vegano);
+		osquiBuilder.agregarCondicion(hipertenso);
+		osquiBuilder.agregarCondicion(diabetico);
+		osquiBuilder.setRutina(Rutina.MEDIANO);
+		osqui = osquiBuilder.build();
 
-		osqui = new Usuario(80.0, 1.90, "Juan Manuel Oscar", "masculino",
-				LocalDate.of(1985, 10, 11), Arrays.asList(), Arrays.asList(),
-				Arrays.asList(vegano, hipertenso, diabetico), recetas,
-				Rutina.MEDIANO, Arrays.asList());
 		
 		repoUsuarios.agregarAPendienteDeAprobacion(juan);
 		repoUsuarios.agregarAPendienteDeAprobacion(oscar);
