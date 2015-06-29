@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
@@ -19,6 +20,7 @@ import org.junit.Test;
 
 public class TestAgregarReceta {
 	Usuario juan, pedro;
+	UsuarioBuilder juanBuilder, pedroBuilder;
 	Receta arrozConLechePrivada, arrozConLechePublica;
 	
 	ComponenteDeReceta arroz, leche, azucar, grasa;
@@ -33,14 +35,32 @@ public class TestAgregarReceta {
 	@Before
 	public void init() {
 
-		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
-				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
-				Arrays.asList("polenta", "pollo"), Arrays.asList(), recetas,
-				Rutina.LEVE, Arrays.asList());
-		pedro = new Usuario(72.2, 1.81, "Pedro", "masculino",
-				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
-				Arrays.asList("polenta", "pollo"), Arrays.asList(), recetas,
-				Rutina.LEVE, Arrays.asList());
+		juanBuilder = new UsuarioBuilder();
+		juanBuilder.setPeso(72.2);
+		juanBuilder.setAltura(1.81);
+		juanBuilder.setNombre("Juan Manuel");
+		juanBuilder.setSexo("masculino");
+		juanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
+		juanBuilder.agregarPreferenciaAlimenticia("sopa");
+		juanBuilder.agregarPreferenciaAlimenticia("pasta");
+		juanBuilder.agregarDisgustoAlimenticio("polenta");
+		juanBuilder.agregarDisgustoAlimenticio("pollo");
+		juanBuilder.setRutina(Rutina.LEVE);
+		juan = juanBuilder.build();
+	
+		pedroBuilder = new UsuarioBuilder();
+		pedroBuilder.setPeso(72.2);
+		pedroBuilder.setAltura(1.81);
+		pedroBuilder.setNombre("Pedro");
+		pedroBuilder.setSexo("masculino");
+		pedroBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
+		pedroBuilder.agregarPreferenciaAlimenticia("sopa");
+		pedroBuilder.agregarPreferenciaAlimenticia("pasta");
+		pedroBuilder.agregarDisgustoAlimenticio("polenta");
+		pedroBuilder.agregarDisgustoAlimenticio("pollo");
+		pedroBuilder.setRutina(Rutina.LEVE);
+		pedro = pedroBuilder.build();
+
 
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);

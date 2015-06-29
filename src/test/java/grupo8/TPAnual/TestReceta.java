@@ -10,6 +10,7 @@ import java.util.List;
 import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Celiaco;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico;
@@ -34,6 +35,7 @@ public class TestReceta {
 	Hipertenso hipertenso;
 	Vegano vegano;
 	Usuario pepe;
+	UsuarioBuilder pepeBuilder;
 	
 	RepoRecetas repositorio;
 	
@@ -61,9 +63,18 @@ public class TestReceta {
 
 		hipertenso = new Hipertenso();
 		
-		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
-				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), recetas, Rutina.LEVE, Arrays.asList());
+		pepeBuilder = new UsuarioBuilder();
+		pepeBuilder.setPeso(70.0);
+		pepeBuilder.setAltura(1.70);
+		pepeBuilder.setNombre("Pepex");
+		pepeBuilder.setSexo("masculino");
+		pepeBuilder.setFechaDeNacimiento(LocalDate.of(1990, 4, 2));
+		pepeBuilder.agregarPreferenciaAlimenticia("asado");
+		pepeBuilder.agregarPreferenciaAlimenticia("chivito");
+		pepeBuilder.agregarCondicion(hipertenso);
+		pepeBuilder.setRutina(Rutina.LEVE);
+		pepe = pepeBuilder.build();
+
 		
 		builderCaramelo = new RecetaBuilder();
 		builderCaramelo.setNombre("Caramelo");

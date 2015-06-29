@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
@@ -23,6 +24,7 @@ import org.junit.Test;
 public class TestGrupo {
 	
 	Usuario juan, oscar, pepe;
+	UsuarioBuilder juanBuilder, oscarBuilder, pepeBuilder;
 	Hipertenso hipertenso;
 	Vegano vegano;
 	Grupo grupoJPO;
@@ -45,19 +47,49 @@ public class TestGrupo {
 		hipertenso = new Hipertenso();
 		vegano = new Vegano();
 		
-		juan = new Usuario(72.2, 1.81, "Juan Manuel", "masculino",
-				LocalDate.of(1994, 11, 14), Arrays.asList("sopa", "pasta"),
-				Arrays.asList("polenta", "pollo"), Arrays.asList(),
-				recetas, Rutina.LEVE, grupos);
+		juanBuilder = new UsuarioBuilder();
+		juanBuilder.setPeso(72.2);
+		juanBuilder.setAltura(1.81);
+		juanBuilder.setNombre("Juan Manuel");
+		juanBuilder.setSexo("masculino");
+		juanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
+		juanBuilder.agregarPreferenciaAlimenticia("sopa");
+		juanBuilder.agregarPreferenciaAlimenticia("pasta");
+		juanBuilder.agregarDisgustoAlimenticio("polenta");
+		juanBuilder.agregarDisgustoAlimenticio("pollo");
+		juanBuilder.setRutina(Rutina.LEVE);
+		juan = juanBuilder.build();
+		
+		
+		oscarBuilder = new UsuarioBuilder();
+		oscarBuilder.setPeso(80.5);
+		oscarBuilder.setAltura(1.80);
+		oscarBuilder.setNombre("Oscar");
+		oscarBuilder.setSexo("masculino");
+		oscarBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
+		oscarBuilder.agregarPreferenciaAlimenticia("queso");
+		oscarBuilder.agregarPreferenciaAlimenticia("pescado");
+		oscarBuilder.agregarPreferenciaAlimenticia("frutas");
+		oscarBuilder.agregarDisgustoAlimenticio("polenta");
+		oscarBuilder.agregarDisgustoAlimenticio("fideos");
+		oscarBuilder.agregarCondicion(hipertenso);
+		oscarBuilder.agregarCondicion(vegano);
+		oscarBuilder.setRutina(Rutina.INTENSIVO);
+		oscar = oscarBuilder.build();
 
-		oscar = new Usuario(80.5, 1.80, "Oscar", "masculino", LocalDate.of(
-				1994, 9, 24), Arrays.asList("queso", "pescado", "frutas"),
-				Arrays.asList("polenta", "fideos"), Arrays.asList(vegano,
-						hipertenso), recetas, Rutina.INTENSIVO, grupos);
+		
+		pepeBuilder = new UsuarioBuilder();
+		pepeBuilder.setPeso(70.0);
+		pepeBuilder.setAltura(1.70);
+		pepeBuilder.setNombre("Pepex");
+		pepeBuilder.setSexo("masculino");
+		pepeBuilder.setFechaDeNacimiento(LocalDate.of(1990,4, 2));
+		pepeBuilder.agregarPreferenciaAlimenticia("asado");
+		pepeBuilder.agregarPreferenciaAlimenticia("chivito");
+		pepeBuilder.agregarCondicion(hipertenso);
+		pepeBuilder.setRutina(Rutina.LEVE);
+		pepe = pepeBuilder.build();
 
-		pepe = new Usuario(70.0, 1.70, "Pepex", "masculino", LocalDate.of(1990,
-				4, 2), Arrays.asList("asado", "chivito"), Arrays.asList(),
-				Arrays.asList(hipertenso), recetas, Rutina.LEVE, grupos);
 		
 		grupoSinPepe = new Grupo("Pepi-no", integrantesSinPepe, Arrays.asList("chocolate", "dulceDeLeche"));
 		juan.agregarAUnGrupo(grupoSinPepe);
