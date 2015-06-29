@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.Commands.EnviarMail;
+import grupo8.TPAnual.model.Commands.LogConsulta;
 import grupo8.TPAnual.model.Commands.MarcarComoFavoritas;
 import grupo8.TPAnual.model.Decorators.FiltroNulo;
 import grupo8.TPAnual.model.DependenciasLocales.Mail;
@@ -56,7 +57,7 @@ public class TestCommands {
 				LocalDate.of(1994, 9, 24), Rutina.INTENSIVO);
 		ernesto.setGestorDeConsultas(gestor);
 		ernesto.setRepositorio(repoRecetas);
-		
+
 		receta1Builder = new RecetaBuilder();
 		receta1Builder.setNombre("Pollo con papas");
 		receta1Builder.agregarIngrediente(pollo);
@@ -66,7 +67,7 @@ public class TestCommands {
 		receta1Builder.setSubidaPorSistema(true);
 		receta1Builder.setRepositorio(repoRecetas);
 		receta1 = receta1Builder.build();
-		
+
 		receta2Builder = new RecetaBuilder();
 		receta2Builder.setNombre("filet de merluza con cebolla");
 		receta2Builder.agregarIngrediente(merluza);
@@ -102,5 +103,21 @@ public class TestCommands {
 		gestor.ejecutarAcciones();
 		assertTrue(ernesto.getRecetasFavoritas().containsAll(
 				Arrays.asList(receta1, receta2)));
+	}
+
+	@Test
+	public void seGeneraLaTareaPendienteDeLoggearUnaConsulta() {
+		// Agrego 100 recetas para que la consulta devuelva 102 filtradas
+		// y asi se cree el log (ya habia 2 creadas en el before)
+
+		for (int i = 0; i < 100; i++) {
+			receta2Builder.build();
+		}
+		
+		//Esto es feucho pero bueno :)
+		recetasFiltradas = ernesto.filtrarRecetas(filtro);
+		assertEquals(LogConsulta.class, ernesto.getGestorDeConsultas()
+				.getAccionesARealizar().get(0).getClass());
+
 	}
 }
