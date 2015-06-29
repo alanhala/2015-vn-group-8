@@ -7,6 +7,8 @@ import grupo8.TPAnual.exceptions.UsuarioSinFechaDeNacimientoException;
 import grupo8.TPAnual.exceptions.UsuarioSinPesoException;
 import grupo8.TPAnual.exceptions.UsuarioSinNombreException;
 import grupo8.TPAnual.exceptions.UsuarioSinRutinaException;
+import grupo8.TPAnual.model.Commands.LogConsulta;
+import grupo8.TPAnual.model.Commands.TratamientoDeConsultas;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
@@ -39,6 +41,7 @@ public class Usuario implements Sugerible {
 	private List<Receta> recetasFavoritas;
 	private RepositorioDeRecetas repositorio;
 	private GestorDeConsultas gestorDeConsultas;
+	private List<TratamientoDeConsultas> tratamientosDeConsultas;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,
@@ -56,6 +59,7 @@ public class Usuario implements Sugerible {
 		this.rutina = rutina;
 		this.grupos = grupos;
 		this.recetasFavoritas = new ArrayList<Receta>();
+		this.tratamientosDeConsultas = new ArrayList<TratamientoDeConsultas>();
 	}
 
 	public Usuario(Double peso, Double altura, String nombre,
@@ -71,6 +75,7 @@ public class Usuario implements Sugerible {
 		this.recetas = new ArrayList<Receta>();
 		this.grupos = new ArrayList<Grupo>();
 		this.recetasFavoritas = new ArrayList<Receta>();
+		this.tratamientosDeConsultas = new ArrayList<TratamientoDeConsultas>();
 	}
 
 	public double calcularIMC() {
@@ -259,11 +264,26 @@ public class Usuario implements Sugerible {
 		return recetasFiltradas;
 	}
 	
-	public List<Receta> filtrarRecetas(Filtro filtro){
+	public List<Receta> filtrarRecetas(Filtro filtro) {
 		List<Receta> recetasAFiltrar = this.getRecetasAccesibles();
-		List<Receta> recetasFiltradas = filtro.filtrarRecetasDe(this,recetasAFiltrar);
+		List<Receta> recetasFiltradas = filtro.filtrarRecetasDe(this,
+				recetasAFiltrar);
 		this.gestorDeConsultas.notificar(this, recetasFiltradas);
+		this.tratarConsulta(filtro, recetasFiltradas);
 		return recetasFiltradas;
+	}
+	
+	// Este metodo crea las acciones correspondientes a realizar y las manda al
+	// gestor de consultas
+	private void tratarConsulta(Filtro filtro, List<Receta> recetasFiltradas) {
+
+		if (recetasFiltradas.size() > 100) {
+			gestorDeConsultas.agregarAccionARealizar(new LogConsulta(recetasFiltradas));
+		}
+
+		this.tratamientosDeConsultas.forEach(t -> t.agregarAccionARealizar(
+				this, filtro, recetasFiltradas));
+
 	}
 
 	public Boolean tieneMismoNombreQue(Usuario usuario) {
@@ -294,6 +314,20 @@ public class Usuario implements Sugerible {
 		this.gestorDeConsultas = gestorDeConsultas;	
 	}
 
+	public List<Receta> getRecetasFavoritas() {
+		return recetasFavoritas;
+	}
 
+	public GestorDeConsultas getGestorDeConsultas() {
+		return gestorDeConsultas;
+	}
+	
+	public void agregarTratamientoDeConsultas(TratamientoDeConsultas tratamiento) {
+		tratamientosDeConsultas.add(tratamiento);
+	}
 
+	public void setRepositorio(RepositorioDeRecetas repositorio) {
+		this.repositorio = repositorio;
+	}
+	
 }
