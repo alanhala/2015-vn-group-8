@@ -36,6 +36,8 @@ public class MarcarComoFavoritas implements TratamientoDeConsultas {
 	@Override
 	public void ejecutar() {
 		recetasFiltradas.forEach(receta -> usuario.agregarAFavoritos(receta));
+		//TODO Que pasa acá cuando la receta ya estaba en la lista de favoritos? 
+		//Hay duplicados? Me parece que pifiaron en el tipo de la lista de favoritos :) revisenlo.
 	}
 
 }
