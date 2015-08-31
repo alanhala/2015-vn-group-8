@@ -55,6 +55,7 @@ public class TestCommands {
 
 		ernesto = new Usuario(66.0, 177.0, "Ernesto",
 				LocalDate.of(1994, 9, 24), Rutina.INTENSIVO);
+		//TODO No habia un builder para esto?
 		ernesto.setGestorDeConsultas(gestor);
 		ernesto.setRepositorio(repoRecetas);
 
@@ -118,6 +119,8 @@ public class TestCommands {
 		recetasFiltradas = ernesto.filtrarRecetas(filtro);
 		assertEquals(LogConsulta.class, ernesto.getGestorDeConsultas()
 				.getAccionesARealizar().get(0).getClass());
+		// TODO Medio raro esto jajaj 
+		//de ultima revisen que encuentre una con ese tipo de objeto, pero ese get(0) es medio... casi hardcodeado.
 
 	}
 }

@@ -47,6 +47,23 @@ public class TestAgregarReceta {
 		juanBuilder.agregarDisgustoAlimenticio("pollo");
 		juanBuilder.setRutina(Rutina.LEVE);
 		juan = juanBuilder.build();
+		
+		/* TODO Tooooodos los test que arreglaron con el builder quedan un poco más amigables asi:
+		 Yo los cambiaría para que queden más entendibles.
+		 
+		juan = new UsuarioBuilder()
+		.setPeso(72.2)
+		.setAltura(1.81)
+		.setNombre("Juan Manuel")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 11, 14))
+		.agregarPreferenciaAlimenticia("sopa")
+		.agregarPreferenciaAlimenticia("pasta")
+		.agregarDisgustoAlimenticio("polenta")
+		.agregarDisgustoAlimenticio("pollo")
+		.setRutina(Rutina.LEVE)
+		.build();
+		 */
 	
 		pedroBuilder = new UsuarioBuilder();
 		pedroBuilder.setPeso(72.2);
@@ -87,6 +104,8 @@ public class TestAgregarReceta {
 		arrozConLechePrivadaBuilder.setSubidaPorSistema(false);
 		arrozConLechePrivadaBuilder.setRepositorio(repositorio);
 		arrozConLechePrivada = arrozConLechePrivadaBuilder.build();
+		
+		//TODO hasta si miran el commit, el codigo se les recontra agradó por esto. 
 	}
 
 	@Test

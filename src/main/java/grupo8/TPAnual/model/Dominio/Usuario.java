@@ -280,6 +280,9 @@ public class Usuario implements Sugerible {
 		if (recetasFiltradas.size() > 100) {
 			gestorDeConsultas.agregarAccionARealizar(new LogConsulta(recetasFiltradas));
 		}
+		//TODO Porque hace el checkeo de cuantos resultados tienen acá? 
+		//No les parece mejor agregar siempre un log, 
+		//y hacer que dentro del log se fije si tiene que loguear o no segun la cantidad de resultados? 
 
 		this.tratamientosDeConsultas.forEach(t -> t.agregarAccionARealizar(
 				this, filtro, recetasFiltradas));

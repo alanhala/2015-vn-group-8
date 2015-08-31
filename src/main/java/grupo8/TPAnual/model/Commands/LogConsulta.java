@@ -27,6 +27,8 @@ public class LogConsulta implements TratamientoDeConsultas {
 
 	@Override
 	public void ejecutar() {
+		//Ven, acá... meten en vez de en el usuario el checkeo acá, y siempre agregan un log. 
+		//Cuando me vean cuentenme que les parece.
 		log.info(recetasConsultadas);
 	}
 }
