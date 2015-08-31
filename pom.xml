@@ -8,34 +8,47 @@
 	<name>TPAnual</name>
 	<url>http://maven.apache.org</url>
 	<dependencies>
+
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+     			<groupId>org.mongodb.morphia</groupId>
+      			<artifactId>morphia</artifactId>
+      			<version>1.0.1</version>
+    		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
+
 		<dependency>
 			<groupId>org.uqbar-project</groupId>
 			<artifactId>queComemos-repoRecetas-entrega3</artifactId>
 			<version>0.0.2</version>
 		</dependency>
+
 		<dependency>
 			<groupId>commons-logging</groupId>
 			<artifactId>commons-logging</artifactId>
 			<version>1.1.1</version>
 		</dependency>
+
 	</dependencies>
+
 	<build>
 		<plugins>
 			<plugin>
