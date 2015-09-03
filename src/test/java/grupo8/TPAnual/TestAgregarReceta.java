@@ -48,8 +48,8 @@ public class TestAgregarReceta {
 		juanBuilder.setRutina(Rutina.LEVE);
 		juan = juanBuilder.build();
 		
-		/* TODO Tooooodos los test que arreglaron con el builder quedan un poco más amigables asi:
-		 Yo los cambiaría para que queden más entendibles.
+		/* TODO Tooooodos los test que arreglaron con el builder quedan un poco mï¿½s amigables asi:
+		 Yo los cambiarï¿½a para que queden mï¿½s entendibles.
 		 
 		juan = new UsuarioBuilder()
 		.setPeso(72.2)
@@ -105,7 +105,7 @@ public class TestAgregarReceta {
 		arrozConLechePrivadaBuilder.setRepositorio(repositorio);
 		arrozConLechePrivada = arrozConLechePrivadaBuilder.build();
 		
-		//TODO hasta si miran el commit, el codigo se les recontra agradó por esto. 
+		//TODO hasta si miran el commit, el codigo se les recontra agradï¿½ por esto. 
 	}
 
 	@Test
