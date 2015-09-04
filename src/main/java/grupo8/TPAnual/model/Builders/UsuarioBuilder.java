@@ -45,49 +45,61 @@ public class UsuarioBuilder {
 		return unUsuario;
 	}
 
-	public void setPeso(Double nuevoPeso) {
+	public UsuarioBuilder setPeso(Double nuevoPeso) {
 		peso = nuevoPeso;
+		return this;
 	}
 	
-	public void setAltura(Double nuevaAltura) {
+	public UsuarioBuilder setAltura(Double nuevaAltura) {
 		altura = nuevaAltura;
+		return this;
 	}
 	
-	public void setNombre(String nuevoNombre) {
+	public UsuarioBuilder setNombre(String nuevoNombre) {
 		nombre = nuevoNombre;
+		return this;
 	}
 	
-	public void setSexo(String nuevoSexo) {
+	public UsuarioBuilder setSexo(String nuevoSexo) {
 		sexo = nuevoSexo;
+		return this;
 	}
 	
-	public void setFechaDeNacimiento(LocalDate nuevaFecha) {
+	public UsuarioBuilder setFechaDeNacimiento(LocalDate nuevaFecha) {
 		fechaDeNacimiento = nuevaFecha;
+		return this;
 	}
 	
-	public void agregarPreferenciaAlimenticia(String nuevaPreferencia) {
+	public UsuarioBuilder agregarPreferenciaAlimenticia(String nuevaPreferencia) {
 		preferenciasAlimenticias.add(nuevaPreferencia);
+		return this;
 	}
 	
-	public void agregarDisgustoAlimenticio(String nuevoDisgusto) {
+	public UsuarioBuilder agregarDisgustoAlimenticio(String nuevoDisgusto) {
 		disgustosAlimenticios.add(nuevoDisgusto);
+		return this;
 	}
 	
-	public void agregarCondicion(Condicion nuevaCondicion) {
+	public UsuarioBuilder agregarCondicion(Condicion nuevaCondicion) {
 		condiciones.add(nuevaCondicion);
+		return this;
 	}
 	
-	public void agregarReceta(Receta nuevaReceta) {
+	public UsuarioBuilder agregarReceta(Receta nuevaReceta) {
 		recetas.add(nuevaReceta);
+		return this;
 	}
 	
-	public void setRutina(Rutina nuevaRutina) {
+	public UsuarioBuilder setRutina(Rutina nuevaRutina) {
 		rutina = nuevaRutina;
+		return this;
 	}
 	
-	public void agregarGrupo(Grupo nuevoGrupo) {
+	public UsuarioBuilder agregarGrupo(Grupo nuevoGrupo) {
 		grupos.add(nuevoGrupo);
+		return this;
 	}
+	
 	
 
 }

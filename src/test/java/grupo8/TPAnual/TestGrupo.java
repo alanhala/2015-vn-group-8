@@ -44,51 +44,49 @@ public class TestGrupo {
 
 	@Before
 	public void init(){
-		hipertenso = new Hipertenso();
-		vegano = new Vegano();
 		
-		juanBuilder = new UsuarioBuilder();
-		juanBuilder.setPeso(72.2);
-		juanBuilder.setAltura(1.81);
-		juanBuilder.setNombre("Juan Manuel");
-		juanBuilder.setSexo("masculino");
-		juanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
-		juanBuilder.agregarPreferenciaAlimenticia("sopa");
-		juanBuilder.agregarPreferenciaAlimenticia("pasta");
-		juanBuilder.agregarDisgustoAlimenticio("polenta");
-		juanBuilder.agregarDisgustoAlimenticio("pollo");
-		juanBuilder.setRutina(Rutina.LEVE);
-		juan = juanBuilder.build();
+		juan = new UsuarioBuilder()
+		.setPeso(72.2)
+		.setAltura(1.81)
+		.setNombre("Juan Manuel")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 11, 14))
+		.agregarPreferenciaAlimenticia("sopa")
+		.agregarPreferenciaAlimenticia("pasta")
+		.agregarDisgustoAlimenticio("polenta")
+		.agregarDisgustoAlimenticio("pollo")
+		.setRutina(Rutina.LEVE)
+		.build();
 		
 		
-		oscarBuilder = new UsuarioBuilder();
-		oscarBuilder.setPeso(80.5);
-		oscarBuilder.setAltura(1.80);
-		oscarBuilder.setNombre("Oscar");
-		oscarBuilder.setSexo("masculino");
-		oscarBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
-		oscarBuilder.agregarPreferenciaAlimenticia("queso");
-		oscarBuilder.agregarPreferenciaAlimenticia("pescado");
-		oscarBuilder.agregarPreferenciaAlimenticia("frutas");
-		oscarBuilder.agregarDisgustoAlimenticio("polenta");
-		oscarBuilder.agregarDisgustoAlimenticio("fideos");
-		oscarBuilder.agregarCondicion(hipertenso);
-		oscarBuilder.agregarCondicion(vegano);
-		oscarBuilder.setRutina(Rutina.INTENSIVO);
-		oscar = oscarBuilder.build();
+		oscar = new UsuarioBuilder()
+		.setPeso(80.5)
+		.setAltura(1.80)
+		.setNombre("Oscar")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
+		.agregarPreferenciaAlimenticia("queso")
+		.agregarPreferenciaAlimenticia("pescado")
+		.agregarPreferenciaAlimenticia("frutas")
+		.agregarDisgustoAlimenticio("polenta")
+		.agregarDisgustoAlimenticio("fideos")
+		.agregarCondicion(new Hipertenso())
+		.agregarCondicion(new Vegano())
+		.setRutina(Rutina.INTENSIVO)
+		.build();
 
 		
-		pepeBuilder = new UsuarioBuilder();
-		pepeBuilder.setPeso(70.0);
-		pepeBuilder.setAltura(1.70);
-		pepeBuilder.setNombre("Pepex");
-		pepeBuilder.setSexo("masculino");
-		pepeBuilder.setFechaDeNacimiento(LocalDate.of(1990,4, 2));
-		pepeBuilder.agregarPreferenciaAlimenticia("asado");
-		pepeBuilder.agregarPreferenciaAlimenticia("chivito");
-		pepeBuilder.agregarCondicion(hipertenso);
-		pepeBuilder.setRutina(Rutina.LEVE);
-		pepe = pepeBuilder.build();
+		pepe = new UsuarioBuilder()
+		.setPeso(70.0)
+		.setAltura(1.70)
+		.setNombre("Pepex")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1990,4, 2))
+		.agregarPreferenciaAlimenticia("asado")
+		.agregarPreferenciaAlimenticia("chivito")
+		.agregarCondicion(new Hipertenso())
+		.setRutina(Rutina.LEVE)
+		.build();
 
 		
 		grupoSinPepe = new Grupo("Pepi-no", integrantesSinPepe, Arrays.asList("chocolate", "dulceDeLeche"));
@@ -106,30 +104,30 @@ public class TestGrupo {
 		flan = new ComponenteDeReceta("flan", 400.0, 800.0);
 		caramelo = new ComponenteDeReceta("caramelo", 50.0, 420.0);
 		
-		flanConDulceDeLecheBuilder = new RecetaBuilder();
-		flanConDulceDeLecheBuilder.setNombre("Flan con dulce de leche");
-		flanConDulceDeLecheBuilder.agregarIngrediente(flan);
-		flanConDulceDeLecheBuilder.agregarIngrediente(dulceDeLeche);
-		flanConDulceDeLecheBuilder.agregarCondimento(caramelo);
-		flanConDulceDeLecheBuilder.setCalorias(1720.0);
-		flanConDulceDeLecheBuilder.setCreador(juan);
-		flanConDulceDeLecheBuilder.setSubidaPorSistema(true);
-		flanConDulceDeLecheBuilder.setRepositorio(repositorio);	
-		flanConDulceDeLeche = flanConDulceDeLecheBuilder.build();
+		flanConDulceDeLeche = new RecetaBuilder()
+		.setNombre("Flan con dulce de leche")
+		.agregarIngrediente(flan)
+		.agregarIngrediente(dulceDeLeche)
+		.agregarCondimento(caramelo)
+		.setCalorias(1720.0)
+		.setCreador(juan)
+		.setSubidaPorSistema(true)
+		.setRepositorio(repositorio)	
+		.build();
 		
 		
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
 
-		carneAlHornoConPapasBuilder = new RecetaBuilder();
-		carneAlHornoConPapasBuilder.setNombre("Carne al horno con papas");
-		carneAlHornoConPapasBuilder.agregarIngrediente(colitaDeCuadril);
-		carneAlHornoConPapasBuilder.agregarIngrediente(papa);
-		carneAlHornoConPapasBuilder.setCalorias(1350.0);
-		carneAlHornoConPapasBuilder.setCreador(pepe);
-		carneAlHornoConPapasBuilder.setSubidaPorSistema(true);
-		carneAlHornoConPapasBuilder.setRepositorio(repositorio);	
-		carneAlHornoConPapas = carneAlHornoConPapasBuilder.build();
+		carneAlHornoConPapas = new RecetaBuilder()
+		.setNombre("Carne al horno con papas")
+		.agregarIngrediente(colitaDeCuadril)
+		.agregarIngrediente(papa)
+		.setCalorias(1350.0)
+		.setCreador(pepe)
+		.setSubidaPorSistema(true)
+		.setRepositorio(repositorio)	
+		.build();
 	}
 	
 	@Test
