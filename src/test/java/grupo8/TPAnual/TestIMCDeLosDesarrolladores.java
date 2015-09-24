@@ -20,54 +20,54 @@ public class TestIMCDeLosDesarrolladores {
 	@Before
 	public void init() {
 		
-		felipeBuilder = new UsuarioBuilder();
-		felipeBuilder.setPeso(55.1);
-		felipeBuilder.setAltura(1.69);
-		felipeBuilder.setSexo("masculino");
-		felipeBuilder.setNombre("Felipe");
-		felipeBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 23));
-		felipeBuilder.setRutina(Rutina.LEVE);
-		felipe = felipeBuilder.build();
+		felipe = new UsuarioBuilder()
+		.setPeso(55.1)
+		.setAltura(1.69)
+		.setSexo("masculino")
+		.setNombre("Felipe")
+		.setFechaDeNacimiento(LocalDate.of(1994, 9, 23))
+		.setRutina(Rutina.LEVE)
+		.build();
 		
 		
-		crespoBuilder = new UsuarioBuilder();
-		crespoBuilder.setPeso(72.2);
-		crespoBuilder.setAltura(1.81);
-		crespoBuilder.setSexo("masculino");
-		crespoBuilder.setNombre("Juan Manuel");
-		crespoBuilder.setFechaDeNacimiento(LocalDate.of(1994, 11, 14));
-		crespoBuilder.setRutina(Rutina.LEVE);
-		crespo = crespoBuilder.build();
+		crespo = new UsuarioBuilder()
+		.setPeso(72.2)
+		.setAltura(1.81)
+		.setSexo("masculino")
+		.setNombre("Juan Manuel")
+		.setFechaDeNacimiento(LocalDate.of(1994, 11, 14))
+		.setRutina(Rutina.LEVE)
+		.build();
 		
 		
-		ivoBuilder = new UsuarioBuilder();
-		ivoBuilder.setPeso(65.2);
-		ivoBuilder.setAltura(1.78);
-		ivoBuilder.setNombre("Ivo");
-		ivoBuilder.setFechaDeNacimiento(LocalDate.of(1994, 12, 12));
-		ivoBuilder.setSexo("masculino");
-		ivoBuilder.setRutina(Rutina.LEVE);
-		ivo = ivoBuilder.build();
+		ivo= new UsuarioBuilder()
+		.setPeso(65.2)
+		.setAltura(1.78)
+		.setNombre("Ivo")
+		.setFechaDeNacimiento(LocalDate.of(1994, 12, 12))
+		.setSexo("masculino")
+		.setRutina(Rutina.LEVE)
+		.build();
 		
 		
-		alanBuilder = new UsuarioBuilder();
-		alanBuilder.setPeso(90.0);
-		alanBuilder.setAltura(1.80);
-		alanBuilder.setNombre("Alan");
-		alanBuilder.setFechaDeNacimiento(LocalDate.of(1994, 10, 28));
-		alanBuilder.setSexo("masculino");
-		alanBuilder.setRutina(Rutina.LEVE);
-		alan = alanBuilder.build();
+		alan = new UsuarioBuilder()
+		.setPeso(90.0)
+		.setAltura(1.80)
+		.setNombre("Alan")
+		.setFechaDeNacimiento(LocalDate.of(1994, 10, 28))
+		.setSexo("masculino")
+		.setRutina(Rutina.LEVE)
+		.build();
 		
 		
-		diegoBuilder = new UsuarioBuilder();
-		diegoBuilder.setPeso(62.00);
-		diegoBuilder.setAltura(1.75);
-		diegoBuilder.setNombre("Diego");
-		diegoBuilder.setFechaDeNacimiento(LocalDate.of(1995, 6, 3));
-		diegoBuilder.setSexo("masculino");
-		diegoBuilder.setRutina(Rutina.LEVE);
-		diego = diegoBuilder.build();
+		diego = new UsuarioBuilder()
+		.setPeso(62.00)
+		.setAltura(1.75)
+		.setNombre("Diego")
+		.setFechaDeNacimiento(LocalDate.of(1995, 6, 3))
+		.setSexo("masculino")
+		.setRutina(Rutina.LEVE)
+		.build();
 	}
 
 	@Test

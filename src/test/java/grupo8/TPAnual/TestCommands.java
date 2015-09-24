@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
+import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.Commands.EnviarMail;
 import grupo8.TPAnual.model.Commands.LogConsulta;
 import grupo8.TPAnual.model.Commands.MarcarComoFavoritas;
@@ -29,6 +30,7 @@ public class TestCommands {
 	private MailSender mailSender;
 	private FiltroNulo filtro;
 	private Usuario ernesto;
+	private UsuarioBuilder ernestoBuilder;
 	private Receta receta1, receta2;
 	private RecetaBuilder receta1Builder, receta2Builder;
 	private EnviarMail tratamientoEnviarMail;
@@ -53,31 +55,36 @@ public class TestCommands {
 		merluza = new ComponenteDeReceta("merluza", 750.0, 200.0);
 		cebolla = new ComponenteDeReceta("cebolla", 100.0, 50.0);
 
-		ernesto = new Usuario(66.0, 177.0, "Ernesto",
-				LocalDate.of(1994, 9, 24), Rutina.INTENSIVO);
-		//TODO No habia un builder para esto?
+		ernesto = new UsuarioBuilder()
+		.setPeso(66.0)
+		.setAltura(1.77)
+		.setNombre("Ernesto")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
+		.setRutina(Rutina.INTENSIVO)
+		.build();
 		ernesto.setGestorDeConsultas(gestor);
 		ernesto.setRepositorio(repoRecetas);
 
-		receta1Builder = new RecetaBuilder();
-		receta1Builder.setNombre("Pollo con papas");
-		receta1Builder.agregarIngrediente(pollo);
-		receta1Builder.agregarIngrediente(papa);
-		receta1Builder.setCalorias(1300.0);
-		receta1Builder.setCreador(ernesto);
-		receta1Builder.setSubidaPorSistema(true);
-		receta1Builder.setRepositorio(repoRecetas);
-		receta1 = receta1Builder.build();
+		receta1 = new RecetaBuilder()
+		.setNombre("Pollo con papas")
+		.agregarIngrediente(pollo)
+		.agregarIngrediente(papa)
+		.setCalorias(1300.0)
+		.setCreador(ernesto)
+		.setSubidaPorSistema(true)
+		.setRepositorio(repoRecetas)
+		.build();
 
-		receta2Builder = new RecetaBuilder();
-		receta2Builder.setNombre("filet de merluza con cebolla");
-		receta2Builder.agregarIngrediente(merluza);
-		receta2Builder.agregarCondimento(cebolla);
-		receta2Builder.setCalorias(1300.0);
-		receta2Builder.setCreador(ernesto);
-		receta2Builder.setSubidaPorSistema(true);
-		receta2Builder.setRepositorio(repoRecetas);
-		receta2 = receta2Builder.build();
+		receta2 = new RecetaBuilder()
+		.setNombre("filet de merluza con cebolla")
+		.agregarIngrediente(merluza)
+		.agregarCondimento(cebolla)
+		.setCalorias(1300.0)
+		.setCreador(ernesto)
+		.setSubidaPorSistema(true)
+		.setRepositorio(repoRecetas)
+		.build();
 
 	}
 

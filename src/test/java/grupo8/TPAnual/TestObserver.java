@@ -15,6 +15,7 @@ import grupo8.TPAnual.model.Monitores.MonitorRecetasMasConsultadas;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasSegunSexo;
 import grupo8.TPAnual.model.Repositorios.RepoRecetas;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
+import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.Builders.UsuarioBuilder;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
@@ -95,53 +96,52 @@ public class TestObserver {
 			//String preparacion, Dificultad dificultad, Temporada temporada,
 			//Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas) {
 
-		vegano = new Vegano();
 		
-		veganoVerduleroBuilder = new UsuarioBuilder();
-		veganoVerduleroBuilder.setPeso(80.5);
-		veganoVerduleroBuilder.setAltura(1.80);
-		veganoVerduleroBuilder.setNombre("Verdulero");
-		veganoVerduleroBuilder.setSexo("masculino");
-		veganoVerduleroBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
-		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("lechuga");
-		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("tomate");
-		veganoVerduleroBuilder.agregarPreferenciaAlimenticia("rucula");
-		veganoVerduleroBuilder.agregarDisgustoAlimenticio("carne");
-		veganoVerduleroBuilder.agregarDisgustoAlimenticio("pollo");
-		veganoVerduleroBuilder.agregarCondicion(vegano);
-		veganoVerduleroBuilder.setRutina(Rutina.LEVE);
-		veganoVerdulero = veganoVerduleroBuilder.build();
+		veganoVerdulero = new UsuarioBuilder()
+		.setPeso(80.5)
+		.setAltura(1.80)
+		.setNombre("Verdulero")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
+		.agregarPreferenciaAlimenticia("lechuga")
+		.agregarPreferenciaAlimenticia("tomate")
+		.agregarPreferenciaAlimenticia("rucula")
+		.agregarDisgustoAlimenticio("carne")
+		.agregarDisgustoAlimenticio("pollo")
+		.agregarCondicion(new Vegano())
+		.setRutina(Rutina.LEVE)
+		.build();
 
 		
-		veganaFruteraBuilder = new UsuarioBuilder();
-		veganaFruteraBuilder.setPeso(80.5);
-		veganaFruteraBuilder.setAltura(1.80);
-		veganaFruteraBuilder.setNombre("Frutero");
-		veganaFruteraBuilder.setSexo("femenino");
-		veganaFruteraBuilder.setFechaDeNacimiento(LocalDate.of(1994, 9, 24));
-		veganaFruteraBuilder.agregarPreferenciaAlimenticia("manzana");
-		veganaFruteraBuilder.agregarPreferenciaAlimenticia("banana");
-		veganaFruteraBuilder.agregarPreferenciaAlimenticia("kiwi");
-		veganaFruteraBuilder.agregarDisgustoAlimenticio("pescado");
-		veganaFruteraBuilder.agregarDisgustoAlimenticio("chivito");
-		veganaFruteraBuilder.agregarCondicion(vegano);
-		veganaFruteraBuilder.setRutina(Rutina.INTENSIVO);
-		veganaFrutera = veganaFruteraBuilder.build();
+		veganaFrutera = new UsuarioBuilder()
+		.setPeso(80.5)
+		.setAltura(1.80)
+		.setNombre("Frutero")
+		.setSexo("femenino")
+		.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
+		.agregarPreferenciaAlimenticia("manzana")
+		.agregarPreferenciaAlimenticia("banana")
+		.agregarPreferenciaAlimenticia("kiwi")
+		.agregarDisgustoAlimenticio("pescado")
+		.agregarDisgustoAlimenticio("chivito")
+		.agregarCondicion(new Vegano())
+		.setRutina(Rutina.INTENSIVO)
+		.build();
 
 		
-		adictoAlCafeBuilder = new UsuarioBuilder();
-		adictoAlCafeBuilder.setPeso(43.2);
-		adictoAlCafeBuilder.setAltura(1.42);
-		adictoAlCafeBuilder.setNombre("Cafetero");
-		adictoAlCafeBuilder.setSexo("masculino");
-		adictoAlCafeBuilder.setFechaDeNacimiento(LocalDate.of(1992, 3, 6));
-		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("cafe");
-		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("leche");
-		adictoAlCafeBuilder.agregarPreferenciaAlimenticia("cafe con leche");
-		adictoAlCafeBuilder.agregarDisgustoAlimenticio("nesquik");
-		adictoAlCafeBuilder.agregarDisgustoAlimenticio("no cafe");
-		adictoAlCafeBuilder.setRutina(Rutina.NADA);
-		adictoAlCafe = adictoAlCafeBuilder.build();
+		adictoAlCafe = new UsuarioBuilder()
+		.setPeso(43.2)
+		.setAltura(1.42)
+		.setNombre("Cafetero")
+		.setSexo("masculino")
+		.setFechaDeNacimiento(LocalDate.of(1992, 3, 6))
+		.agregarPreferenciaAlimenticia("cafe")
+		.agregarPreferenciaAlimenticia("leche")
+		.agregarPreferenciaAlimenticia("cafe con leche")
+		.agregarDisgustoAlimenticio("nesquik")
+		.agregarDisgustoAlimenticio("no cafe")
+		.setRutina(Rutina.NADA)
+		.build();
 
 		
 		veganoVerdulero.setGestorDeConsultas(gestorDeConsultas);
@@ -152,18 +152,44 @@ public class TestObserver {
 		veganaFrutera.agregarRepositorio(repoRecetas);
 		adictoAlCafe.agregarRepositorio(repoRecetas);
 		
+		caramelo = new RecetaBuilder()
+		.setNombre("caramelo")
+		.setIngredientes(ingredientesDeCaramelo)
+		.setCondimentos(condimentosDeCaramelo)
+		.setCalorias(3000.0)
+		.setPreparacion("hacer caramelo")
+		.setDificultad(Dificultad.DIFICIL)
+		.setTemporada(null)
+		.setCreador(veganaFrutera)
+		.setSubidaPorSistema(false)
+		.setRepositorio(repoRecetas)
+		.build();
 		
-		caramelo = new Receta("caramelo", ingredientesDeCaramelo,
-				condimentosDeCaramelo, 3000.0, "hacer caramelo", Dificultad.DIFICIL, null,
-				veganaFrutera, false, Arrays.asList(),repoRecetas);
+		caldoSalado = new RecetaBuilder()
+		.setNombre("caldo salado")
+		.setIngredientes(ingredientesDeCaldoSalado)
+		.setCondimentos(condimentosDeCaldoSalado)
+		.setCalorias(700.0)
+		.setPreparacion("hacer caldo salado")
+		.setDificultad(Dificultad.DIFICIL)
+		.setTemporada(null)
+		.setCreador(veganoVerdulero)
+		.setSubidaPorSistema(false)
+		.setRepositorio(repoRecetas)
+		.build();
 		
-		caldoSalado = new Receta("caldo salado", ingredientesDeCaldoSalado,
-				condimentosDeCaldoSalado, 700.0, "hacer caldo salado", Dificultad.DIFICIL,
-				null, veganoVerdulero, false, Arrays.asList(), repoRecetas);
-		
-		cafeConLeche = new Receta("cafe con leche", ingredientesDeCafeConLeche,
-				condimentosDeCafeConLeche, 50.0, "mezclar cafe y leche", Dificultad.FACIL,
-				null, adictoAlCafe, false, Arrays.asList(), repoRecetas);
+		cafeConLeche = new RecetaBuilder()
+		.setNombre("cafe con leche")
+		.setIngredientes(ingredientesDeCafeConLeche)
+		.setCondimentos(condimentosDeCafeConLeche)
+		.setCalorias(50.0)
+		.setPreparacion("mezclar cafe y leche")
+		.setDificultad(Dificultad.FACIL)
+		.setTemporada(null)
+		.setCreador(adictoAlCafe)
+		.setSubidaPorSistema(false)
+		.setRepositorio(repoRecetas)
+		.build();
 		
 		
 		

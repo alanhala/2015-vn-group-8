@@ -67,56 +67,69 @@ public class RecetaBuilder {
 							+ limiteSuperiorDelRango);
 	}
 	
-	public void setNombre(String nuevoNombre){
+	public RecetaBuilder setNombre(String nuevoNombre){
 		nombre = nuevoNombre;
+		return this;
 	}
 	
-	public void agregarIngrediente(ComponenteDeReceta ingrediente) {
+	public RecetaBuilder agregarIngrediente(ComponenteDeReceta ingrediente) {
 		ingredientes.add(ingrediente);
+		return this;
 	}
 	
-	public void setIngredientes(List<ComponenteDeReceta> nuevosIngredientes) {
+	public RecetaBuilder setIngredientes(List<ComponenteDeReceta> nuevosIngredientes) {
 		ingredientes = nuevosIngredientes;
+		return this;
 	}
 	
-	public void agregarCondimento(ComponenteDeReceta condimento) {
+	public RecetaBuilder agregarCondimento(ComponenteDeReceta condimento) {
 		condimentos.add(condimento);
+		return this;
 	}
 	
-	public void setCondimentos(List<ComponenteDeReceta> nuevosCondimentos) {
+	public RecetaBuilder setCondimentos(List<ComponenteDeReceta> nuevosCondimentos) {
 		ingredientes = nuevosCondimentos;
+		return this;
 	}
 	
-	public void setCalorias(Double nuevasCalorias){
+	public RecetaBuilder setCalorias(Double nuevasCalorias){
 		calorias = nuevasCalorias;
+		return this;
 	}
 	
-	public void setPreparacion(String nuevaPreparacion){
+	public RecetaBuilder setPreparacion(String nuevaPreparacion){
 		preparacion = nuevaPreparacion;
+		return this;
 	}
 	
-	public void setDificultad(Dificultad nuevaDificultad){
+	public RecetaBuilder setDificultad(Dificultad nuevaDificultad){
 		dificultad = nuevaDificultad;
+		return this;
 	}
 	
-	public void setTemporada(Temporada nuevaTemporada){
+	public RecetaBuilder setTemporada(Temporada nuevaTemporada){
 		temporada = nuevaTemporada;
+		return this;
 	}
 	
-	public void setCreador(Usuario nuevoCreador){
+	public RecetaBuilder setCreador(Usuario nuevoCreador){
 		creador = nuevoCreador;
+		return this;
 	}
 	
-	public void setSubidaPorSistema(Boolean esSubidaPorSistema){
+	public RecetaBuilder setSubidaPorSistema(Boolean esSubidaPorSistema){
 		subidaPorSistema = esSubidaPorSistema;
+		return this;
 	}
 	
-	public void agregarSubreceta(Receta receta) {
+	public RecetaBuilder agregarSubreceta(Receta receta) {
 		subrecetas.add(receta);
+		return this;
 	}
 	
-	public void setRepositorio(RepoRecetas nuevoRepositorio){
+	public RecetaBuilder setRepositorio(RepoRecetas nuevoRepositorio){
 		repositorio = nuevoRepositorio;
+		return this;
 	}
 }
 
