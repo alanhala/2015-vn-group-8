@@ -17,15 +17,15 @@ import queComemos.entrega3.repositorio.RepoRecetas;
 public class RepoRecetasAdapter implements RepositorioDeRecetas {
 
 	private RepoRecetas repoRecetas;
-	private BuscadorAdapter adapter;
+	private BuscadorAdapter buscador;
 
 	public RepoRecetasAdapter(RepoRecetas repo) {
 		this.repoRecetas = repo;
 	}
 
 	public List<RecetaAdapter> getRecetas() {
-		BusquedaRecetas buscador = adapter.getBuscador();
-		String resultJson = repoRecetas.getRecetas(buscador);
+		BusquedaRecetas busqueda = buscador.getBuscador();
+		String resultJson = repoRecetas.getRecetas(busqueda);
 		final Type tipoListaRecetasAdapter = new TypeToken<List<RecetaAdapter>>() {
 		}.getType();
 		List<RecetaAdapter> recetasBuscadas = new Gson().fromJson(resultJson,
@@ -42,12 +42,12 @@ public class RepoRecetasAdapter implements RepositorioDeRecetas {
 
 	}
 
-	public void setAdapter(BuscadorAdapter adapter) {
-		this.adapter = adapter;
+	public void setAdapter(BuscadorAdapter buscador) {
+		this.buscador = buscador;
 	}
 
 	public BuscadorAdapter getAdapter() {
-		return adapter;
+		return buscador;
 	}
 
 }
