@@ -13,11 +13,9 @@ import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Vegano;
 import grupo8.TPAnual.model.Decorators.Filtro;
 import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
-import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
-import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
 import grupo8.TPAnual.model.Dominio.Rutina;
 
+import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,8 +23,22 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="usuarios")
 public class Usuario implements Sugerible {
 
+	@Id
+	@GeneratedValue
+	private Long id;
 	private Double peso;
 	private Double altura;
 	private String nombre;
@@ -39,7 +51,6 @@ public class Usuario implements Sugerible {
 	private Rutina rutina;
 	private List<Grupo> grupos;
 	private List<Receta> recetasFavoritas;
-	private RepositorioDeRecetas repositorio;
 	private GestorDeConsultas gestorDeConsultas;
 	private List<TratamientoDeConsultas> tratamientosDeConsultas;
 
@@ -196,12 +207,12 @@ public class Usuario implements Sugerible {
 		return peso <= unPeso;
 	}
 
-	public void agregarUnaReceta(Receta receta) {
+	public void agregarReceta(Receta receta) {
 		recetas.add(receta);
 	}
 
 	public boolean puedeVerOModificar(Receta receta) {
-		return receta.puedeSerVistaOModificadaPor(this);
+		return receta.esPublica() || this.tieneAcceso(receta);
 	}
 
 	public boolean tenesUnaReceta(Receta unaReceta) {
@@ -209,7 +220,7 @@ public class Usuario implements Sugerible {
 	}
 
 	public void modificarRecetaPublica(Receta unaReceta) {
-		unaReceta.clonar(this);
+		this.agregarReceta(unaReceta.clonar());
 	}
 
 	public boolean compartisGrupoCon(Usuario usuario) {
@@ -249,28 +260,19 @@ public class Usuario implements Sugerible {
 		return this.calcularIMC() >= 25;
 	}
 
-	public Set<Receta> getRecetasGrupalesYPropias() {
+	public List<Receta> getRecetasGrupalesYPropias() {
 		Set<Receta> recetasAccesibles = new HashSet<Receta>();
 		grupos.forEach(grupo -> recetasAccesibles.addAll(grupo
 				.getRecetasDelGrupo()));
 		recetasAccesibles.addAll(this.recetas);
-		return recetasAccesibles;
+		List<Receta> listadoDeRecetas = new ArrayList();
+		listadoDeRecetas.addAll(recetasAccesibles);
+		return listadoDeRecetas;
 	}
 	
-	public List<Receta> getRecetasAccesibles() {
-		List<Receta> recetasFiltradas = new ArrayList<Receta>();
-		recetasFiltradas.addAll(repositorio.listarRecetas());
-		recetasFiltradas.addAll(this.getRecetasGrupalesYPropias());
-		return recetasFiltradas;
-	}
-	
-	public List<Receta> filtrarRecetas(Filtro filtro) {
-		List<Receta> recetasAFiltrar = this.getRecetasAccesibles();
-		List<Receta> recetasFiltradas = filtro.filtrarRecetasDe(this,
-				recetasAFiltrar);
-		this.gestorDeConsultas.notificar(this, recetasFiltradas);
+	public void gestionarConsulta(List<Receta> recetasFiltradas, Filtro filtro){
+		gestorDeConsultas.notificar(this, recetasFiltradas);
 		this.tratarConsulta(filtro, recetasFiltradas);
-		return recetasFiltradas;
 	}
 	
 	// Este metodo crea las acciones correspondientes a realizar y las manda al
@@ -280,7 +282,7 @@ public class Usuario implements Sugerible {
 		if (recetasFiltradas.size() > 100) {
 			gestorDeConsultas.agregarAccionARealizar(new LogConsulta(recetasFiltradas));
 		}
-		//TODO Porque hace el checkeo de cuantos resultados tienen acá? 
+		//TODO Porque hace el checkeo de cuantos resultados tienen acï¿½? 
 		//No les parece mejor agregar siempre un log, 
 		//y hacer que dentro del log se fije si tiene que loguear o no segun la cantidad de resultados? 
 
@@ -289,20 +291,16 @@ public class Usuario implements Sugerible {
 
 	}
 
-	public Boolean tieneMismoNombreQue(Usuario usuario) {
+	public boolean tieneMismoNombreQue(Usuario usuario) {
 		return this.getNombre().equals(usuario.getNombre());
 	}
 
-	public Boolean nombreContieneNombreDe(Usuario usuario) {
+	public boolean nombreContieneNombreDe(Usuario usuario) {
 		return this.getNombre().contains(usuario.getNombre());
 	}
 
-	public Boolean tieneLasCondicionesDe(Usuario usuario) {
+	public boolean tieneLasCondicionesDe(Usuario usuario) {
 		return usuario.condiciones.stream().allMatch(c -> this.condiciones.contains(c));
-	}
-	
-	public void agregarRepositorio(RepositorioDeRecetas repositorio){
-		this.repositorio = repositorio;
 	}
 
 	public boolean esVegano() {
@@ -329,8 +327,12 @@ public class Usuario implements Sugerible {
 		tratamientosDeConsultas.add(tratamiento);
 	}
 
-	public void setRepositorio(RepositorioDeRecetas repositorio) {
-		this.repositorio = repositorio;
+	public boolean tieneAcceso(Receta receta){
+		return this.tenesUnaReceta(receta) || this.comparteReceta(receta);
+	}
+
+	public boolean comparteReceta(Receta receta) {
+		return grupos.stream().anyMatch(grupo -> grupo.algunUsuarioTiene(receta));
 	}
 	
 }

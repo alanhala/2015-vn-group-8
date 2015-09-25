@@ -3,9 +3,6 @@ package grupo8.TPAnual.model.Dominio;
 import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
-import grupo8.TPAnual.model.Repositorios.RepositorioDeRecetas;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -19,15 +16,14 @@ public class Receta {
 	private Double calorias;
 	private String preparacion;
 	private Dificultad dificultad;
-	private Temporada temporada;
-	private Usuario creador;
+	private String temporada;
 	private List<Receta> subrecetas;
-	private RepoRecetas repositorio;
+	private Boolean publica;
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,
-			String preparacion, Dificultad dificultad, Temporada temporada,
-			Usuario creador, Boolean subidaPorSistema, List<Receta> subrecetas, RepoRecetas repositorio) {
+			String preparacion, Dificultad dificultad, String temporada,
+			Boolean publica, List<Receta> subrecetas) {
 		this.nombre = nombre;
 		this.ingredientes = ingredientes;
 		this.condimentos = condimentos;
@@ -35,12 +31,8 @@ public class Receta {
 		this.preparacion = preparacion;
 		this.dificultad = dificultad;
 		this.temporada = temporada;
-		this.creador = creador;
 		this.subrecetas = subrecetas;
-		this.repositorio = repositorio;
-		creador.agregarUnaReceta(this);
-		if (subidaPorSistema)
-			repositorio.agregar(this);
+		this.publica = publica;
 	}
 
 	public Double calorias() {
@@ -48,12 +40,7 @@ public class Receta {
 	}
 
 	public boolean esPublica() {
-		return repositorio.tieneUnaReceta(this);
-	}
-
-	public boolean puedeSerVistaOModificadaPor(Usuario usuario) {
-		return this.esPublica() || usuario == creador
-				|| usuario.compartisGrupoCon(creador);
+		return publica;
 	}
 
 	public boolean tieneSalOCaldo() {
@@ -108,11 +95,11 @@ public class Receta {
 		preparacion = nuevaPreparacion;
 	}
 
-	public void clonar(Usuario creador) {
+	public Receta clonar() {
 
-		new Receta(this.nombre, this.ingredientes, this.condimentos,
+		return new Receta(this.nombre, this.ingredientes, this.condimentos,
 				this.calorias, this.preparacion, this.dificultad,
-				this.temporada, creador, false, this.subrecetas,this.repositorio);
+				this.temporada, false, this.subrecetas);
 	}
 
 	public List<ComponenteDeReceta> getIngredientes() {
