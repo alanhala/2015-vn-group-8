@@ -20,7 +20,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +37,6 @@ public class TestReceta {
 	Usuario pepe;
 	UsuarioBuilder pepeBuilder;
 	
-	RepoRecetas repositorio;
-	
 	List<Condicion> condiciones = new ArrayList<Condicion>();
 	List<Receta> recetas = new ArrayList<Receta>();
 	
@@ -51,8 +49,6 @@ public class TestReceta {
 	
 	@Before
 	public void init() {
-		
-		repositorio = new RepoRecetas();
 		
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -80,20 +76,18 @@ public class TestReceta {
 		.agregarIngrediente(grasa)
 		.agregarCondimento(azucar)
 		.setCalorias(3000.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
+		pepe.agregarReceta(caramelo);
 		
 		caldoSalado = new RecetaBuilder()
 		.setNombre("CaldoSalado")
 		.agregarIngrediente(caldo)
 		.agregarCondimento(sal)
 		.setCalorias(700.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
+		pepe.agregarReceta(caldoSalado);
 		
 		recetaSinSubrecetas = new RecetaBuilder()
 		.setNombre("Arroz con leche")
@@ -101,10 +95,9 @@ public class TestReceta {
 		.agregarIngrediente(leche)
 		.agregarCondimento(azucar)
 		.setCalorias(150.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
+		pepe.agregarReceta(recetaSinSubrecetas);
 		
 		recetaConSubreceta = new RecetaBuilder()
 		.setNombre("Arroz con leche y caramelo")
@@ -112,12 +105,11 @@ public class TestReceta {
 		.agregarIngrediente(leche)
 		.agregarCondimento(azucar)
 		.setCalorias(4500.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.agregarSubreceta(caramelo)
 		.agregarSubreceta(caldoSalado)
 		.build();
+		pepe.agregarReceta(recetaConSubreceta);
 	
 
 	}
@@ -127,9 +119,7 @@ public class TestReceta {
 		recetaInvalida = new RecetaBuilder()
 		.setNombre("Aire")
 		.setCalorias(1.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
 	}
 
@@ -139,9 +129,7 @@ public class TestReceta {
 		.setNombre("Toneladas de grasa")
 		.agregarIngrediente(grasa)
 		.setCalorias(7284.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
 	}
 

@@ -13,7 +13,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +27,7 @@ public class TestAgregarReceta {
 	List<ComponenteDeReceta> condimentos = new ArrayList<ComponenteDeReceta>();
 	List<Receta> recetas = new ArrayList<Receta>();
 	List<Receta> subrecetas = new ArrayList<Receta>();
-	RepoRecetas repositorio = new RepoRecetas();
+	Recetario repositorio = new Recetario();
 	RecetaBuilder arrozConLechePublicaBuilder;
 	RecetaBuilder arrozConLechePrivadaBuilder;
 
@@ -72,10 +72,9 @@ public class TestAgregarReceta {
 		.agregarIngrediente(leche)
 		.agregarCondimento(azucar)
 		.setCalorias(350.0)
-		.setCreador(juan)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
 		.build();
+		repositorio.agregar(arrozConLechePublica);
 		
 		arrozConLechePrivada = new RecetaBuilder()
 		.setNombre("Arroz con leche")
@@ -83,10 +82,9 @@ public class TestAgregarReceta {
 		.agregarIngrediente(leche)
 		.agregarCondimento(azucar)
 		.setCalorias(350.0)
-		.setCreador(juan)
 		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
 		.build();
+		juan.agregarReceta(arrozConLechePrivada);
 	}
 
 	@Test

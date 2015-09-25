@@ -16,7 +16,7 @@ import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -31,7 +31,7 @@ public class TestGrupo {
 	Grupo grupoSinPepe;
 	
 	Receta flanConDulceDeLeche, carneAlHornoConPapas;
-	RepoRecetas repositorio = new RepoRecetas();
+	Recetario repositorio = new Recetario();
 	ComponenteDeReceta flan, dulceDeLeche, caramelo, colitaDeCuadril, papa;
 	RecetaBuilder carneAlHornoConPapasBuilder;
 	RecetaBuilder flanConDulceDeLecheBuilder;
@@ -110,11 +110,9 @@ public class TestGrupo {
 		.agregarIngrediente(dulceDeLeche)
 		.agregarCondimento(caramelo)
 		.setCalorias(1720.0)
-		.setCreador(juan)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)	
 		.build();
-		
+		juan.agregarReceta(flanConDulceDeLeche);
 		
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0, 1000.0);
 		papa = new ComponenteDeReceta("Papa", 200.0, 350.0);
@@ -124,10 +122,9 @@ public class TestGrupo {
 		.agregarIngrediente(colitaDeCuadril)
 		.agregarIngrediente(papa)
 		.setCalorias(1350.0)
-		.setCreador(pepe)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)	
 		.build();
+		pepe.agregarReceta(carneAlHornoConPapas);
 	}
 	
 	@Test

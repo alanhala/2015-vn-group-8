@@ -21,7 +21,7 @@ import grupo8.TPAnual.model.Dominio.Grupo;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Rutina;
 import grupo8.TPAnual.model.Dominio.Usuario;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 
 import java.time.LocalDate;
@@ -36,52 +36,46 @@ public class TestDecoradores {
 
 	Usuario roberto;
 	UsuarioBuilder robertoBuilder, sistemaBuilder;
-	
-	Receta arrozConLeche, grasaConAzucar, chivitoConCebolla,
-			caldoSalado, chivitoSalado, tortaDeChocolate,
-			polloAlHornoConPapas, guisoDeLentejas, fideosConManteca, mondongoConTabasco,
+
+	Receta arrozConLeche, grasaConAzucar, chivitoConCebolla, caldoSalado,
+			chivitoSalado, tortaDeChocolate, polloAlHornoConPapas,
+			guisoDeLentejas, fideosConManteca, mondongoConTabasco,
 			porotosConPimenton;
 
 	RecetaBuilder arrozConLecheBuilder, grasaConAzucarBuilder,
-		chivitoConCebollaBuilder, caldoSaladoBuilder,
-		chivitoSaladoBuilder, tortaDeChocolateBuilder,
-		polloAlHornoConPapasBuilder, guisoDeLentejasBuilder,
-		fideosConMantecaBuilder, mondongoConTabascoBuilder,
-		porotosConPimentonBuilder;
-	
+			chivitoConCebollaBuilder, caldoSaladoBuilder, chivitoSaladoBuilder,
+			tortaDeChocolateBuilder, polloAlHornoConPapasBuilder,
+			guisoDeLentejasBuilder, fideosConMantecaBuilder,
+			mondongoConTabascoBuilder, porotosConPimentonBuilder;
+
 	ComponenteDeReceta arroz, leche, azucar, grasa, sal, caldo, aji, cebolla,
 			chivito, chocolate, harina, dulceDeLeche, pollo, papas, lentejas,
 			chorizoColorado, salsaDeTomate, fideos, manteca, mondongo, tabasco,
 			porotos, pimenton;
-	
+
 	Hipertenso hipertenso;
 	Vegano vegano;
+	Recetario repositorio = new Recetario();
 
 	List<Condicion> condiciones = new ArrayList<Condicion>();
 
 	@Before
 	public void init() {
 
-		roberto = new UsuarioBuilder()
-		.setPeso(140.0)
-		.setAltura(1.80)
-		.setNombre("Roberto")
-		.setSexo("masculino")
-		.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
-		.agregarPreferenciaAlimenticia("queso")
-		.agregarPreferenciaAlimenticia("pescado")
-		.agregarPreferenciaAlimenticia("frutas")
-		.agregarDisgustoAlimenticio("polenta")
-		.agregarDisgustoAlimenticio("fideos")
-		.agregarCondicion(new Hipertenso())
-		.agregarCondicion(new Vegano())
-		.setRutina(Rutina.INTENSIVO)
-		.build();
+		roberto = new UsuarioBuilder().setPeso(140.0).setAltura(1.80)
+				.setNombre("Roberto").setSexo("masculino")
+				.setFechaDeNacimiento(LocalDate.of(1994, 9, 24))
+				.agregarPreferenciaAlimenticia("queso")
+				.agregarPreferenciaAlimenticia("pescado")
+				.agregarPreferenciaAlimenticia("frutas")
+				.agregarDisgustoAlimenticio("polenta")
+				.agregarDisgustoAlimenticio("fideos")
+				.agregarCondicion(new Hipertenso())
+				.agregarCondicion(new Vegano()).setRutina(Rutina.INTENSIVO)
+				.build();
 
 		RepoUsuarios repoUsuarios = new RepoUsuarios();
 		repoUsuarios.add(roberto);
-		
-		RepoRecetas repositorio = new RepoRecetas();
 
 		arroz = new ComponenteDeReceta("gramos de arroz", 50.0, 100.0);
 		leche = new ComponenteDeReceta("tazas de leche", 3.0, 250.0);
@@ -107,123 +101,78 @@ public class TestDecoradores {
 		porotos = new ComponenteDeReceta("porotos", 100.0, 2500.0);
 		pimenton = new ComponenteDeReceta("pimenton", 20.0, 2500.0);
 
-		arrozConLeche = new RecetaBuilder()
-		.setNombre("Arroz con leche")
-		.agregarIngrediente(arroz)
-		.agregarIngrediente(leche)
-		.agregarCondimento(azucar)
-		.setCalorias(30.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
-		grasaConAzucar = new RecetaBuilder()
-		.setNombre("Grasa con azucar")
-		.agregarIngrediente(grasa)
-		.agregarCondimento(azucar)
-		.setCalorias(70.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
+		arrozConLeche = new RecetaBuilder().setNombre("Arroz con leche")
+				.agregarIngrediente(arroz).agregarIngrediente(leche)
+				.agregarCondimento(azucar).setCalorias(30.0)
+				.setSubidaPorSistema(false).build();
+		roberto.agregarReceta(arrozConLeche);
+
+		grasaConAzucar = new RecetaBuilder().setNombre("Grasa con azucar")
+				.agregarIngrediente(grasa).agregarCondimento(azucar)
+				.setCalorias(70.0).setSubidaPorSistema(false).build();
+		roberto.agregarReceta(grasaConAzucar);
+
 		chivitoConCebolla = new RecetaBuilder()
-		.setNombre("Chivito con cebolla")
-		.agregarIngrediente(chivito)
-		.agregarCondimento(cebolla)
-		.setCalorias(40.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
-		caldoSalado = new RecetaBuilder()
-		.setNombre("Caldo salado")
-		.agregarIngrediente(caldo)
-		.agregarCondimento(aji)
-		.agregarCondimento(sal)
-		.setCalorias(250.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
-		chivitoSalado = new RecetaBuilder()
-		.setNombre("Chivito salado")
-		.agregarIngrediente(chivito)
-		.agregarCondimento(sal)
-		.setCalorias(550.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
-		tortaDeChocolate = new RecetaBuilder()
-		.setNombre("Torta de chocolate")
-		.agregarIngrediente(harina)
-		.agregarIngrediente(chocolate)
-		.agregarCondimento(dulceDeLeche)
-		.setCalorias(900.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(false)
-		.setRepositorio(repositorio)
-		.build();
-		
+				.setNombre("Chivito con cebolla").agregarIngrediente(chivito)
+				.agregarCondimento(cebolla).setCalorias(40.0)
+				.setSubidaPorSistema(false).build();
+		roberto.agregarReceta(chivitoConCebolla);
+
+		caldoSalado = new RecetaBuilder().setNombre("Caldo salado")
+				.agregarIngrediente(caldo).agregarCondimento(aji)
+				.agregarCondimento(sal).setCalorias(250.0)
+				.setSubidaPorSistema(false).build();
+		roberto.agregarReceta(caldoSalado);
+
+		chivitoSalado = new RecetaBuilder().setNombre("Chivito salado")
+				.agregarIngrediente(chivito).agregarCondimento(sal)
+				.setCalorias(550.0).setSubidaPorSistema(false).build();
+		roberto.agregarReceta(chivitoSalado);
+
+		tortaDeChocolate = new RecetaBuilder().setNombre("Torta de chocolate")
+				.agregarIngrediente(harina).agregarIngrediente(chocolate)
+				.agregarCondimento(dulceDeLeche).setCalorias(900.0)
+				.setSubidaPorSistema(false).build();
+		roberto.agregarReceta(tortaDeChocolate);
+
 		polloAlHornoConPapas = new RecetaBuilder()
-		.setNombre("Pollo al horno con papas")
-		.agregarIngrediente(pollo)
-		.agregarIngrediente(papas)
-		.agregarCondimento(aji)
-		.agregarCondimento(sal)
-		.setCalorias(1500.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
-		.build();
-		
-		guisoDeLentejas = new RecetaBuilder()
-		.setNombre("Guiso de lentejas")
-		.agregarIngrediente(lentejas)
-		.agregarIngrediente(chorizoColorado)
-		.agregarCondimento(salsaDeTomate)
-		.setCalorias(600.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
-		.build();
-		
-		fideosConManteca = new RecetaBuilder()
-		.setNombre("Fideos con manteca")
-		.agregarIngrediente(fideos)
-		.agregarCondimento(manteca)
-		.setCalorias(500.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
-		.build();
-		
+				.setNombre("Pollo al horno con papas")
+				.agregarIngrediente(pollo).agregarIngrediente(papas)
+				.agregarCondimento(aji).agregarCondimento(sal)
+				.setCalorias(1500.0)
+				// .setCreador(roberto)
+				.setSubidaPorSistema(true).build();
+		repositorio.agregar(polloAlHornoConPapas);
+
+		guisoDeLentejas = new RecetaBuilder().setNombre("Guiso de lentejas")
+				.agregarIngrediente(lentejas)
+				.agregarIngrediente(chorizoColorado)
+				.agregarCondimento(salsaDeTomate).setCalorias(600.0)
+				// .setCreador(roberto)
+				.setSubidaPorSistema(true).build();
+		repositorio.agregar(guisoDeLentejas);
+
+		fideosConManteca = new RecetaBuilder().setNombre("Fideos con manteca")
+				.agregarIngrediente(fideos).agregarCondimento(manteca)
+				.setCalorias(500.0)
+				// .setCreador(roberto)
+				.setSubidaPorSistema(true).build();
+		repositorio.agregar(fideosConManteca);
+
 		mondongoConTabasco = new RecetaBuilder()
-		.setNombre("Mondongo con tabasco")
-		.agregarIngrediente(mondongo)
-		.agregarCondimento(tabasco)
-		.setCalorias(1330.0)
-		.setCreador(roberto)
-		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
-		.build();
-		
+				.setNombre("Mondongo con tabasco").agregarIngrediente(mondongo)
+				.agregarCondimento(tabasco).setCalorias(1330.0)
+				// .setCreador(roberto)
+				.setSubidaPorSistema(true).build();
+		repositorio.agregar(mondongoConTabasco);
+
 		porotosConPimenton = new RecetaBuilder()
-		.setNombre("Porotos con pimenton")
-		.agregarIngrediente(porotos)
-		.agregarCondimento(pimenton)
-		.setCalorias(4999.9)
-		.setCreador(roberto)
-		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)
-		.build();
-		
-		roberto.agregarRepositorio(repositorio);
+				.setNombre("Porotos con pimenton").agregarIngrediente(porotos)
+				.agregarCondimento(pimenton).setCalorias(4999.9)
+				// .setCreador(roberto)
+				.setSubidaPorSistema(true).build();
+		repositorio.agregar(porotosConPimenton);
+
 	}
 
 	@Test
@@ -231,8 +180,7 @@ public class TestDecoradores {
 		DecoradorFiltroSobrepeso procesarRecetasParaUsuariosConSobrepeso = new DecoradorFiltroSobrepeso(
 				new FiltroNulo());
 
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(procesarRecetasParaUsuariosConSobrepeso);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, procesarRecetasParaUsuariosConSobrepeso);
 
 		assertTrue(recetasFiltradas.containsAll(Arrays.asList(arrozConLeche,
 				grasaConAzucar, chivitoConCebolla, caldoSalado)));
@@ -241,8 +189,7 @@ public class TestDecoradores {
 	public void filtroRecetasParesParaUsuariosConSobrepeso() {
 		DecoradorProcesarPares procesarRecetasParesParaUsuariosConSobrepeso = new DecoradorProcesarPares(
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(procesarRecetasParesParaUsuariosConSobrepeso);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, procesarRecetasParesParaUsuariosConSobrepeso);
 
 		assertTrue(recetasFiltradas.containsAll(Arrays.asList(grasaConAzucar,
 				caldoSalado)));
@@ -252,8 +199,7 @@ public class TestDecoradores {
 	public void filtroDeRecetasPorCondicionesPreexistentesFiltraRecetasRoberto1Roberto2Roberto6YRecetaPublica2() {
 		DecoradorFiltroCondicionesPreexistentes filtroDeRecetasPorCondicionesPreexistentes = new DecoradorFiltroCondicionesPreexistentes(
 				new FiltroNulo());
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroDeRecetasPorCondicionesPreexistentes);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, filtroDeRecetasPorCondicionesPreexistentes);
 		assertTrue(recetasFiltradas.containsAll(Arrays.asList(arrozConLeche,
 				grasaConAzucar, tortaDeChocolate, guisoDeLentejas)));
 	}
@@ -267,8 +213,7 @@ public class TestDecoradores {
 		DecoradorFiltroIngredientesCaros filtroDeRecetasPorIngredientesCaros = new DecoradorFiltroIngredientesCaros(
 				new FiltroNulo(), ingredientesCaros);
 
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroDeRecetasPorIngredientesCaros);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, filtroDeRecetasPorIngredientesCaros);
 
 		assertTrue(recetasFiltradas.containsAll(Arrays.asList(arrozConLeche,
 				grasaConAzucar, caldoSalado, polloAlHornoConPapas,
@@ -280,59 +225,57 @@ public class TestDecoradores {
 		DecoradorFiltroDisgusto filtroDeRecetasPorDisgustosAlimenticios = new DecoradorFiltroDisgusto(
 				new FiltroNulo());
 
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroDeRecetasPorDisgustosAlimenticios);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, filtroDeRecetasPorDisgustosAlimenticios);
 
 		assertTrue(recetasFiltradas.containsAll(Arrays.asList(arrozConLeche,
-				grasaConAzucar, chivitoConCebolla, caldoSalado,
-				chivitoSalado, tortaDeChocolate, polloAlHornoConPapas,
-				guisoDeLentejas)));
+				grasaConAzucar, chivitoConCebolla, caldoSalado, chivitoSalado,
+				tortaDeChocolate, polloAlHornoConPapas, guisoDeLentejas)));
 	}
-	
+
 	// tampoco anda este test
-/* 
-	@Test
-	public void filtroPrimeras10RecetasDeRoberto() {
-
-		DecoradorProcesarPimerosDiez procesarPrimerasDiezRecetas = new DecoradorProcesarPimerosDiez(
-				new FiltroNulo());
-
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(procesarPrimerasDiezRecetas);
-
-		int posicionDeLaUltimaReceta = roberto.getRecetasAccesibles().size() - 1;
-
-		assertTrue((!recetasFiltradas.contains(roberto.getRecetasAccesibles()
-				.get(posicionDeLaUltimaReceta)))
-				&& (recetasFiltradas.size() == 10));
-
-	}
-*/
+	/*
+	 * @Test public void filtroPrimeras10RecetasDeRoberto() {
+	 * 
+	 * DecoradorProcesarPimerosDiez procesarPrimerasDiezRecetas = new
+	 * DecoradorProcesarPimerosDiez( new FiltroNulo());
+	 * 
+	 * List<Receta> recetasFiltradas = roberto
+	 * .filtrarRecetas(procesarPrimerasDiezRecetas);
+	 * 
+	 * int posicionDeLaUltimaReceta = roberto.getRecetasAccesibles().size() - 1;
+	 * 
+	 * assertTrue((!recetasFiltradas.contains(roberto.getRecetasAccesibles()
+	 * .get(posicionDeLaUltimaReceta))) && (recetasFiltradas.size() == 10));
+	 * 
+	 * }
+	 */
 	// este es el �nico test que no anda (por assertion)
-/*	@Test
-	public void filtroDeRecetasConIngredientesCarosOrdenadasPorCalorias() {
-		List<String> ingredientesCaros = new ArrayList<String>();
-
-		ingredientesCaros.add("chivito");
-		ingredientesCaros.add("harina");
-
-		DecoradorProcesarOrdenamiento filtroDeRecetasPorIngredientesCarosOrdenadasPorCalorias = new DecoradorProcesarOrdenamiento(
-				new DecoradorFiltroIngredientesCaros(new FiltroNulo(),
-						ingredientesCaros), new ComparatorRecetasPorCalorias());
-
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroDeRecetasPorIngredientesCarosOrdenadasPorCalorias);
-
-		assertTrue(recetasFiltradas.indexOf(arrozConLeche) == 0
-				&& recetasFiltradas.indexOf(grasaConAzucar) == 1
-				&& recetasFiltradas.indexOf(caldoSalado) == 2
-				&& recetasFiltradas.indexOf(fideosConManteca) == 3
-				&& recetasFiltradas.indexOf(guisoDeLentejas) == 5
-				&& recetasFiltradas.indexOf(polloAlHornoConPapas) == 9
-				&& recetasFiltradas.indexOf(mondongoConTabasco) == 7
-				&& recetasFiltradas.indexOf(porotosConPimenton) == 11);
-		
-	}*/
+	/*
+	 * @Test public void
+	 * filtroDeRecetasConIngredientesCarosOrdenadasPorCalorias() { List<String>
+	 * ingredientesCaros = new ArrayList<String>();
+	 * 
+	 * ingredientesCaros.add("chivito"); ingredientesCaros.add("harina");
+	 * 
+	 * DecoradorProcesarOrdenamiento
+	 * filtroDeRecetasPorIngredientesCarosOrdenadasPorCalorias = new
+	 * DecoradorProcesarOrdenamiento( new DecoradorFiltroIngredientesCaros(new
+	 * FiltroNulo(), ingredientesCaros), new ComparatorRecetasPorCalorias());
+	 * 
+	 * List<Receta> recetasFiltradas = roberto
+	 * .filtrarRecetas(filtroDeRecetasPorIngredientesCarosOrdenadasPorCalorias);
+	 * 
+	 * assertTrue(recetasFiltradas.indexOf(arrozConLeche) == 0 &&
+	 * recetasFiltradas.indexOf(grasaConAzucar) == 1 &&
+	 * recetasFiltradas.indexOf(caldoSalado) == 2 &&
+	 * recetasFiltradas.indexOf(fideosConManteca) == 3 &&
+	 * recetasFiltradas.indexOf(guisoDeLentejas) == 5 &&
+	 * recetasFiltradas.indexOf(polloAlHornoConPapas) == 9 &&
+	 * recetasFiltradas.indexOf(mondongoConTabasco) == 7 &&
+	 * recetasFiltradas.indexOf(porotosConPimenton) == 11);
+	 * 
+	 * }
+	 */
 
 	@Test
 	public void filtroRecetasDeRobertoPorDisgustosAlimenticiosYSobrepeso() {
@@ -340,14 +283,12 @@ public class TestDecoradores {
 		DecoradorFiltroDisgusto filtroPorDisgustoYSobrepeso = new DecoradorFiltroDisgusto(
 				new DecoradorFiltroSobrepeso(new FiltroNulo()));
 
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroPorDisgustoYSobrepeso);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, filtroPorDisgustoYSobrepeso);
 
-		assertTrue((recetasFiltradas.containsAll(Arrays.asList(
-				arrozConLeche, grasaConAzucar, chivitoConCebolla,
-				caldoSalado)) && (recetasFiltradas.size() == 4)));
+		assertTrue((recetasFiltradas.containsAll(Arrays.asList(arrozConLeche,
+				grasaConAzucar, chivitoConCebolla, caldoSalado)) && (recetasFiltradas
+				.size() == 4)));
 	}
-
 
 	@Test
 	public void filtroRecetasDeRobertoPorDisgustosAlimenticiosYSobrepesoOrdenadoAlfabeticamente() {
@@ -357,8 +298,7 @@ public class TestDecoradores {
 						new FiltroNulo())),
 				new ComparatorRecetasAlfabeticamente());
 
-		List<Receta> recetasFiltradas = roberto
-				.filtrarRecetas(filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente);
+		List<Receta> recetasFiltradas = repositorio.filtrarRecetas(roberto, filtroPorDisgustoYSobrepesoOrdenadoAlfabeticamente);
 
 		assertTrue(recetasFiltradas.indexOf(arrozConLeche) == 0
 				&& recetasFiltradas.indexOf(grasaConAzucar) == 3

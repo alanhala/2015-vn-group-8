@@ -13,7 +13,7 @@ import grupo8.TPAnual.model.Monitores.MonitorConsultasDeVeganosPorRecetasDificil
 import grupo8.TPAnual.model.Monitores.MonitorConsultasPorHora;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasMasConsultadas;
 import grupo8.TPAnual.model.Monitores.MonitorRecetasSegunSexo;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 import grupo8.TPAnual.model.Builders.RecetaBuilder;
 import grupo8.TPAnual.model.Builders.UsuarioBuilder;
@@ -40,7 +40,7 @@ public class TestObserver {
 	Usuario veganoVerdulero, veganaFrutera, adictoAlCafe;
 	UsuarioBuilder veganoVerduleroBuilder, veganaFruteraBuilder, adictoAlCafeBuilder;
 	Vegano vegano;
-	RepoRecetas repoRecetas;
+	Recetario repoRecetas;
 	GestorDeConsultas gestorDeConsultas = new GestorDeConsultas();
 	
 	Receta caramelo, caldoSalado, cafeConLeche;
@@ -59,7 +59,7 @@ public class TestObserver {
 	@Before
 	public void setup() {
 		
-		repoRecetas = new RepoRecetas();
+		repoRecetas = new Recetario();
 		
 		consultasDeVeganosPorRecetasDificiles = new MonitorConsultasDeVeganosPorRecetasDificiles();
 		consultasPorHora = new MonitorConsultasPorHora();
@@ -148,10 +148,6 @@ public class TestObserver {
 		veganaFrutera.setGestorDeConsultas(gestorDeConsultas);
 		adictoAlCafe.setGestorDeConsultas(gestorDeConsultas);
 		
-		veganoVerdulero.agregarRepositorio(repoRecetas);
-		veganaFrutera.agregarRepositorio(repoRecetas);
-		adictoAlCafe.agregarRepositorio(repoRecetas);
-		
 		caramelo = new RecetaBuilder()
 		.setNombre("caramelo")
 		.setIngredientes(ingredientesDeCaramelo)
@@ -160,10 +156,9 @@ public class TestObserver {
 		.setPreparacion("hacer caramelo")
 		.setDificultad(Dificultad.DIFICIL)
 		.setTemporada(null)
-		.setCreador(veganaFrutera)
 		.setSubidaPorSistema(false)
-		.setRepositorio(repoRecetas)
 		.build();
+		veganaFrutera.agregarReceta(caramelo);
 		
 		caldoSalado = new RecetaBuilder()
 		.setNombre("caldo salado")
@@ -173,10 +168,9 @@ public class TestObserver {
 		.setPreparacion("hacer caldo salado")
 		.setDificultad(Dificultad.DIFICIL)
 		.setTemporada(null)
-		.setCreador(veganoVerdulero)
 		.setSubidaPorSistema(false)
-		.setRepositorio(repoRecetas)
 		.build();
+		veganoVerdulero.agregarReceta(caldoSalado);
 		
 		cafeConLeche = new RecetaBuilder()
 		.setNombre("cafe con leche")
@@ -186,10 +180,13 @@ public class TestObserver {
 		.setPreparacion("mezclar cafe y leche")
 		.setDificultad(Dificultad.FACIL)
 		.setTemporada(null)
-		.setCreador(adictoAlCafe)
 		.setSubidaPorSistema(false)
-		.setRepositorio(repoRecetas)
 		.build();
+		adictoAlCafe.agregarReceta(cafeConLeche);
+		
+		repoRecetas.agregar(caramelo);
+		repoRecetas.agregar(caldoSalado);
+		repoRecetas.agregar(cafeConLeche);
 		
 		
 		
@@ -198,9 +195,9 @@ public class TestObserver {
 	@Test
 	public void dosVeganosConsultanTresVeces() {
 		
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganoVerdulero, new FiltroNulo());
 	
 		assertEquals(consultasDeVeganosPorRecetasDificiles.cantidadDeVeganosConRecetasDificiles(), (Integer) 2 );
 		
@@ -209,19 +206,19 @@ public class TestObserver {
 	@Test
 	public void elCarameloEsElMasConsultado() {
 		
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganoVerdulero.filtrarRecetas(new FiltroNulo());
-		adictoAlCafe.filtrarRecetas(new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganoVerdulero, new FiltroNulo());
+		repoRecetas.filtrarRecetas(adictoAlCafe, new FiltroNulo());
 		
 		assertTrue(recetasMasConsultadas.recetaMasConsultada().equalsIgnoreCase("caramelo"));
 	}
 	@Test
 	public void consultamosAEstaHora() {
 		
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
-		veganoVerdulero.filtrarRecetas(new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganoVerdulero, new FiltroNulo());
 		
 		assertEquals(consultasPorHora.cantidadDeConsultasPorHora(Calendar.HOUR_OF_DAY), (Integer) 3 );
 		
@@ -229,8 +226,8 @@ public class TestObserver {
 	
 	@Test
 	public void lasMujeresConsultanMasElCaramelo() {
-		
-		veganaFrutera.filtrarRecetas(new FiltroNulo());
+
+		repoRecetas.filtrarRecetas(veganaFrutera, new FiltroNulo());
 		
 		assertTrue(recetasSegunSexo.recetaMasConsultadaPorMujeres().equalsIgnoreCase("caramelo"));
 		
@@ -239,9 +236,9 @@ public class TestObserver {
 	@Test
 	public void losHombresConsultanMasElCaldoSalado() {
 		
-		veganoVerdulero.filtrarRecetas(new FiltroNulo());
-		veganoVerdulero.filtrarRecetas(new FiltroNulo());
-		adictoAlCafe.filtrarRecetas(new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganoVerdulero, new FiltroNulo());
+		repoRecetas.filtrarRecetas(veganoVerdulero, new FiltroNulo());
+		repoRecetas.filtrarRecetas(adictoAlCafe, new FiltroNulo());
 		
 		assertTrue(recetasSegunSexo.recetaMasConsultadaPorHombres().equalsIgnoreCase("caldo salado"));
 			

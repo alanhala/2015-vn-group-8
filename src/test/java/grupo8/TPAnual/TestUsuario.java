@@ -18,7 +18,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 import grupo8.TPAnual.model.Dominio.Rutina;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 import grupo8.TPAnual.model.Repositorios.RepoUsuarios;
 
 import org.junit.Before;
@@ -35,7 +35,7 @@ public class TestUsuario {
 	ComponenteDeReceta colitaDeCuadril, papa;
 	
 	RepoUsuarios repoUsuarios = new RepoUsuarios();
-	RepoRecetas repositorio;
+	Recetario repositorio;
 	
 	UsuarioBuilder juanBuilder, oscarBuilder, pepeBuilder, osquiBuilder;
 	
@@ -113,7 +113,7 @@ public class TestUsuario {
 		repoUsuarios.agregarAPendienteDeAprobacion(pepe);
 		repoUsuarios.agregarAPendienteDeAprobacion(osqui);
 		
-		repositorio = new RepoRecetas();
+		repositorio = new Recetario();
 
 		colitaDeCuadril = new ComponenteDeReceta("Colita de cuadril", 500.0,
 				1000.0);
@@ -124,10 +124,9 @@ public class TestUsuario {
 		.agregarIngrediente(colitaDeCuadril)
 		.agregarIngrediente(papa)
 		.setCalorias(1350.0)
-		.setCreador(juan)
 		.setSubidaPorSistema(true)
-		.setRepositorio(repositorio)	
 		.build();
+		juan.agregarReceta(carneAlHornoConPapas);
 	}
 
 	@Test
