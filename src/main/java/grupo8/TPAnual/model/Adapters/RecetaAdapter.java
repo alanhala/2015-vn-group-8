@@ -5,7 +5,7 @@ import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Rutina;
 import grupo8.TPAnual.model.Dominio.Usuario;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -32,9 +32,7 @@ public class RecetaAdapter {
 		recetaBuilder.setIngredientes(this.crearComponentes());
 		recetaBuilder.setCondimentos(this.crearComponentes());
 		recetaBuilder.setCalorias((double) totalCalorias);
-		recetaBuilder.setCreador(usuarioExterno);
 		recetaBuilder.setSubidaPorSistema(false);
-		recetaBuilder.setRepositorio(new RepoRecetas());
 		
 		return recetaBuilder.build();
 	}
