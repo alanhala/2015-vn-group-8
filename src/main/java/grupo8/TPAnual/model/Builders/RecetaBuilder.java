@@ -8,9 +8,8 @@ import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.Dominio.ComponenteDeReceta;
 import grupo8.TPAnual.model.Dominio.Dificultad;
 import grupo8.TPAnual.model.Dominio.Receta;
-import grupo8.TPAnual.model.Dominio.Temporada;
 import grupo8.TPAnual.model.Dominio.Usuario;
-import grupo8.TPAnual.model.Repositorios.RepoRecetas;
+import grupo8.TPAnual.model.Repositorios.Recetario;
 
 public class RecetaBuilder {
 
@@ -22,11 +21,10 @@ public class RecetaBuilder {
 	private Double calorias;
 	private String preparacion;
 	private Dificultad dificultad;
-	private Temporada temporada;
+	private String temporada;
 	private Usuario creador;
 	private Boolean subidaPorSistema;
 	private List<Receta> subrecetas;
-	private RepoRecetas repositorio;
 	
 	public RecetaBuilder(){
 	
@@ -41,8 +39,8 @@ public class RecetaBuilder {
 		this.esValida();
 			
 		receta = new Receta(nombre, ingredientes, condimentos, calorias,
-							preparacion, dificultad, temporada, creador,
-							subidaPorSistema, subrecetas, repositorio);
+							preparacion, dificultad, temporada,
+							subidaPorSistema, subrecetas);
 		
 		return receta;
 	}
@@ -107,13 +105,8 @@ public class RecetaBuilder {
 		return this;
 	}
 	
-	public RecetaBuilder setTemporada(Temporada nuevaTemporada){
+	public RecetaBuilder setTemporada(String nuevaTemporada){
 		temporada = nuevaTemporada;
-		return this;
-	}
-	
-	public RecetaBuilder setCreador(Usuario nuevoCreador){
-		creador = nuevoCreador;
 		return this;
 	}
 	
@@ -124,11 +117,6 @@ public class RecetaBuilder {
 	
 	public RecetaBuilder agregarSubreceta(Receta receta) {
 		subrecetas.add(receta);
-		return this;
-	}
-	
-	public RecetaBuilder setRepositorio(RepoRecetas nuevoRepositorio){
-		repositorio = nuevoRepositorio;
 		return this;
 	}
 }
