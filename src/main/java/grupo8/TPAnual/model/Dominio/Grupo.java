@@ -61,4 +61,8 @@ public class Grupo implements Sugerible {
 
 	}
 
+	public boolean algunUsuarioTiene(Receta receta) {
+		return integrantes.stream().anyMatch(usuario -> usuario.tenesUnaReceta(receta));
+	}
+
 }
