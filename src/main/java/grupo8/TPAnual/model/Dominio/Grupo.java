@@ -4,10 +4,28 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="grupos")
+
 public class Grupo implements Sugerible {
 
+	
+	@Id
+	@GeneratedValue
+	public long id;
+	
 	private String nombre;
+	
+	@Transient //transientivo
 	private List<Usuario> integrantes;
+	
+	@Transient
 	private List<String> preferenciasAlimenticias;
 
 	public Grupo(String nombre, List<Usuario> integrantes,
@@ -38,7 +56,6 @@ public class Grupo implements Sugerible {
 				.getPreferenciasAlimenticias());
 	}
 
-	// Este no deberia ir en receta? (falta testearlo)
 	public boolean laRecetaEsApropiada(Receta unaReceta) {
 		return this
 				.getIntegrantes()

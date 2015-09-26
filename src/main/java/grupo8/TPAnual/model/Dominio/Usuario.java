@@ -15,7 +15,6 @@ import grupo8.TPAnual.model.Decorators.Filtro;
 import grupo8.TPAnual.model.Monitores.GestorDeConsultas;
 import grupo8.TPAnual.model.Dominio.Rutina;
 
-import java.beans.Transient;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -23,14 +22,16 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="usuarios")
@@ -43,15 +44,36 @@ public class Usuario implements Sugerible {
 	private Double altura;
 	private String nombre;
 	private String sexo;
+	
+	@Transient
 	private LocalDate fechaDeNacimiento;
+	
+	@Transient
 	private List<String> preferenciasAlimenticias;
+	
+	@Transient
 	private List<String> disgustosAlimenticios;
+	
+	@ManyToMany
 	private List<Condicion> condiciones;
+	
+	@OneToMany
+	@JoinColumn(name="usuario_id")
 	private List<Receta> recetas;
+	
+	@Enumerated
 	private Rutina rutina;
+	
+	@ManyToMany
 	private List<Grupo> grupos;
+	
+	@ManyToMany
 	private List<Receta> recetasFavoritas;
+	
+	@OneToOne
 	private GestorDeConsultas gestorDeConsultas;
+	
+	@OneToMany
 	private List<TratamientoDeConsultas> tratamientosDeConsultas;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,

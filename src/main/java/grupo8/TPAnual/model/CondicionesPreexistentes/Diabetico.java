@@ -1,11 +1,17 @@
 package grupo8.TPAnual.model.CondicionesPreexistentes;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import grupo8.TPAnual.exceptions.DiabeticoInvalidoException;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
 
-public class Diabetico implements Condicion {
+@Entity
+@DiscriminatorValue("d")
+
+public class Diabetico extends Condicion {
 
 	@Override
 	public void esValida(Usuario usuario) {

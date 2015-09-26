@@ -1,11 +1,16 @@
 package grupo8.TPAnual.model.CondicionesPreexistentes;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+
 import grupo8.TPAnual.exceptions.HipertensoInvalidoException;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
+@Entity
+@DiscriminatorValue("h")
 
-public class Hipertenso implements Condicion {
+public class Hipertenso extends Condicion {
 
 	@Override
 	public void esValida(Usuario usuario) {

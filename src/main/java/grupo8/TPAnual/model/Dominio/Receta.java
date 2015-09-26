@@ -3,15 +3,22 @@ package grupo8.TPAnual.model.Dominio;
 import grupo8.TPAnual.exceptions.RecetaConCaloriasFueraDelRangoException;
 import grupo8.TPAnual.exceptions.RecetaSinIngredientesException;
 import grupo8.TPAnual.model.CondicionesPreexistentes.Condicion;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Transient;
+
 public class Receta {
 
 	private String nombre;
+	
+	@Transient
 	private List<ComponenteDeReceta> ingredientes;
+	
+	@Transient
 	private List<ComponenteDeReceta> condimentos;
 	private Double calorias;
 	private String preparacion;
