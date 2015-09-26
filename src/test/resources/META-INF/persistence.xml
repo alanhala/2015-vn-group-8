@@ -7,8 +7,8 @@
   
     <persistence-unit name="db" transaction-type="RESOURCE_LOCAL">
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
-    	<class>grupo8.TPAnual.Receta</class>
-    	<class>grupo8.TPAnual.Usuario</class>
+    	<class>grupo8.TPAnual.model.Dominio.Receta</class>
+    	<class>grupo8.TPAnual.model.Dominio.Usuario</class>
     	
     	 
         <properties> 

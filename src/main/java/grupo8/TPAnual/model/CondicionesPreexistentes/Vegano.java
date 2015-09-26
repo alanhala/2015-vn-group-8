@@ -7,8 +7,16 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 import java.util.Arrays;
 import java.util.List;
 
-public class Vegano implements Condicion {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.Transient;
 
+@Entity
+@DiscriminatorValue("v")
+
+public class Vegano extends Condicion {
+
+	@Transient
 	public static final List<String> preferenciasProhibidas = Arrays.asList(
 			"pollo", "carne", "chivito", "chori");
 
