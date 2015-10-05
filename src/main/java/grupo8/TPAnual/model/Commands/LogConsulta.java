@@ -20,16 +20,16 @@ import org.apache.commons.logging.Log;
 @DiscriminatorValue("LC")
 public class LogConsulta extends TratamientoDeConsultas {
 	
-	@Id
-	@GeneratedValue
-	private Long id;
-
 	@Transient //TODO Ver si hay que persistir esto
 	private static Log log;
 	
 	@OneToMany
 	@JoinColumn(name = "log_consulta_id")
 	private List<Receta> recetasConsultadas;
+	
+	public LogConsulta(){
+		//Lo necesito para hibernate
+	}
 
 	public LogConsulta(List<Receta> recetasConsultadas) {
 		this.recetasConsultadas = recetasConsultadas;

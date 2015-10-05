@@ -42,6 +42,10 @@ public class Receta extends PersistentEntity {
 	@Transient
 	private List<Receta> subrecetas;
 	private Boolean publica;
+	
+	public Receta(){
+		//Lo necesito para Hibernate
+	}
 
 	public Receta(String nombre, List<ComponenteDeReceta> ingredientes,
 			List<ComponenteDeReceta> condimentos, Double calorias,

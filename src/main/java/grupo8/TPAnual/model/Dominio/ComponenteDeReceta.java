@@ -15,6 +15,10 @@ public class ComponenteDeReceta extends PersistentEntity {
 	private Double cantidad;
 	private Double calorias;
 	
+	public ComponenteDeReceta(){
+		//Lo necesito para Hibernate
+	}
+	
 	public ComponenteDeReceta(String nombre, Double cantidad, Double calorias) {
 		this.nombre = nombre;
 		this.cantidad = cantidad;

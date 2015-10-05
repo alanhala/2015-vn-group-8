@@ -18,10 +18,6 @@ import javax.persistence.OneToOne;
 @DiscriminatorValue("MF")
 public class MarcarComoFavoritas extends TratamientoDeConsultas {
 	
-	@Id
-	@GeneratedValue
-	private Long id;
-
 	// Datos de la consulta
 
 	@OneToOne

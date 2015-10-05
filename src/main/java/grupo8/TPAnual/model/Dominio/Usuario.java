@@ -74,6 +74,10 @@ public class Usuario extends PersistentEntity implements Sugerible {
 	
 	@Transient
 	private List<TratamientoDeConsultas> tratamientosDeConsultas;
+	
+	public Usuario(){
+		//Lo necesito para Hibernate
+	}
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
 			LocalDate fechaDeNacimiento, List<String> preferenciasAlimenticias,

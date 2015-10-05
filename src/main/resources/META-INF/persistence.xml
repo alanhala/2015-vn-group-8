@@ -18,6 +18,9 @@
     	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico</class>
     	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso</class>
     	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Vegano</class>
+	<class>grupo8.TPAnual.model.Commands.MarcarComoFavoritas</class>
+	<class>grupo8.TPAnual.model.Commands.LogConsulta</class>
+	<class>grupo8.TPAnual.model.Commands.EnviarMail</class>
     	
     	 
         <properties> 

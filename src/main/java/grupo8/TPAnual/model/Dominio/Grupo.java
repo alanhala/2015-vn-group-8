@@ -24,6 +24,10 @@ public class Grupo extends PersistentEntity implements Sugerible {
 	
 	@Transient
 	private List<String> preferenciasAlimenticias;
+	
+	public Grupo(){
+		//Lo necesito para Hibernate
+	}
 
 	public Grupo(String nombre, List<Usuario> integrantes,
 			List<String> preferenciasAlimenticias) {

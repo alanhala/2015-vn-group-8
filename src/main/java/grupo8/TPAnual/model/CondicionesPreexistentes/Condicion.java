@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
+import Persistencia.PersistentEntity;
 import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
@@ -14,12 +15,8 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name="condiciones")
 
-public abstract class Condicion {
+public abstract class Condicion extends PersistentEntity {
 
-	@Id
-	@GeneratedValue
-	public long id;
-	
 	public void esValida(Usuario usuario) {
 	}
 

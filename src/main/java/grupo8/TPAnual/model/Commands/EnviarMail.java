@@ -21,14 +21,10 @@ import javax.persistence.Transient;
 @DiscriminatorValue("EM")
 public class EnviarMail extends TratamientoDeConsultas {
 
-	@Id
-	@GeneratedValue
-	private Long id;
-	
 	@OneToOne
 	private Usuario usuario;
 	
-	@OneToOne
+	@Transient //TODO Ver si hay que persistir
 	private Filtro filtro;
 	
 	@OneToMany

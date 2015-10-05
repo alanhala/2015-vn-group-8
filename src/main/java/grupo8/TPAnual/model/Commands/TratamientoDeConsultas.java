@@ -16,9 +16,8 @@ import grupo8.TPAnual.model.Dominio.Receta;
 import grupo8.TPAnual.model.Dominio.Usuario;
 
 @Entity
-@Table(name = "TratamientosDeConsultas")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "DiscriminatorTratamientoDeConsulta")
+@DiscriminatorColumn(name = "Tipo")
 public abstract class TratamientoDeConsultas extends PersistentEntity{
 
 	public void agregarAccionARealizar(Usuario usuario, Filtro filtro,
