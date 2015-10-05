@@ -1,7 +1,17 @@
 package grupo8.TPAnual.model.Dominio;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="COMPONENTES_DE_RECETAS")
 public class ComponenteDeReceta {
 	
+	@Id
+	@GeneratedValue
+	private Long componenteID;
 	private String nombre;
 	private Double cantidad;
 	private Double calorias;
