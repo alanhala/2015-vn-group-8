@@ -9,6 +9,15 @@
     	<provider>org.hibernate.ejb.HibernatePersistence</provider>
     	<class>grupo8.TPAnual.model.Dominio.Receta</class>
     	<class>grupo8.TPAnual.model.Dominio.Usuario</class>
+    	<class>grupo8.TPAnual.model.Dominio.Dificultad</class>
+    	<class>grupo8.TPAnual.model.Dominio.Grupo</class>
+    	<class>grupo8.TPAnual.model.Dominio.Rutina</class>
+    	<class>grupo8.TPAnual.model.Dominio.ComponenteDeReceta</class>
+    	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Celiaco</class>
+    	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Condicion</class>
+    	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Diabetico</class>
+    	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Hipertenso</class>
+    	<class>grupo8.TPAnual.model.CondicionesPreexistentes.Vegano</class>
     	
     	 
         <properties> 
