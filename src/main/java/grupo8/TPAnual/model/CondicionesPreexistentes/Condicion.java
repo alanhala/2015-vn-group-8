@@ -12,7 +12,7 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="condicion")
+@DiscriminatorColumn(name="condiciones")
 
 public abstract class Condicion {
 
