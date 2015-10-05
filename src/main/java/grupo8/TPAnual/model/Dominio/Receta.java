@@ -9,21 +9,39 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Transient;
 
+@Entity
+@Table(name="recetas")
 public class Receta {
-
+	
+	@Id
+	@GeneratedValue
+	private Long recetaId;
+	
 	private String nombre;
 	
-	@Transient
+	@OneToMany
+	@JoinColumn(name="receta_id")
 	private List<ComponenteDeReceta> ingredientes;
 	
-	@Transient
+	@OneToMany
+	@JoinColumn(name="receta_id")
 	private List<ComponenteDeReceta> condimentos;
+	
 	private Double calorias;
 	private String preparacion;
+	@Enumerated
 	private Dificultad dificultad;
 	private String temporada;
+	@Transient
 	private List<Receta> subrecetas;
 	private Boolean publica;
 

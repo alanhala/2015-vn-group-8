@@ -11,14 +11,14 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="grupos")
+@Table(name="GRUPOS")
 
 public class Grupo implements Sugerible {
 
 	
 	@Id
 	@GeneratedValue
-	public long id;
+	public long grupoId;
 	
 	private String nombre;
 	

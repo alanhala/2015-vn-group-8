@@ -70,10 +70,10 @@ public class Usuario implements Sugerible {
 	@ManyToMany
 	private List<Receta> recetasFavoritas;
 	
-	@OneToOne
+	@Transient
 	private GestorDeConsultas gestorDeConsultas;
 	
-	@OneToMany
+	@Transient
 	private List<TratamientoDeConsultas> tratamientosDeConsultas;
 
 	public Usuario(Double peso, Double altura, String nombre, String sexo,
