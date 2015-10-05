@@ -19,12 +19,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="recetas")
+@Table(name="Recetas")
 public class Receta {
 	
 	@Id
 	@GeneratedValue
-	private Long recetaId;
+	private Long id;
 	
 	private String nombre;
 	

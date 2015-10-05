@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="GRUPOS")
+@Table(name="Grupos")
 
 public class Grupo implements Sugerible {
 

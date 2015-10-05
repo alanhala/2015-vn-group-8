@@ -34,7 +34,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="usuarios")
+@Table(name="Usuarios")
 public class Usuario implements Sugerible {
 
 	@Id
@@ -70,7 +70,7 @@ public class Usuario implements Sugerible {
 	@ManyToMany
 	private List<Receta> recetasFavoritas;
 	
-	@Transient
+	@OneToOne
 	private GestorDeConsultas gestorDeConsultas;
 	
 	@Transient

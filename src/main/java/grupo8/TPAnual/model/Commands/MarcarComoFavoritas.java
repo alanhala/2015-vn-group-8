@@ -6,11 +6,29 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.List;
 
-public class MarcarComoFavoritas implements TratamientoDeConsultas {
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
+@Entity
+@DiscriminatorValue("MF")
+public class MarcarComoFavoritas extends TratamientoDeConsultas {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 
 	// Datos de la consulta
 
+	@OneToOne
 	private Usuario usuario;
+	
+	@OneToMany
+	@JoinColumn(name = "marcar_como_favoritas_id")
 	private List<Receta> recetasFiltradas;
 	
 	public MarcarComoFavoritas(){
@@ -36,7 +54,7 @@ public class MarcarComoFavoritas implements TratamientoDeConsultas {
 	@Override
 	public void ejecutar() {
 		recetasFiltradas.forEach(receta -> usuario.agregarAFavoritos(receta));
-		//TODO Que pasa acá cuando la receta ya estaba en la lista de favoritos? 
+		//TODO Que pasa acï¿½ cuando la receta ya estaba en la lista de favoritos? 
 		//Hay duplicados? Me parece que pifiaron en el tipo de la lista de favoritos :) revisenlo.
 	}
 

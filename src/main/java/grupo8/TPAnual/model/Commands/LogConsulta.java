@@ -6,11 +6,29 @@ import grupo8.TPAnual.model.Dominio.Usuario;
 
 import java.util.List;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+
 import org.apache.commons.logging.Log;
 
-public class LogConsulta implements TratamientoDeConsultas {
+@Entity
+@DiscriminatorValue("LC")
+public class LogConsulta extends TratamientoDeConsultas {
+	
+	@Id
+	@GeneratedValue
+	private Long id;
 
+	@Transient //TODO Ver si hay que persistir esto
 	private static Log log;
+	
+	@OneToMany
+	@JoinColumn(name = "log_consulta_id")
 	private List<Receta> recetasConsultadas;
 
 	public LogConsulta(List<Receta> recetasConsultadas) {
@@ -27,7 +45,7 @@ public class LogConsulta implements TratamientoDeConsultas {
 
 	@Override
 	public void ejecutar() {
-		//Ven, acá... meten en vez de en el usuario el checkeo acá, y siempre agregan un log. 
+		//Ven, acï¿½... meten en vez de en el usuario el checkeo acï¿½, y siempre agregan un log. 
 		//Cuando me vean cuentenme que les parece.
 		log.info(recetasConsultadas);
 	}
