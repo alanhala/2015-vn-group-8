@@ -10,15 +10,12 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import Persistencia.PersistentEntity;
+
 @Entity
 @Table(name="Grupos")
 
-public class Grupo implements Sugerible {
-
-	
-	@Id
-	@GeneratedValue
-	public long grupoId;
+public class Grupo extends PersistentEntity implements Sugerible {
 	
 	private String nombre;
 	

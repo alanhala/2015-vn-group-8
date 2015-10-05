@@ -14,13 +14,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import Persistencia.PersistentEntity;
+
 @Entity
 @Table(name="GestoresDeConsultas")
-public class GestorDeConsultas {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
+public class GestorDeConsultas extends PersistentEntity {
 	
 	@Transient
 	private List<Monitor> monitores;

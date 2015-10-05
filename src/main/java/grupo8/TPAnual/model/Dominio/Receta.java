@@ -18,13 +18,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import Persistencia.PersistentEntity;
+
 @Entity
 @Table(name="Recetas")
-public class Receta {
-	
-	@Id
-	@GeneratedValue
-	private Long id;
+public class Receta extends PersistentEntity {
 	
 	private String nombre;
 	

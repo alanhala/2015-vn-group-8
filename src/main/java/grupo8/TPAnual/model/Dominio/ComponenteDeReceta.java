@@ -5,13 +5,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import Persistencia.PersistentEntity;
+
 @Entity
 @Table(name="ComponentesDeReceta")
-public class ComponenteDeReceta {
+public class ComponenteDeReceta extends PersistentEntity {
 	
-	@Id
-	@GeneratedValue
-	private Long id;
 	private String nombre;
 	private Double cantidad;
 	private Double calorias;

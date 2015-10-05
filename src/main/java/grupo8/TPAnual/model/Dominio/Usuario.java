@@ -33,13 +33,12 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import Persistencia.PersistentEntity;
+
 @Entity
 @Table(name="Usuarios")
-public class Usuario implements Sugerible {
+public class Usuario extends PersistentEntity implements Sugerible {
 
-	@Id
-	@GeneratedValue
-	private Long id;
 	private Double peso;
 	private Double altura;
 	private String nombre;
